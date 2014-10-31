@@ -8,7 +8,7 @@ class UserManager(BaseUserManager):
                      is_active, is_admin, **kwargs):
         if not email:
             raise ValueError('The given email must be set')
-        email = self.normaize_email(email)
+        email = self.normalize_email(email)
         user = self.model(email=email,
                           is_active=is_active,
                           is_admin=is_admin,
