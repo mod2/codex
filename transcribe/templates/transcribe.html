@@ -1,0 +1,31 @@
+{% extends '_base.html' %}
+
+{% block mainclass %}transcribe side-by-side{% endblock mainclass %}
+
+{% block main %}
+<header>
+	<div class="left">
+		<span class="toggle-lights">Light/Dark</span>
+		<span class="toggle-layout">Switch Layout</span>
+
+		<div class="controls-image">
+
+		</div>
+	</div>
+	<div class="right">
+		<label>Saved 9:48 am</label>
+		<span>Finish &amp; Continue</span>
+		<span>Finish</span>
+	</div>
+</header>
+
+<div class="wrapper">
+	<div class="image">
+		<img src="https://farm5.staticflickr.com/4033/5159378664_2e0c4ae7dc_o_d.jpg" />
+	</div>
+	<div class="transcript">
+		<textarea spellcheck="false"></textarea>
+	</div>
+</div>
+</section>
+{% endblock main %}

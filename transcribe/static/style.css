@@ -1,0 +1,333 @@
+* {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: Source Sans Pro, Helvetica, Arial;
+}
+
+body {
+	line-height: 1.4em;
+	margin: 0;
+	padding: 0;
+}
+
+
+/* Header bar */
+/* -------------------------------------------------- */
+
+body > header {
+	background: #111;
+	color: #fff;
+	font-size: 1.1em;
+	height: 45px;
+	overflow: hidden;
+	width: 100%;
+	z-index: 50000;
+}
+
+body > header span {
+	color: #777;
+	margin: 0 15px;
+	text-transform: uppercase;
+}
+
+body > header a {
+	color: #fff;
+	display: inline-block;
+	padding: 18px 15px 10px;
+	text-decoration: none;
+}
+
+body > header a:hover {
+	color: #e0ffaa;
+	background: #444;
+}
+
+
+/* General headers */
+/* -------------------------------------------------- */
+
+body header .left {
+	float: left;
+}
+
+body header .right {
+	float: right;
+}
+
+
+/* Main (below header) */
+/* -------------------------------------------------- */
+
+body #main {
+	height: calc(100% - 45px);
+}
+
+
+/* Content */
+/* -------------------------------------------------- */
+
+body #main.page {
+	background: #eee;
+	padding-top: 2em;
+}
+
+body #main.page .container {
+	box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+	margin: 0px auto;
+	max-width: 750px;
+}
+
+body #main.page > header {
+	background: #662b55;
+	border-radius: 3px 3px 0 0;
+	color: #fff;
+	padding: 30px 35px 10px;
+	height: 75px;
+}
+
+body #main.page > header h1 {
+	font-size: 1.8em;
+	font-weight: 400;
+	line-height: 1.2em;
+	margin: 0;
+}
+
+body #main.page #content {
+	background: #fff;
+	border-radius: 0 0 3px 3px;
+	min-height: 1em;
+	padding: 35px;
+}
+
+body #main.page #content form fieldset {
+	border: none;
+	font-size: 1.2em;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+body #main.page #content form fieldset + fieldset {
+	border-top: solid 1px #ccc;
+	margin-top: 2em;
+	padding-top: 2em;
+}
+
+body #main.page #content form fieldset > label {
+	font-size: 1.2em;
+	float: left;
+	width: 20%;
+}
+
+body #main.page #content form fieldset > section {
+	float: left;
+	width: 65%;
+}
+
+body #main.page #content form fieldset > span.saved {
+	background: #eee;
+	border-radius: 3px;
+	color: #bbb;
+	float: left;
+	font-size: .8em;
+	font-style: italic;
+	margin-left: 7%;
+	padding: 3px 8px;
+	text-align: right;
+	width: 8%;
+}
+
+body #main.page #content form div.user {
+	color: #2570ae;
+}
+
+body #main.page #content form div.user + div.user {
+	margin-top: .35em;
+}
+
+body #main.page #content form div.user span.delete {
+	color: #aaa;
+	display: inline-block;	
+	margin-left: 5px;
+}
+
+body #main.page #content form div.user + input[type=text] {
+	margin-top: 1em;
+}
+
+body #main.page #content form input[type=text] {
+	border-radius: 3px;
+	border: solid 1px #bbb;
+	font-size: 1em;
+	padding: 2px 5px;
+}
+
+body #main.page #content form input[type=text]:focus {
+	outline: none;
+	border-color: #666;
+}
+
+body #main.page #content form input[type=text].title {
+	font-size: 1.2em;
+	padding: 4px 8px;
+	width: 100%;
+}
+
+body #main.page #content form input.button {
+	background: #729948;
+	border-radius: 3px;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	font-size: .9em;
+	padding: 3px 12px 4px;
+	box-shadow: 0 0 5px #ddd;
+}
+
+body #main.page #content form input[type=text] + input.button {
+	margin-left: 3px;
+}
+
+body #main.page #content form input.button:hover {
+	background: #41621e;
+}
+
+body #main.page #content form div.item {
+	border-radius: 3px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+	overflow: hidden;
+	padding: 8px 12px;
+}
+
+body #main.page #content form div.item + div.item {
+	margin-top: .5em;
+}
+
+body #main.page #content form div.item + input.button {
+	margin-top: 1em;
+}
+
+body #main.page #content form div.item .controls {
+	color: #bbb;
+	float: right;
+}
+
+body #main.page #content form div.item .controls span + span {
+	margin-left: .5em;
+}
+
+
+/* Transcription */
+/* -------------------------------------------------- */
+
+body #main.transcribe header {
+	background: #436883;
+	color: #fff;
+	height: 50px;
+	padding: 10px 15px;
+	border-bottom: solid 1px #203751;
+}
+
+body #main.transcribe header label {
+	color: #aac7d8;
+	display: inline-block;
+	padding: 3px 10px 4px;
+	margin-right: 10px;
+}
+
+body #main.transcribe header span {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	background: #4991bd;
+	border-radius: 3px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+	display: inline-block;
+	padding: 3px 10px 4px;
+	user-select: none;
+}
+
+body #main.transcribe header span:hover {
+	background: #00436c;
+}
+
+body #main.transcribe header span + span {
+	margin-left: 10px;
+}
+
+body #main.transcribe .wrapper {
+	-webkit-flex-direction: column;
+	display: flex;
+	flex-direction: column;
+	height: calc(100% - 51px);
+}
+
+body #main.transcribe .image {
+	-webkit-flex: 1.3;
+	flex: 1.3;
+	overflow: scroll;
+	width: 100%;
+}
+
+body #main.transcribe .transcript {
+	-webkit-flex: 1;
+	border-top: solid 1px #888;
+	flex: 1;
+	width: 100%;
+}
+
+body #main.transcribe .transcript textarea {
+	padding: 25px;
+	border: none;
+	font-size: 1.3em;
+	line-height: 1.4em;
+	width: 100%;
+	height: 100%;
+}
+
+body #main.transcribe .transcript textarea:focus {
+	outline: none;
+}
+
+
+/* Side-by-side */
+/* -------------------------------------------------- */
+
+body #main.transcribe.side-by-side .wrapper {
+	-webkit-flex-direction: row;
+	flex-direction: row;
+}
+
+body #main.transcribe.side-by-side .image {
+	height: 100%;
+	max-height: 100%;
+}
+
+body #main.transcribe.side-by-side .transcript {
+	border-left: solid 1px #888;
+	border-top: none;
+	height: 100%;
+}
+
+
+/* Dark mode */
+/* -------------------------------------------------- */
+
+body.dark #main.transcribe header {
+	background: #333;
+	border-bottom-color: #444;
+}
+
+body.dark #main.transcribe header span {
+	background: #2e4e61;
+}
+
+body.dark #main.transcribe header label {
+	color: #777;
+}
+
+body.dark #main.transcribe .transcript textarea {
+	background: #111;
+	color: #aaa;
+}
