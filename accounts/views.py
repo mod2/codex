@@ -31,4 +31,4 @@ def logout(request):
     # TODO: add message that they have been successfully logged out and redirect
     # to the login page
     django_logout(request)
-    return render_to_response('accounts/logout.html')
+    return redirect('accounts:login')

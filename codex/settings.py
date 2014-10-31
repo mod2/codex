@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'inviter2',
+    'codex',
     'accounts',
     'transcribe',
 )
@@ -62,7 +62,7 @@ AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = ['accounts.backends.EmailAuthBackend', ]
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'codex', 'templates'),
+    #os.path.join(BASE_DIR, 'codex', 'templates'),
 )
 
 # Database
@@ -115,6 +115,7 @@ LOGGING = {
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 if DEBUG:

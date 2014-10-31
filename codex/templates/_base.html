@@ -1,10 +1,31 @@
+{% load staticfiles %}
+<!DOCTYPE html>
 <html>
 <head>
+	<title>Codex</title>
+
 	<meta charset="utf-8">
-	<title>{% block title %}CODEX{% endblock %}</title>
+
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+	<link href="{% static 'style.css' %}" type="text/css" rel="stylesheet" />
+
+	<script src="{% static 'jquery-2.1.1.min.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'codex.js' %}" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-	{% block content %}
-	{% endblock %}
+	<header>
+		<div class="left">
+			<span>Codex</span>
+			<a href="{% url 'home' %}">Home</a>
+		</div>
+		<div class="right">
+			<a href="{% url 'account' %}">Account</a>
+			<a href="{% url 'accounts:logout' %}">Logout</a>
+		</div>
+	</header>
+
+	<section id="main" class="{% block mainclass %}{% endblock mainclass %}">
+		{% block main %}{% endblock main %}
+	</section>
 </body>
 </html>

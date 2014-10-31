@@ -5,6 +5,7 @@
 }
 
 body {
+	background: #eee;
 	line-height: 1.4em;
 	margin: 0;
 	padding: 0;
@@ -67,8 +68,8 @@ body #main {
 /* -------------------------------------------------- */
 
 body #main.page {
-	background: #eee;
 	padding-top: 2em;
+	padding-bottom: 5em;
 }
 
 body #main.page .container {
