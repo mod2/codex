@@ -83,11 +83,11 @@ body #main.page > header {
 	border-radius: 3px 3px 0 0;
 	color: #fff;
 	padding: 30px 35px 10px;
-	height: 75px;
+	height: 70px;
 }
 
 body #main.page > header h1 {
-	font-size: 1.8em;
+	font-size: 1.6em;
 	font-weight: 400;
 	line-height: 1.2em;
 	margin: 0;
