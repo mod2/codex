@@ -10,20 +10,21 @@
 
 <form method="post" action="{% url 'accounts:login' %}">
 	{% csrf_token %}
-	<fieldset>
+	<div class="group">
 		<label>{{ form.email.label_tag }}</label>
 		<section>
 			{{ form.email }}
 		</section>
+	</div>
 
+	<div class="group">
 		<label>{{ form.password.label_tag }}</label>
 		<section>
 			{{ form.password }}
 		</section>
-	</fieldset>
-
+	</div>
+	
 	<input type="submit" value="Login" class="button" />
-
 	<input type="hidden" name="next" value="{{ form.next_url }}" />
 </form>
 

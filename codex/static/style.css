@@ -100,12 +100,16 @@ body #main.page #content {
 	padding: 35px;
 }
 
+body #main.page #content form {
+	font-size: 1.2em;
+	overflow: hidden;
+}
+
 body #main.page #content form fieldset {
 	border: none;
-	font-size: 1.2em;
 	margin: 0;
-	padding: 0;
 	overflow: hidden;
+	padding: 0;
 }
 
 body #main.page #content form fieldset + fieldset {
@@ -114,18 +118,18 @@ body #main.page #content form fieldset + fieldset {
 	padding-top: 2em;
 }
 
-body #main.page #content form fieldset > label {
-	font-size: 1.2em;
+body #main.page #content form label {
+	font-size: 1.05em;
 	float: left;
 	width: 20%;
 }
 
-body #main.page #content form fieldset > section {
+body #main.page #content form section {
 	float: left;
 	width: 65%;
 }
 
-body #main.page #content form fieldset > span.saved {
+body #main.page #content form span.saved {
 	background: #eee;
 	border-radius: 3px;
 	color: #bbb;
@@ -136,6 +140,18 @@ body #main.page #content form fieldset > span.saved {
 	padding: 3px 8px;
 	text-align: right;
 	width: 8%;
+}
+
+body #main.page #content form div.group {
+	overflow: hidden;
+}
+
+body #main.page #content form div.group + div.group {
+	margin-top: 10px;
+}
+
+body #main.page #content form div.group + input[type=submit] {
+	margin-top: 15px;
 }
 
 body #main.page #content form div.user {
@@ -156,7 +172,9 @@ body #main.page #content form div.user + input[type=text] {
 	margin-top: 1em;
 }
 
-body #main.page #content form input[type=text] {
+body #main.page #content form input[type=text],
+	body #main.page #content form input[type=email],
+	body #main.page #content form input[type=password] {
 	border-radius: 3px;
 	border: solid 1px #bbb;
 	font-size: 1em;
