@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'rest_framework',
     'codex',
     'accounts',
     'transcribe',
@@ -61,8 +62,12 @@ LOGOUT_URL = '/account/logout/'
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = ['accounts.backends.EmailAuthBackend', ]
 
+REST_FRAMEWORK = {
+    'PAGINATE_BY': 10,
+}
+
 TEMPLATE_DIRS = (
-    #os.path.join(BASE_DIR, 'codex', 'templates'),
+    # os.path.join(BASE_DIR, 'codex', 'templates'),
 )
 
 # Database
