@@ -181,7 +181,9 @@ body #main.page #content form input[type=text],
 	padding: 2px 5px;
 }
 
-body #main.page #content form input[type=text]:focus {
+body #main.page #content form input[type=text]:focus,
+	body #main.page #content form input[type=email]:focus,
+	body #main.page #content form input[type=password]:focus {
 	outline: none;
 	border-color: #666;
 }
