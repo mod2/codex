@@ -458,3 +458,30 @@ body.dark #main.transcribe .transcript textarea {
 	float: left;
 	height: 100%;
 }
+
+.dashboard-projects {
+	margin-top: 3em;
+}
+
+.dashboard-projects h1 {
+	color: #fff;
+	font-size: 1.1em;
+	font-weight: normal;
+	margin: 0 0 .5em 0;
+}
+
+.dashboard-projects a.new-project {
+	background: #8ea556;
+	border-radius: 3px;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	margin-top: 1em;
+	padding: 3px 10px 5px;
+	text-decoration: none;
+}
+
+.dashboard-projects a.new-project:hover {
+	background: #698b15;
+}
