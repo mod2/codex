@@ -161,7 +161,7 @@ body #main.page #content form div.user + div.user {
 
 body #main.page #content form div.user span.delete {
 	color: #aaa;
-	display: inline-block;	
+	display: inline-block;
 	margin-left: 5px;
 }
 
@@ -497,4 +497,88 @@ form.edit-project fieldset {
 
 form.edit-project fieldset#title-fieldset {
 	opacity: 1.0;
+}
+
+
+/* Project Details */
+/* -------------------------------------------------- */
+
+.project-details {
+	padding-bottom: 50px;
+}
+
+.project-details h1 {
+	font-size: 1.8em;
+	font-weight: normal;
+	letter-spacing: -0.01em;
+	margin: 0 0 2em 0;
+}
+
+.project-details a.edit {
+	float: right;
+	color: #4d86c7;
+	text-decoration: none;
+}
+
+.project-details a.edit:hover {
+	color: #111;
+}
+
+.project-details .group {
+	font-size: 1.2em;
+	overflow: hidden;
+}
+
+.project-details .group + .group {
+	border-top: solid 1px #ddd;
+	margin-top: 1.5em;
+	padding-top: 1.5em;
+}
+
+.project-details .group label {
+	font-size: 1.1em;
+	float: left;
+	width: 20%;
+}
+
+.project-details .group section {
+	float: left;
+	width: 65%;
+}
+
+.project-details .group section a {
+	color: #4d86c7;
+	text-decoration: none;
+}
+
+.project-details .group section a:hover {
+	color: #111;
+}
+
+.project-details .group section ul {
+	margin: 0;
+	padding: 0;
+}
+
+.project-details .group section ul li + li {
+	margin-top: .35em;
+}
+
+.project-details .group section ul li {
+	list-style: none;
+}
+
+.project-details .group section b {
+	font-weight: 600;
+}
+
+.project-details .group section ul.items li ul {
+	color: #888;
+	font-size: .9em;
+	margin-left: 2em;
+	margin-top: .5em;
+}
+
+.project-details .group section ul.items li ul li + li {
+	margin-top: .1em;
 }

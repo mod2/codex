@@ -1,0 +1,71 @@
+{% extends 'page.html' %}
+
+{% block title %}Project Details{% endblock title %}
+
+{% block content %}
+<div class="project-details">
+	<a class="edit" href="">Edit Project</a>
+
+	<h1>Grandpa's Journals, 1968</h1>
+
+	<div class="group">
+		<label>Users</label>
+		<section>
+			<ul>
+				<li><b>Joe Schmoe:</b> 3 items</li>
+				<li><b>kdiz@gmail.com:</b> 17 items</li>
+				<li><b>Penelope:</b> 6 items</li>
+			</ul>
+		</section>
+	</div>
+
+	<div class="group">
+		<label>Items</label>
+		<section>
+			<ul class="items">
+				<li class="finished">
+					<a href="/">page-01.jpg</a> — finished — image (Flickr)
+					<ul>
+						<li class="draft">14 Oct 2014 — Joe Schmoe — draft</li>
+						<li class="finished">18 Oct 2014 — Joe Schmoe — finished</li>
+						<li class="finished">21 Oct 2014 — Penelope — finished</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/">page-02.jpg</a> — draft — image (Flickr)
+					<ul>
+						<li class="draft">17 Oct 2014 — Joe Schmoe — draft</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/">page-03.jpg</a> — draft — image (local)
+					<ul>
+						<li class="draft">18 Oct 2014 — Penelope — draft</li>
+					</ul>
+				</li>
+			</ul>
+		</section>
+	</div>
+
+	<div class="group">
+		<label>Download</label>
+		<section>
+			<ul>
+				<li><a href="">Download transcript</a> (text)</li>
+				<li><a href="">Download transcript</a> (PDF)</li>
+				<li><a href="">Download project history</a> (JSON)</li>
+			</ul>
+		</section>
+	</div>
+
+	<div class="group">
+		<label>Delete</label>
+		<section>
+			<ul>
+				<li><a href="">Delete project</a></li>
+			</ul>
+		</section>
+	</div>
+</div>
+
+{% endblock content %}

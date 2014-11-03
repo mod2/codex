@@ -18,6 +18,11 @@ def new_project(request):
     from django.shortcuts import render_to_response
     return render_to_response('new_project.html')
 
+@login_required
+def project(request, project):
+    from django.shortcuts import render_to_response
+    return render_to_response('project.html')
+
 
 urlpatterns = patterns(
     '',
@@ -29,4 +34,5 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^invites/', include('inviter2.urls', namespace='inviter2')),
     url(r'^new-project/', new_project, name='new_project'),
+    url(r'^project/(.+?)/', project, name='project'),
 )
