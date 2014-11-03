@@ -129,6 +129,7 @@ body #main.page #content form span.saved {
 	background: #eee;
 	border-radius: 3px;
 	color: #bbb;
+	display: none;
 	float: left;
 	font-size: .8em;
 	font-style: italic;
@@ -484,4 +485,16 @@ body.dark #main.transcribe .transcript textarea {
 
 .dashboard-projects a.new-project:hover {
 	background: #698b15;
+}
+
+
+/* New/Edit Project */
+/* -------------------------------------------------- */
+
+form.edit-project fieldset {
+	opacity: 0.2;
+}
+
+form.edit-project fieldset#title-fieldset {
+	opacity: 1.0;
 }
