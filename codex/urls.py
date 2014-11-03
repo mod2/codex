@@ -13,6 +13,11 @@ def account(request):
     from django.shortcuts import render_to_response
     return render_to_response('account.html')
 
+@login_required
+def new_project(request):
+    from django.shortcuts import render_to_response
+    return render_to_response('new_project.html')
+
 
 urlpatterns = patterns(
     '',
@@ -23,4 +28,5 @@ urlpatterns = patterns(
     url(r'^admin/logout/$', 'accounts.views.logout', name='admin:logout'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^invites/', include('inviter2.urls', namespace='inviter2')),
+    url(r'^new-project/', new_project, name='new_project'),
 )
