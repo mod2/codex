@@ -20,9 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '3zw+f$15)grg!nwa)%v@s!kc3u_ft(dy$ti*^ta(n_6+a%c8=0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-TEMPLATE_DEBUG = True
+DEBUG = TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -64,6 +62,13 @@ AUTHENTICATION_BACKENDS = ['accounts.backends.EmailAuthBackend', ]
 
 REST_FRAMEWORK = {
     'PAGINATE_BY': 10,
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/codex-cache',
+    },
 }
 
 TEMPLATE_DIRS = (
@@ -125,3 +130,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 if DEBUG:
     INSTALLED_APPS += ('debug_toolbar',)
+    DEBUG_TOOLBAR_PATCH_SETTINGS = False

@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
+from transcribe.urls import router
 
 
 @login_required
@@ -32,7 +33,12 @@ urlpatterns = patterns(
     url(r'^admin/login/$', 'accounts.views.login', name='admin:login'),
     url(r'^admin/logout/$', 'accounts.views.logout', name='admin:logout'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^invites/', include('inviter2.urls', namespace='inviter2')),
+    # url(r'^invites/', include('inviter2.urls', namespace='inviter2')),
     url(r'^new-project/', new_project, name='new_project'),
     url(r'^project/(.+?)/', project, name='project'),
+    # url(r'^invites/', include('inviter2.urls', namespace='inviter2')),
+    url(r'^transcribe/', include('transcribe.urls', namespace='transcribe')),
+    # url(r'^api/', include(router.urls)),
+    # url(r'^api-auth/', include('rest_framework.urls',
+    #                            namespace='rest_framework')),
 )

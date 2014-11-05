@@ -1,11 +1,13 @@
-from django.conf.urls import url, include
+from django.conf.urls import url, include, patterns
 from rest_framework import routers
 from .views import ProjectViewSet
 
-router = routers.DefaultRouter()
+router = routers.SimpleRouter()
 router.register(r'projects', ProjectViewSet)
 
-urlpatters = [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framwork.urls', namespace='rest_framwork'))
-]
+urlpatters = patterns(
+    '',
+    url(r'^api/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls',
+                               namespace='rest_framework'))
+)
