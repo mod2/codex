@@ -7,10 +7,6 @@ import django.utils.timezone
 
 class Migration(migrations.Migration):
 
-    needed_by = (
-        ('authtoken', '0001_initial'),
-    )
-
     dependencies = [
     ]
 

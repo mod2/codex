@@ -1,13 +1,11 @@
 from rest_framework import viewsets, authentication, permissions
 from .models import Project
 from .serializers import ProjectSerializer
-from accounts.backends import EmailAuthAPIBackend
 
 
 class DefaultViewSetMixin(object):
     authentication_classes = (
-        EmailAuthAPIBackend,
-        authentication.TokenAuthentication,
+        authentication.SessionAuthentication,
     )
     permission_classes = (
         permissions.IsAuthenticated,
