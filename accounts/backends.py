@@ -1,4 +1,6 @@
 from .models import User
+from rest_framework import authentication
+from rest_framework.exceptions import AuthenticationFailed
 
 
 class EmailAuthBackend(object):
@@ -22,3 +24,13 @@ class EmailAuthBackend(object):
             return None
         except User.DoesNotExist:
             return None
+
+
+class EmailAuthAPIBackend(authentication.BasicAuthentication):
+    def authenticate_credentials(self, userid, password):
+        """Authenticate the userid and password against email and password."""
+        backend = EmailAuthBackend()
+        user = backend.authenticate(email=userid, password=password)
+        if user is None or not user.is_active:
+            raise AuthenticationFailed('Invalid email/password')
+        return (user, None)
