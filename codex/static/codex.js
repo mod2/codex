@@ -50,7 +50,6 @@ $(document).ready(function() {
 				if (data.id && typeof field.attr("data-id") == 'undefined') {
 					field.attr("data-id", data.id);
 				}
-				console.log(data);
 			},
 			error: function(data) {
 				savedSign.html("Error").addClass("error");
