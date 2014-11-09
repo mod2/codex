@@ -30,5 +30,7 @@
 	<section id="main" class="{% block mainclass %}{% endblock mainclass %}">
 		{% block main %}{% endblock main %}
 	</section>
+
+    <div class="hidden" id="user-id">{{ request.user.id }}</div>
 </body>
 </html>

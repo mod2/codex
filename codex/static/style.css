@@ -135,8 +135,13 @@ body #main.page #content form span.saved {
 	font-style: italic;
 	margin-left: 7%;
 	padding: 3px 8px;
-	text-align: right;
+	text-align: center;
 	width: 8%;
+}
+
+body #main.page #content form span.saved.error {
+	color: #fff;
+	background: #f00;
 }
 
 body #main.page #content form div.group {
