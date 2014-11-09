@@ -1,12 +1,12 @@
 {% extends 'page.html' %}
 
-{% block title %}Project Details{% endblock title %}
+{% block title %}{{ project.name }}{% endblock title %}
 
 {% block content %}
 <div class="project-details">
 	<a class="edit" href="">Edit Project</a>
 
-	<h1>Grandpa's Journals, 1968</h1>
+    <h1>{{ project.name }}</h1>
 
 	<div class="group">
 		<label>Users</label>
