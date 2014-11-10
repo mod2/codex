@@ -12,6 +12,7 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^new-project/', 'transcribe.views.new_project', name='new_project'),
     url(r'^project/(.+?)/', 'transcribe.views.project', name='project'),
+    url(r'^projects/', 'transcribe.views.all_projects', name='all_projects'),
     # url(r'^invites/', include('inviter2.urls', namespace='inviter2')),
 )
 

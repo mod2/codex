@@ -1,0 +1,21 @@
+{% extends "page.html" %}
+
+{% block title %}Project Archive{% endblock title %}
+
+{% block mainclass %}page dashboard{% endblock mainclass %}
+
+{% block content %}
+{% for project in projects %}
+<div class="dashboard-entry project">
+	<div class="controls right">
+		<a class="action" href="{% url 'project' project.id %}">Manage</a>
+		<a class="action" href="">Get Item</a>
+	</div>
+
+	<div class="info"><label>project</label> 28 items left, 1 transcriber</div>
+	<h2>{{ project.name }}</h2>
+	<div class="percentage"><div class="value" style="width: 81%;"></div></div>
+</div>
+{% endfor %}
+
+{% endblock %}

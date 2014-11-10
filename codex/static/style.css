@@ -469,6 +469,16 @@ body.dark #main.transcribe .transcript textarea {
 	margin-top: 3em;
 }
 
+.dashboard-projects a.right {
+	color: #afd0e5;
+	font-size: .9em;
+	text-decoration: none;
+}
+
+.dashboard-projects a.right:hover {
+	color: #fff;
+}
+
 .dashboard-projects h1 {
 	color: #fff;
 	font-size: 1.1em;
@@ -490,6 +500,10 @@ body.dark #main.transcribe .transcript textarea {
 
 .dashboard-projects a.new-project:hover {
 	background: #698b15;
+}
+
+.dashboard-projects .dashboard-entry + a.new-project {
+	margin-top: 2em;
 }
 
 

@@ -37,7 +37,8 @@
 </div>
 
 <section class="dashboard-projects">
-	<h1>Your Projects</h1>
+	<a class="right" href="{% url "all_projects" %}">Archived Projects</a>
+	<h1>Your Active Projects</h1>
 
 	{% for project in projects %}
 	<div class="dashboard-entry project">
@@ -52,16 +53,6 @@
 	</div>
 	{% endfor %}
 
-	<div class="dashboard-entry project">
-		<div class="controls right">
-			<a class="action" href="/project/1/">Manage</a>
-			<a class="action" href="">Get Item</a>
-		</div>
-
-		<div class="info"><label>project</label> 116 items left, 8 transcribers</div>
-		<h2>Dad's Autobiography</h2>
-		<div class="percentage"><div class="value" style="width: 7%;"></div></div>
-	</div>
 	<a class="new-project" href="{% url 'new_project' %}">Create Project</a>
 </section>
 

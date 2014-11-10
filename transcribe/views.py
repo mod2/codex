@@ -38,3 +38,11 @@ def project(request, project_id):
         return render_to_response('project.html', { 'request': request, 'project': project })
     except:
         pass
+
+@login_required
+def all_projects(request):
+    try:
+        projects = Project.objects.filter(owner=request.user)
+        return render_to_response('all_projects.html', { 'request': request, 'projects': projects })
+    except:
+        pass
