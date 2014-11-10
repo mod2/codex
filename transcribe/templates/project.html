@@ -62,10 +62,21 @@
 		<label>Delete</label>
 		<section>
 			<ul>
-				<li><a href="">Delete project</a></li>
+				<li><a class="delete-project-link" href="">Delete project</a></li>
 			</ul>
 		</section>
 	</div>
 </div>
 
 {% endblock content %}
+
+{% block modal %}
+<form class="delete-project">
+	<a class="cancel-link">No, whoops, so sorry</a>
+	<h2>Delete Project</h2>
+
+	<p>Are you really, really sure you want to send this project to the chopping block?</p>
+
+	<input type="submit" value="Heck Yes" data-id="{{ project.id }}" />
+</form>
+{% endblock modal %}

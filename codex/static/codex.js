@@ -59,6 +59,58 @@ $(document).ready(function() {
 			},
 		});
 	});
+
+	// Modal helper functions
+	function showModal(type) {
+		$(".modal-background").fadeIn(100);
+
+		$(".modal ." + type).show();
+		$(".modal").fadeIn(100);
+	}
+
+	function hideModal() {
+		$(".modal").fadeOut(100);
+		$(".modal-background").fadeOut(100);
+	}
+
+	// General modal cancel
+	$(".modal a.cancel-link").on("click", function() {
+		hideModal();
+		return false;
+	});
+
+
+	// Show delete modal
+	$(".delete-project-link").on("click", function() {
+		showModal("delete-project");
+		return false;
+	});
+
+	// Actually delete the project
+	$(".modal .delete-project input[type=submit]").on("click", function() {
+		var projectId = $(this).attr("data-id");
+		var url = "/transcribe/api/projects/" + projectId;
+
+		$.ajax({
+			url: url,
+			method: 'DELETE',
+			success: function(data) {
+				// Hide modal
+				hideModal();
+
+				// Redirect to dashboard
+				window.location.href = "/";
+			},
+			error: function(data) {
+				$(this).siblings("h2").html("Error");
+				$(this).siblings("label").html("Error deleting project.");
+				$(this).parents("form:first").addClass("error");
+				console.log(data);
+			},
+		});
+
+		return false;
+	});
 });
 
 function getCookie(name) {

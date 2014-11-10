@@ -32,5 +32,11 @@
 	</section>
 
     <div class="hidden" id="user-id">{{ request.user.id }}</div>
+
+	<!-- Modal -->
+	<div class="modal-background"></div>
+	<div class="modal">
+		{% block modal %}{% endblock modal %}
+	</div>
 </body>
 </html>

@@ -588,3 +588,89 @@ form.edit-project fieldset.faded {
 .project-details .group section ul.items li ul li + li {
 	margin-top: .1em;
 }
+
+
+/* Modal */
+/* -------------------------------------------------- */
+
+.modal-background {
+	background: rgba(0, 0, 0, 0.8);
+	bottom: 0;
+	display: none;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 60000;
+}
+
+.modal {
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+	display: none;
+	margin: 50px auto;
+	position: absolute;
+	top: 0;
+	left: 30%;
+	right: 30%;
+	max-width: 400px;
+	z-index: 65000;
+}
+
+.modal form {
+	border-radius: 5px;
+	padding: 25px;
+}
+
+.modal form a.cancel-link {
+	color: #888;
+	cursor: pointer;
+	float: right;
+	font-size: .9em;
+	text-decoration: none;
+}
+
+.modal form a.cancel-link:hover {
+	color: #000;
+}
+
+.modal form h2 {
+	font-size: 1.3em;
+	font-weight: normal;
+	margin: 0 0 .75em 0;
+}
+
+.modal form.error h2 {
+	color: #f00;
+}
+
+.modal form input[type=text] {
+	border-radius: 3px;
+	border: solid 1px #bbb;
+	font-size: 1em;
+	font-weight: bold;
+	padding: 2px 5px;
+	width: 100%;
+}
+
+.modal form input[type=text] + p {
+	margin-top: .5em;
+}
+
+.modal form input[type=submit] {
+	-webkit-appearance: none;
+	background: #5997d6;
+	border-radius: 3px;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	display: block;
+	font-size: .9em;
+	margin-top: 1.5em;
+	padding: 5px 10px 6px;
+}
+
+.modal form input[type=submit]:hover {
+	background: #000;
+}
