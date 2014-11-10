@@ -497,11 +497,12 @@ body.dark #main.transcribe .transcript textarea {
 /* -------------------------------------------------- */
 
 form.edit-project fieldset {
-	opacity: 0.2;
+	opacity: 1.0;
+	transition: opacity .5s ease-in-out;
 }
 
-form.edit-project fieldset#title-fieldset {
-	opacity: 1.0;
+form.edit-project fieldset.faded {
+	opacity: 0.2;
 }
 
 

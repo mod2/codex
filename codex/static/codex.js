@@ -50,6 +50,9 @@ $(document).ready(function() {
 				if (data.id && typeof field.attr("data-id") == 'undefined') {
 					field.attr("data-id", data.id);
 				}
+
+				// Fade in the rest
+				$("fieldset.faded").removeClass("faded");
 			},
 			error: function(data) {
 				savedSign.html("Error").addClass("error");
