@@ -40,9 +40,9 @@ def project(request, project_id):
         pass
 
 @login_required
-def all_projects(request):
+def archived_projects(request):
     try:
-        projects = Project.objects.filter(owner=request.user)
-        return render_to_response('all_projects.html', { 'request': request, 'projects': projects })
+        projects = Project.objects.filter(owner=request.user).exclude(status='active')
+        return render_to_response('archived_projects.html', { 'request': request, 'projects': projects })
     except:
         pass
