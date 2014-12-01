@@ -1,5 +1,5 @@
 from rest_framework import viewsets, authentication, permissions
-from .models import Project
+from .models import Project, Item
 from .serializers import ProjectSerializer
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
@@ -36,6 +36,15 @@ def project(request, project_id):
     try:
         project = Project.objects.get(id=project_id)
         return render_to_response('project.html', { 'request': request, 'project': project })
+    except:
+        pass
+
+@login_required
+def review_project(request, project_id):
+    """ View to show project items that need review. """
+    try:
+        project = Project.objects.get(id=project_id)
+        return render_to_response('review_project.html', { 'request': request, 'project': project })
     except:
         pass
 
