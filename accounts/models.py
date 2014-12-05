@@ -30,7 +30,7 @@ class User(AbstractBaseUser):
     """
     email = models.EmailField('email address', unique=True, db_index=True)
     name = models.CharField(max_length=255, blank=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
