@@ -619,6 +619,11 @@ form.edit-project.new fieldset.faded {
 	margin-top: .1em;
 }
 
+.project-details .group section a.delete-project-link {
+	color: #d24304;
+	font-size: .8em;
+}
+
 
 /* Modal */
 /* -------------------------------------------------- */
