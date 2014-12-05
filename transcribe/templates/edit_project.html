@@ -15,9 +15,9 @@
 	<fieldset class="faded">
 		<label>Users</label>
 		<section>
-			<div class="userlist">
+			<div class="userlist" data-project-id="{{ project.id }}">
 				{% for user in project.users.all %}
-				<div class="user" data-email="{{ user.email }}">{{ user.name }} ({{ user.email }}) <span class="delete">x</span></div>
+				<div class="user" data-email="{{ user.email }}">{% if user.name %}{{ user.name }} ({{ user.email }}){% else %}{{ user.email }}{% endif %} <span class="delete">x</span></div>
 				{% endfor %}
 			</div>
 

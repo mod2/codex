@@ -2,7 +2,7 @@ $(document).ready(function() {
 	// From https://gist.github.com/alanhamlett/6316427
 	$.ajaxSetup({
 		beforeSend: function(xhr, settings) {
-			if (settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE') {
+			if (settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE' || settings.type == 'PATCH') {
 				xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
 			}
 		}
@@ -143,7 +143,6 @@ $(document).ready(function() {
 		transformResult: function(response) {
 			// Load as JSON
 			response = JSON.parse(response);
-			console.log(response);
 
 			// Map name/email to the format the plugin wants (value/data)
 			return {
@@ -200,7 +199,10 @@ $(document).ready(function() {
 		}
 
 		// Add them to the list
-		$("div.userlist").append("<div class='user' data-email='" + userEmail + "'>" + displayName + "<span class='delete'>x</span></div>");
+		$("div.userlist").append("<div class='user' data-email='" + userEmail + "'>" + displayName + " <span class='delete'>x</span></div>");
+
+		// Send it to the server
+		updateUserList();
 
 		// Clear out the text box and hidden field
 		$("#add-user-autocomplete").val('');
@@ -217,10 +219,37 @@ $(document).ready(function() {
 		
 		$(this).parents("div.user").slideUp(150, function() {
 			$(this).remove();
+			updateUserList();
 		});
 
 		return false;
 	});
+
+
+	// Send user list to web service
+	function updateUserList() {
+		// Get project ID
+		var projectId = $("div.userlist").attr("data-project-id");
+
+		// Get user list (emails)
+		var userList = $.map($("div.userlist div.user"), function(user) {
+			return $(user).attr("data-email");
+		});
+
+		// Update just the user list
+		$.ajax({
+			url: '/transcribe/api/projects/' + projectId + '/',
+			method: 'PATCH',
+			contentType: 'application/json',
+			data: JSON.stringify({ users: userList }),
+			success: function(data) {
+				console.log("success", data);
+			},
+			error: function(data) {
+				console.log("error", data);
+			},
+		});
+	}
 });
 
 function getCookie(name) {

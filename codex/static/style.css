@@ -166,10 +166,13 @@ body #main.page #content form div.user + div.user {
 }
 
 body #main.page #content form div.user span.delete {
+	-moz-user-select: none;
+	-webkit-user-select: none;
 	color: #aaa;
 	cursor: pointer;
 	display: inline-block;
 	margin-left: 5px;
+	user-select: none;
 }
 
 body #main.page #content form div.user span.delete:hover {
