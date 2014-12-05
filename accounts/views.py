@@ -5,12 +5,11 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import AuthenticationForm
 
+
 def login(request):
     """Custom login view to login using an email address."""
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
-        print(request.POST)
-        print(request.GET)
         if form.is_valid():
             user = authenticate(email=request.POST['email'],
                                 password=request.POST['password'])
@@ -32,6 +31,7 @@ def logout(request):
     # to the login page
     django_logout(request)
     return redirect('accounts:login')
+
 
 @login_required
 def account(request):
