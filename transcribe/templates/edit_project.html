@@ -61,23 +61,20 @@
 		<h2>Add Items</h2>
 	</header>
 
-	<section>
+	<section data-project-id="{{ project.id }}">
 		<ul>
-			<li><span data-type="upload" class="selected">Upload Files</span></li>
-			<li><span data-type="dropbox">Dropbox</span></li>
+			<li><span data-type="dropbox" class="selected">Dropbox</span></li>
 			<li><span data-type="flickr">Flickr</span></li>
 		</ul>
 
 		<div class="main">
-			<article data-type="upload">
-				Upload Files
-				<input type="submit" value="Heck Yes" data-id="{{ project.id }}" />
-			</article>
 			<article data-type="dropbox">
-				Dropbox
+				<h2>Dropbox Import</h2>
+				<input type="submit" value="Import Items" />
 			</article>
 			<article data-type="flickr">
-				Flickr
+				<h2>Flickr Import</h2>
+				<input type="submit" value="Import Items" />
 			</article>
 		</div>
 	</section>
