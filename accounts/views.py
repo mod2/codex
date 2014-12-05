@@ -3,10 +3,10 @@ from __future__ import unicode_literals
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+# from django.db.models import Q
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 
 from transcribe.views import DefaultViewSetMixin
 
@@ -50,11 +50,6 @@ def account(request):
 class UserViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
     model = User
     serializer_class = UserSerializer
-
-    def get_queryset(self):
-        query = self.request.GET.get('query', '')
-        queryset = User.objects.filter(is_active=True)
-        if query:
-            queryset = queryset.filter(
-                Q(name__startswith=query) | Q(email__startswith=query))
-        return queryset
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('^name', '^email')
+    queryset = User.objects.filter(is_active=True).all()
