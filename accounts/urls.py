@@ -1,8 +1,15 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url, include
+from rest_framework.routers import SimpleRouter
 
+from .views import UserViewSet
 
-urlpatterns = patterns(
-    'accounts.views',
-    url(r'^login/$', 'login', name='login'),
-    url(r'^logout/$', 'logout', name='logout'),
-)
+router = SimpleRouter()
+router.register(r'users', UserViewSet)
+
+urlpatterns = [
+    url(r'^login/$', 'accounts.views.login', name='login'),
+    url(r'^logout/$', 'accounts.views.logout', name='logout'),
+    url(r'^api/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls',
+                               namespace='accounts_rest_framework'))
+]

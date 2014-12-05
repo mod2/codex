@@ -5,7 +5,7 @@ from model_utils import Choices
 
 
 class Project(StatusModel):
-    STATUS = Choices('active', 'finished')
+    STATUS = Choices('active', 'finished', 'inactive')
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(User, related_name='projects')
     users = models.ManyToManyField(User, related_name="perm_projects",
