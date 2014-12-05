@@ -15,12 +15,15 @@
 	<fieldset class="faded">
 		<label>Users</label>
 		<section>
-			{% for user in project.users.all %}
-			<div class="user" data-id="{{ user.id }}">{{ user.name }} ({{ user.email }}) <span class="delete">x</span></div>
-			{% endfor %}
-			<div class="user">Name (email address) <span class="delete">x</span></div>
+			<div class="userlist">
+				{% for user in project.users.all %}
+				<div class="user" data-id="{{ user.id }}">{{ user.name }} ({{ user.email }}) <span class="delete">x</span></div>
+				{% endfor %}
+			</div>
 
-			<input type="text" /> <input type="submit" class="button" value="Add" />
+			<input id="add-user-autocomplete" type="text" />
+			<input id="add-user-button" type="submit" class="button" value="Add" />
+			<input type="hidden" name="user-email" />
 		</section>
 		<span class="saved">Saved</span>
 	</fieldset>

@@ -171,8 +171,8 @@ body #main.page #content form div.user span.delete {
 	margin-left: 5px;
 }
 
-body #main.page #content form div.user + input[type=text] {
-	margin-top: 1em;
+body #main.page #content form div.userlist div.user:last-child {
+	margin-bottom: 1em;
 }
 
 body #main.page #content form input[type=text],
@@ -762,4 +762,30 @@ form.edit-project.new fieldset.faded {
 
 .modal form.add-items section .main article:first-child {
 	display: block;
+}
+
+
+/* Add User autocomplete */
+/* -------------------------------------------------- */
+
+.autocomplete-suggestions {
+	background: #fff;
+	border: solid 1px #bbb;
+	border-radius: 0 0 3px 3px;
+	box-shadow: 0 2px 2px #ddd;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion {
+	cursor: pointer;
+	font-size: 1em;
+	font-weight: 600;
+	padding: 5px 8px;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion + .autocomplete-suggestion {
+	border-top: solid 1px #ddd;
+}
+
+.autocomplete-suggestions .autocomplete-suggestion:hover {
+	background: #eee;
 }

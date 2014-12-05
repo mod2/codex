@@ -134,6 +134,68 @@ $(document).ready(function() {
 		$("form.add-items section ul li span.selected").removeClass("selected");
 		$("form.add-items section ul li span[data-type=" + newType + "]").addClass("selected");
 	});
+
+
+	// Autocomplete for adding userst to a project
+	var options = {
+		serviceUrl: '/account/api/users/',
+		paramName: 'search',
+		transformResult: function(response) {
+			// Load as JSON
+			response = JSON.parse(response);
+			console.log(response);
+
+			// Map name/email to the format the plugin wants (value/data)
+			return {
+				suggestions: $.map(response, function(item) {
+					if (item.name) {
+						return { value: item.name, data: item.email };
+					} else {
+						return { value: item.email, data: item.email };
+					}
+				})
+			};
+		},
+		formatResult: function(suggestion, currentValue) {
+			return '<div id="' + suggestion.data + '">' + suggestion.value + '</div>';
+		},
+		onSelect: function(suggestion) {
+			$("input[name=user-email]").val(suggestion.data);
+			return false;
+		},
+		triggerSelectOnValidInput: false,
+	};
+
+	$("#add-user-autocomplete").autocomplete(options);
+
+	// Add User button
+	$("#add-user-button").on("click", function() {
+		var userName = $("#add-user-autocomplete").val();
+		var userEmail = $("input[name=user-email]").val();
+
+		if (userName && userEmail != userName && userEmail != '') {
+			// They typed in a user who has set a name
+			var displayName = userName + " (" + userEmail + ")";
+		} else if (userName && userEmail == '') {
+			// They typed an email in that wasn't in the system
+			var displayName = userName;
+		} else {
+			// They typed in an email for a user who hasn't set a name
+			var displayName = userEmail;
+		}
+
+		// Add them to the list
+		$("div.userlist").append("<div class='user'>" + displayName + "<span class='delete'>x</span></div>");
+
+		// Clear out the text box and hidden field
+		$("#add-user-autocomplete").val('');
+		$("input[name=user-email]").val('');
+
+		// Don't focus on the button anymore
+		$("#add-user-button").blur();
+
+		return false;
+	});
 });
 
 function getCookie(name) {
