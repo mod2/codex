@@ -106,6 +106,7 @@ body #main.page #content form fieldset {
 	margin: 0;
 	overflow: hidden;
 	padding: 0;
+	padding-bottom: 10px;
 }
 
 body #main.page #content form fieldset + fieldset {
@@ -515,7 +516,7 @@ form.edit-project fieldset {
 	transition: opacity .5s ease-in-out;
 }
 
-form.edit-project fieldset.faded {
+form.edit-project.new fieldset.faded {
 	opacity: 0.2;
 }
 
@@ -619,21 +620,21 @@ form.edit-project fieldset.faded {
 }
 
 .modal {
-	background: #fff;
-	border-radius: 5px;
-	box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
 	display: none;
 	margin: 50px auto;
 	position: absolute;
 	top: 0;
 	left: 30%;
 	right: 30%;
-	max-width: 400px;
 	z-index: 65000;
 }
 
 .modal form {
+	background: #fff;
 	border-radius: 5px;
+	box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+	max-width: 450px;
+	width: 450px;
 	padding: 25px;
 }
 
@@ -687,4 +688,74 @@ form.edit-project fieldset.faded {
 
 .modal form input[type=submit]:hover {
 	background: #000;
+}
+
+
+/* Add Items */
+/* -------------------------------------------------- */
+
+.modal form.add-items {
+	max-width: 650px;
+	min-height: 250px;
+	padding: 0;
+}
+
+.modal form.add-items header {
+	border-bottom: solid 1px #d0d0d0;
+	padding: 25px;
+	padding-bottom: 15px;
+}
+
+.modal form.add-items header h2 {
+	margin-bottom: 0;
+}
+
+.modal form.add-items section {
+	overflow: hidden;
+}
+
+.modal form.add-items section ul {
+	background: #eee;
+	border-radius: 0 0 0 5px;
+	float: left;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.modal form.add-items section ul li {
+	list-style: none;
+}
+
+.modal form.add-items section ul li span {
+	cursor: pointer;
+	display: block;
+	font-size: 1.1em;
+	padding: 8px 25px;	
+}
+
+.modal form.add-items section ul li span:hover {
+	background: #444;
+	color: #fff;
+}
+
+.modal form.add-items section ul li:last-child span:hover {
+	border-radius: 0 0 0 4px;
+}
+
+.modal form.add-items section ul li + li {
+	border-top: solid 1px #ddd;
+}
+
+.modal form.add-items section .main {
+	float: left;
+	padding: 25px;
+}
+
+.modal form.add-items section .main article {
+	display: none;
+}
+
+.modal form.add-items section .main article:first-child {
+	display: block;
 }

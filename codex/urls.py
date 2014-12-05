@@ -11,6 +11,7 @@ urlpatterns = patterns(
     url(r'^admin/logout/$', 'accounts.views.logout', name='admin:logout'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^new-project/', 'transcribe.views.new_project', name='new_project'),
+    url(r'^project/(.+?)/edit/', 'transcribe.views.edit_project', name='edit_project'),
     url(r'^project/(.+?)/', 'transcribe.views.project', name='project'),
     url(r'^review/(.+?)/', 'transcribe.views.review_project', name='review_project'),
     url(r'^archived/', 'transcribe.views.archived_projects', name='archived_projects'),

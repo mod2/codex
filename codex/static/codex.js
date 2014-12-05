@@ -111,6 +111,21 @@ $(document).ready(function() {
 
 		return false;
 	});
+
+
+	// Add items modal
+	$("#add-items-button").on("click", function() {
+		showModal("add-items");
+		return false;
+	});
+
+	// Toggle between item source type
+	$("form.add-items section ul li span").on("click", function() {
+		var newType = $(this).attr("data-type");
+
+		$("form.add-items section .main article:visible").hide();
+		$("form.add-items section .main article[data-type=" + newType + "]").show();
+	});
 });
 
 function getCookie(name) {

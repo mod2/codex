@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="project-details">
-	<a class="edit" href="">Edit Project</a>
+    <a class="edit" href="{% url "edit_project" project.id %}">Edit Project</a>
 
     <h1>{{ project.name }}</h1>
 

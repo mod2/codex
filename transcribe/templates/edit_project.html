@@ -1,0 +1,85 @@
+{% extends 'page.html' %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block content %}
+<form class="edit-project {{ type }}">
+	<fieldset id="title-fieldset">
+		<label>Title</label>
+		<section>
+			<input type="text" class="title" {% if project %}value="{{ project.name }}"{% endif %}/>
+		</section>
+		<span class="saved">Saved</span>
+	</fieldset>
+
+	<fieldset class="faded">
+		<label>Users</label>
+		<section>
+			{% for user in project.users.all %}
+			<div class="user" data-id="{{ user.id }}">{{ user.name }} ({{ user.email }}) <span class="delete">x</span></div>
+			{% endfor %}
+			<div class="user">Name (email address) <span class="delete">x</span></div>
+
+			<input type="text" /> <input type="submit" class="button" value="Add" />
+		</section>
+		<span class="saved">Saved</span>
+	</fieldset>
+
+	<fieldset class="faded">
+		<label>Items</label>
+		<section>
+			{% for item in project.items.all %}
+			<div class="item" data-id="{{ item.id }}">
+				<span>{{ item.name }}</span>
+				<div class="controls">
+					<span class="delete">x</span>
+					<span class="edit">e</span>
+					<span class="reorder">=</span>
+				</div>
+			</div>
+			{% endfor %}
+			<div class="item">
+				<span>page-01.jpg</span>
+				<div class="controls">
+					<span class="delete">x</span>
+					<span class="edit">e</span>
+					<span class="reorder">=</span>
+				</div>
+			</div>
+
+			<input id="add-items-button" type="button" class="button" value="Add Items" />
+		</section>
+		<span class="saved">Saved</span>
+	</fieldset>
+</form>
+{% endblock content %}
+
+{% block modal %}
+<form class="add-items">
+	<header>
+		<a class="cancel-link">Cancel</a>
+		<h2>Add Items</h2>
+	</header>
+
+	<section>
+		<ul>
+			<li><span data-type="upload">Upload Files</span></li>
+			<li><span data-type="dropbox">Dropbox</span></li>
+			<li><span data-type="flickr">Flickr</span></li>
+		</ul>
+
+		<div class="main">
+			<article data-type="upload">
+				Upload Files
+				<input type="submit" value="Heck Yes" data-id="{{ project.id }}" />
+			</article>
+			<article data-type="dropbox">
+				Dropbox
+			</article>
+			<article data-type="flickr">
+				Flickr
+			</article>
+		</div>
+	</section>
+</form>
+{% endblock modal %}

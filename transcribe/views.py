@@ -28,8 +28,15 @@ class ProjectViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
 
 @login_required
 def new_project(request):
-    return render_to_response('new_project.html', { 'request': request })
+    return render_to_response('edit_project.html', { 'request': request, 'type': 'new', 'title': 'New Project' })
 
+@login_required
+def edit_project(request, project_id):
+    try:
+        project = Project.objects.get(id=project_id)
+        return render_to_response('edit_project.html', { 'request': request, 'project': project, 'type': 'edit', 'title': 'Edit Project' })
+    except:
+        pass
 
 @login_required
 def project(request, project_id):
