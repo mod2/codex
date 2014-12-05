@@ -89,6 +89,13 @@ body #main.page > header h1 {
 	margin: 0;
 }
 
+body #main.page > header a {
+	color: #a6c9ec;
+	float: right;
+	margin-top: 7px;
+	text-decoration: none;
+}
+
 body #main.page #content {
 	background: #fff;
 	border-radius: 0 0 3px 3px;

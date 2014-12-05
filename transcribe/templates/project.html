@@ -2,19 +2,21 @@
 
 {% block title %}Project Details{% endblock title %}
 
+{% block page_link %}<a href="{% url "edit_project" project.id %}">Edit</a>{% endblock page_link %}
+
 {% block content %}
 <div class="project-details">
-    <a class="edit" href="{% url "edit_project" project.id %}">Edit Project</a>
-
     <h1>{{ project.name }}</h1>
 
 	<div class="group">
 		<label>Users</label>
 		<section>
 			<ul>
-				<li><b>Joe Schmoe:</b> 3 items</li>
-				<li><b>kdiz@gmail.com:</b> 17 items</li>
-				<li><b>Penelope:</b> 6 items</li>
+				{% for user in project.users.all %}
+				<li><b>{% if user.name %}{{ user.name }} ({{ user.email }}){% else %}{{ user.email }}{% endif %}:</b> # items</li>
+				{% empty %}
+				<li>Nobody yet. <a href="{% url "edit_project" project.id %}">Add some &rarr;</a></li>
+				{% endfor %}
 			</ul>
 		</section>
 	</div>
