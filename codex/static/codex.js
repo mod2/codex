@@ -79,6 +79,11 @@ $(document).ready(function() {
 		return false;
 	});
 
+	$(".modal-background").on("click", function() {
+		hideModal();
+		return false;
+	});
+
 
 	// Show delete modal
 	$(".delete-project-link").on("click", function() {
@@ -125,6 +130,9 @@ $(document).ready(function() {
 
 		$("form.add-items section .main article:visible").hide();
 		$("form.add-items section .main article[data-type=" + newType + "]").show();
+
+		$("form.add-items section ul li span.selected").removeClass("selected");
+		$("form.add-items section ul li span[data-type=" + newType + "]").addClass("selected");
 	});
 });
 

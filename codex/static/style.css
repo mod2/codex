@@ -696,7 +696,6 @@ form.edit-project.new fieldset.faded {
 
 .modal form.add-items {
 	max-width: 650px;
-	min-height: 250px;
 	padding: 0;
 }
 
@@ -711,6 +710,8 @@ form.edit-project.new fieldset.faded {
 }
 
 .modal form.add-items section {
+	background: #eee;
+	border-radius: 0 0 5px 5px;
 	overflow: hidden;
 }
 
@@ -721,6 +722,7 @@ form.edit-project.new fieldset.faded {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+	width: 160px;
 }
 
 .modal form.add-items section ul li {
@@ -728,6 +730,7 @@ form.edit-project.new fieldset.faded {
 }
 
 .modal form.add-items section ul li span {
+	color: #4a627e;
 	cursor: pointer;
 	display: block;
 	font-size: 1.1em;
@@ -739,17 +742,18 @@ form.edit-project.new fieldset.faded {
 	color: #fff;
 }
 
-.modal form.add-items section ul li:last-child span:hover {
-	border-radius: 0 0 0 4px;
-}
-
-.modal form.add-items section ul li + li {
-	border-top: solid 1px #ddd;
+.modal form.add-items section ul li span.selected {
+	background: #2e536e;
+	color: #fff;
 }
 
 .modal form.add-items section .main {
+	background: #fff;
+	border-left: solid 1px #ddd;
 	float: left;
-	padding: 25px;
+	min-height: 200px;
+	padding: 20px 25px;
+	width: calc(100% - 160px);
 }
 
 .modal form.add-items section .main article {
