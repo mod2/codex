@@ -160,7 +160,19 @@ $(document).ready(function() {
 			return '<div id="' + suggestion.data + '">' + suggestion.value + '</div>';
 		},
 		onSelect: function(suggestion) {
-			$("input[name=user-email]").val(suggestion.data);
+			// Get list of users' emails
+			var userEmails = $.map($("div.userlist div.user"), function(user) {
+				return $(user).attr("data-email");
+			});
+
+			if ($.inArray(suggestion.data, userEmails) == -1) {
+				$("input[name=user-email]").val(suggestion.data);
+
+				addUserToProject();
+			} else {
+				$("#add-user-autocomplete").val('');
+			}
+
 			return false;
 		},
 		triggerSelectOnValidInput: false,
@@ -169,7 +181,9 @@ $(document).ready(function() {
 	$("#add-user-autocomplete").autocomplete(options);
 
 	// Add User button
-	$("#add-user-button").on("click", function() {
+	$("#add-user-button").on("click", addUserToProject);
+	
+	function addUserToProject() {
 		var userName = $("#add-user-autocomplete").val();
 		var userEmail = $("input[name=user-email]").val();
 
@@ -179,13 +193,14 @@ $(document).ready(function() {
 		} else if (userName && userEmail == '') {
 			// They typed an email in that wasn't in the system
 			var displayName = userName;
+			userEmail = userName;
 		} else {
 			// They typed in an email for a user who hasn't set a name
 			var displayName = userEmail;
 		}
 
 		// Add them to the list
-		$("div.userlist").append("<div class='user'>" + displayName + "<span class='delete'>x</span></div>");
+		$("div.userlist").append("<div class='user' data-email='" + userEmail + "'>" + displayName + "<span class='delete'>x</span></div>");
 
 		// Clear out the text box and hidden field
 		$("#add-user-autocomplete").val('');
@@ -193,6 +208,16 @@ $(document).ready(function() {
 
 		// Don't focus on the button anymore
 		$("#add-user-button").blur();
+
+		return false;
+	}
+
+	$("div.userlist").on("click", "div.user span.delete", function() {
+		// Remove from the user list
+		
+		$(this).parents("div.user").slideUp(150, function() {
+			$(this).remove();
+		});
 
 		return false;
 	});
