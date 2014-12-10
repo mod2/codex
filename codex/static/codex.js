@@ -16,7 +16,7 @@ $(document).ready(function() {
 		$("body").toggleClass("dark");
 	});
 
-	$("#title-fieldset input[type=text]").on("keyup", function(e) {
+	$("#name-fieldset input[type=text]").on("keyup", function(e) {
 		var url = '/transcribe/api/projects/';
 		var method = 'POST';
 		var field = $(this);
@@ -27,20 +27,20 @@ $(document).ready(function() {
 
 		// Check to see if the project has already been created
 		if (typeof field.attr("data-id") != 'undefined') {
-			// Already created, so update the title
+			// Already created, so update the name
 			// (If it isn't created yet, we don't need to do anything special here)
 			url += field.attr("data-id") + "/";
 			method = 'PUT';
 		}
 
-		var newTitle = $(this).val().trim();
+		var newName = $(this).val().trim();
 		var owner = $("#user-id").html();
 
 		$.ajax({
 			url: url,
 			method: method,
 			data: {
-				name: newTitle,
+				name: newName,
 				owner: owner,
 			},
 			success: function(data) {
@@ -48,7 +48,7 @@ $(document).ready(function() {
 
 				// Add ID if it came back and it's not already there
 				if (data.id && typeof field.attr("data-id") == 'undefined') {
-					$("#title-fieldset input[type=text]").attr("data-id", data.id);
+					$("#name-fieldset input[type=text]").attr("data-id", data.id);
 				}
 
 				// Fade in the rest
@@ -230,7 +230,7 @@ $(document).ready(function() {
 	// Send user list to web service
 	function updateUserList() {
 		// Get project ID
-		var projectId = $("fieldset#title-fieldset input[type=text]").attr("data-id");
+		var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
 
 		// Get user list (emails)
 		var userList = $.map($("div.userlist div.user"), function(user) {

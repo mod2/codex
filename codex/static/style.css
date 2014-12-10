@@ -210,7 +210,7 @@ body #main.page #content form input[type=text]:focus,
 	border-color: #666;
 }
 
-body #main.page #content form input[type=text].title {
+body #main.page #content form input[type=text].name {
 	font-size: 1.2em;
 	padding: 4px 8px;
 	width: 100%;
