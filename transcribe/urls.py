@@ -1,13 +1,18 @@
 from django.conf.urls import url, include, patterns
-from rest_framework import routers
-from .views import ProjectViewSet
+from rest_framework_nested import routers
+from .views import ProjectViewSet, ItemViewSet
 
 router = routers.SimpleRouter()
 router.register(r'projects', ProjectViewSet)
 
-urlpatters = patterns(
+projects_router = routers.NestedSimpleRouter(router, r'projects',
+                                             lookup='project')
+projects_router.register(r'items', ItemViewSet)
+
+urlpatterns = patterns(
     '',
-    url(r'^api/', include(router.urls)),
+    url('^api/', include(router.urls)),
+    url('^api/', include(projects_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework'))
 )
