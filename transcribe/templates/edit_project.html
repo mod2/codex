@@ -2,14 +2,14 @@
 
 {% block title %}{{ title }}{% endblock title %}
 
-{% block page_link %}<a href="{% url "project" project.id %}">&larr; Back</a>{% endblock page_link %}
+{% block page_link %}{% if type == 'edit' %}<a href="{% url "project" project.id %}">&larr; Back</a>{% endif %}{% endblock page_link %}
 
 {% block content %}
 <form class="edit-project {{ type }}">
 	<fieldset id="title-fieldset">
 		<label>Title</label>
 		<section>
-			<input type="text" class="title" {% if project %}value="{{ project.name }}"{% endif %}/>
+			<input type="text" class="title" {% if project %}value="{{ project.name }}" data-id="{{ project.id }}"{% endif %}/>
 		</section>
 		<span class="saved">Saved</span>
 	</fieldset>

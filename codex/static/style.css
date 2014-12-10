@@ -96,6 +96,10 @@ body #main.page > header a {
 	text-decoration: none;
 }
 
+body #main.page > header a:hover {
+	color: #fff;
+}
+
 body #main.page #content {
 	background: #fff;
 	border-radius: 0 0 3px 3px;
@@ -637,6 +641,10 @@ form.edit-project.new fieldset.faded {
 .project-details .group section a.delete-project-link {
 	color: #d24304;
 	font-size: .8em;
+}
+
+.project-details .group section a.delete-project-link:hover {
+	color: #333;
 }
 
 

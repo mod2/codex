@@ -48,7 +48,7 @@ $(document).ready(function() {
 
 				// Add ID if it came back and it's not already there
 				if (data.id && typeof field.attr("data-id") == 'undefined') {
-					field.attr("data-id", data.id);
+					$("#title-fieldset input[type=text]").attr("data-id", data.id);
 				}
 
 				// Fade in the rest
@@ -181,7 +181,7 @@ $(document).ready(function() {
 
 	// Add User button
 	$("#add-user-button").on("click", addUserToProject);
-	
+
 	function addUserToProject() {
 		var userName = $("#add-user-autocomplete").val();
 		var userEmail = $("input[name=user-email]").val();
@@ -216,7 +216,7 @@ $(document).ready(function() {
 
 	$("div.userlist").on("click", "div.user span.delete", function() {
 		// Remove from the user list
-		
+
 		$(this).parents("div.user").slideUp(150, function() {
 			$(this).remove();
 			updateUserList();
