@@ -32,7 +32,7 @@
 	</div>
 
 	<div class="info"><label>project</label> 4 items left, 3 transcribers</div>
-	<h2>2007 Journal</h2>
+	<h2><a href="">2007 Journal</a></h2>
 	<div class="percentage"><div class="value" style="width: 30%;"></div></div>
 </div>
 
@@ -43,13 +43,12 @@
 	{% for project in projects %}
 	<div class="dashboard-entry project">
 		<div class="controls right">
-			<a class="action" href="{% url 'project' project.id %}">Manage</a>
 			<a class="action" href="{% url 'review_project' project.id %}">Review</a>
 			<a class="action button" href="">Get Item</a>
 		</div>
 
 		<div class="info"><label>project</label> {{ project.items.all|length }} item{% if project.items.all|length != 1 %}s{% endif %} left, {{ project.users.all|length }} transcriber{% if project.users.all|length != 1 %}s{% endif %}</div>
-		<h2>{{ project.name }}</h2>
+		<h2><a href="{% url 'project' project.id %}">{{ project.name }}</a></h2>
 		<div class="percentage"><div class="value" style="width: 81%;"></div></div>
 	</div>
 	{% endfor %}

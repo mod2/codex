@@ -437,6 +437,15 @@ body.dark #main.transcribe .transcript textarea {
 	margin-bottom: .25em;
 }
 
+.dashboard-entry h2 a {
+	color: #1a303f;
+	text-decoration: none;
+}
+
+.dashboard-entry h2 a:hover {
+	color: #459ad7;
+}
+
 .dashboard-entry h3 {
 	color: #aaa;
 	font-weight: 400;
