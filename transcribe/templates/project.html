@@ -13,7 +13,7 @@
 		<section>
 			<ul>
 				{% for user in project.users.all %}
-				<li><b>{% if user.name %}{{ user.name }} ({{ user.email }}){% else %}{{ user.email }}{% endif %}:</b> # items</li>
+				<li><b>{% if user.name %}{{ user.name }} ({{ user.email }}){% else %}{{ user.email }}{% endif %}:</b> {{ project.items.all|length }} item{% if project.items.all|length != 1 %}s{% endif %}</li>
 				{% empty %}
 				<li>Nobody yet. <a href="{% url "edit_project" project.id %}">Add some &rarr;</a></li>
 				{% endfor %}
@@ -22,7 +22,7 @@
 	</div>
 
 	<div class="group">
-		<label>Items</label>
+		<label>{{ project.items.all|length }} Item{% if project.items.all|length != 1 %}s{% endif %}</label>
 		<section>
 			<ul class="items">
 				<li class="finished">
