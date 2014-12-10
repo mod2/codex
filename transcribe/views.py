@@ -1,5 +1,6 @@
 from rest_framework import viewsets, authentication, permissions, status
 from rest_framework.response import Response
+from rest_framework.decorators import list_route
 from .models import Project, Item
 from .serializers import ProjectSerializer, ItemSerializer
 from django.shortcuts import render_to_response
@@ -43,14 +44,13 @@ class ItemViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
                             headers=headers)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def partial_update(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.DATA, many=True)
-        if serializer.is_valid():
-            serializer.save()
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_200_OK,
-                            headers=headers)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    @list_route(methods=['post'])
+    def update_order(self, request, project_pk=None):
+        items = Item.objects.filter(pk__in=request.data.keys())
+        for item in items:
+            item.order = request.data[unicode(item.pk)]
+            item.save()
+        return Response({"success": True})
 
 
 @login_required
