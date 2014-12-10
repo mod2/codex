@@ -1,0 +1,13 @@
+{% extends 'page.html' %}
+
+{% block mainclass %}page error{% endblock mainclass %}
+
+{% block title %}Error{% endblock title %}
+
+{% block content %}
+	{% if type == 403 %}
+	<p class="message">Sorry, you don't have access to that.</p>
+	{% elif type == 404 %}
+	<p class="message">Sorry, that doesn't exist.</p>
+	{% endif %}
+{% endblock content %}

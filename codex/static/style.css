@@ -93,6 +93,10 @@ body #main.page > header {
 	height: 70px;
 }
 
+body #main.page.error > header {
+	background: #962f2f;
+}
+
 body #main.page > header h1 {
 	font-size: 1.6em;
 	font-weight: 400;
