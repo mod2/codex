@@ -20,6 +20,13 @@ $(document).ready(function() {
 		var url = '/transcribe/api/projects/';
 		var method = 'POST';
 		var field = $(this);
+		var newName = $(this).val().trim();
+		var owner = $("#user-id").html();
+
+		// If it's blank, just ignore it
+		if (newName == '') {
+			return false;
+		}
 
 		// Put loading sign up
 		var savedSign = $(this).parents("fieldset:first").find("span.saved");
@@ -32,9 +39,6 @@ $(document).ready(function() {
 			url += field.attr("data-id") + "/";
 			method = 'PUT';
 		}
-
-		var newName = $(this).val().trim();
-		var owner = $("#user-id").html();
 
 		$.ajax({
 			url: url,
