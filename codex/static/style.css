@@ -100,6 +100,14 @@ body #main.page > header a:hover {
 	color: #fff;
 }
 
+body #main.page p.message {
+	background: #f9d9d9;
+	border-radius: 3px;
+	color: #a81111;
+	margin: 0 0 2em 0;
+	padding: 10px 14px;
+}
+
 body #main.page #content {
 	background: #fff;
 	border-radius: 0 0 3px 3px;
