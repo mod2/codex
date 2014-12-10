@@ -447,6 +447,16 @@ body.dark #main.transcribe .transcript textarea {
 }
 
 .dashboard-entry .controls .action {
+	color: #459ad7; 
+	padding: 3px 6px 5px;
+	text-decoration: none;
+}
+
+.dashboard-entry .controls .action:hover {
+	color: #444;
+}
+
+.dashboard-entry .controls .button {
 	background: #266cbd;
 	border-radius: 3px;
 	color: #fff;
@@ -454,8 +464,13 @@ body.dark #main.transcribe .transcript textarea {
 	text-decoration: none;
 }
 
-.dashboard-entry .controls .action:hover {
+.dashboard-entry .controls .button:hover {
 	background: #0f427c;
+	color: #fff;
+}
+
+.dashboard-entry .controls .action:not(.button) + .button {
+	margin-left: 8px;
 }
 
 .dashboard-entry .controls .cancel {

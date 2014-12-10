@@ -8,7 +8,7 @@
 
 <div class="dashboard-entry item">
 	<div class="controls right">
-		<a class="action" href="">Continue Transcribing</a>
+		<a class="action button" href="">Transcribe</a>
 	</div>
 
 	<div class="info"><label>item</label> Grandmother's Journals</div>
@@ -18,7 +18,7 @@
 
 <div class="dashboard-entry item">
 	<div class="controls right">
-		<a class="action" href="">Continue Transcribing</a>
+		<a class="action button" href="">Transcribe</a>
 	</div>
 
 	<div class="info"><label>item</label> Grandpa's Will</div>
@@ -28,7 +28,7 @@
 
 <div class="dashboard-entry project">
 	<div class="controls right">
-		<a class="action" href="">Get Item</a>
+		<a class="action button" href="">Get Item</a>
 	</div>
 
 	<div class="info"><label>project</label> 4 items left, 3 transcribers</div>
@@ -45,10 +45,10 @@
 		<div class="controls right">
 			<a class="action" href="{% url 'project' project.id %}">Manage</a>
 			<a class="action" href="{% url 'review_project' project.id %}">Review</a>
-			<a class="action" href="">Get Item</a>
+			<a class="action button" href="">Get Item</a>
 		</div>
 
-		<div class="info"><label>project</label> 28 items left, 1 transcriber</div>
+		<div class="info"><label>project</label> {{ project.items.all|length }} item{% if project.items.all|length != 1 %}s{% endif %} left, {{ project.users.all|length }} transcriber{% if project.users.all|length != 1 %}s{% endif %}</div>
 		<h2>{{ project.name }}</h2>
 		<div class="percentage"><div class="value" style="width: 81%;"></div></div>
 	</div>
