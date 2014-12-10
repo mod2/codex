@@ -531,7 +531,7 @@ body.dark #main.transcribe .transcript textarea {
 }
 
 .dashboard-projects a.new-project {
-	background: #8ea556;
+	background: hsl(5, 56%, 65%);
 	border-radius: 3px;
 	box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 	color: #fff;
@@ -543,7 +543,7 @@ body.dark #main.transcribe .transcript textarea {
 }
 
 .dashboard-projects a.new-project:hover {
-	background: #698b15;
+	background: hsl(5, 59%, 54%);
 }
 
 .dashboard-projects .dashboard-entry + a.new-project {
