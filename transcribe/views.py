@@ -1,5 +1,5 @@
 from rest_framework import viewsets, authentication, permissions
-from .models import Project
+from .models import Project, Item
 from .serializers import ProjectSerializer
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
@@ -67,5 +67,19 @@ def archived_projects(request):
                     .exclude(status='active'))
         return render_to_response('archived_projects.html',
                                   {'request': request, 'projects': projects})
+    except:
+        pass
+
+@login_required
+def transcribe_item(request, project_id, item_id):
+    try:
+        project = Project.objects.get(id=project_id)
+        item = Item.objects.get(id=item_id)
+
+        # TODO: make sure they have access (owner or are assigned)
+
+        return render_to_response('transcribe.html', {'request': request,
+                                                      'project': project,
+                                                      'item': item})
     except:
         pass

@@ -19,6 +19,10 @@ body {
 	float: right;
 }
 
+.hidden {
+	display: none;
+}
+
 
 /* Header bar */
 /* -------------------------------------------------- */
