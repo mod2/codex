@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from transcribe.urls import router
 
 urlpatterns = patterns(
     '',
@@ -16,14 +15,15 @@ urlpatterns = patterns(
     url(r'^project/(.+?)/', 'transcribe.views.project', name='project'),
     url(r'^review/(.+?)/', 'transcribe.views.review_project', name='review_project'),
     url(r'^archived/', 'transcribe.views.archived_projects', name='archived_projects'),
+    url(r'^transcribe/', include('transcribe.urls', namespace='transcribe')),
     # url(r'^invites/', include('inviter2.urls', namespace='inviter2')),
 )
 
-transcribepatterns = patterns(
-    '',
-    url(r'^transcribe/api/', include(router.urls)),
-    url(r'^transcribe/api-auth/', include('rest_framework.urls',
-                                          namespace='rest_framework')),
-)
+# transcribepatterns = patterns(
+#     '',
+#     url(r'^transcribe/api/', include(router.urls)),
+#     url(r'^transcribe/api-auth/', include('rest_framework.urls',
+#                                           namespace='rest_framework')),
+# )
 
-urlpatterns += transcribepatterns
+# urlpatterns += transcribepatterns
