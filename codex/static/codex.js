@@ -38,6 +38,15 @@ $(document).ready(function() {
 			// (If it isn't created yet, we don't need to do anything special here)
 			url += field.attr("data-id") + "/";
 			method = 'PUT';
+		} else {
+			if (field.hasClass("inprogress")) {
+				// Don't do anything because we're still waiting for the first
+				// AJAX request to come back
+				return false;
+			} else {
+				// Add the inprogress class so we know not to duplicate requests
+				field.addClass("inprogress");
+			}
 		}
 
 		$.ajax({
@@ -53,6 +62,11 @@ $(document).ready(function() {
 				// Add ID if it came back and it's not already there
 				if (data.id && typeof field.attr("data-id") == 'undefined') {
 					$("#name-fieldset input[type=text]").attr("data-id", data.id);
+				}
+
+				// Check to see if we're in progress and turn off the flag
+				if (field.hasClass("inprogress")) {
+					field.removeClass("inprogress");
 				}
 
 				// Fade in the rest
