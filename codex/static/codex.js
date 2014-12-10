@@ -230,7 +230,7 @@ $(document).ready(function() {
 	// Send user list to web service
 	function updateUserList() {
 		// Get project ID
-		var projectId = $("div.userlist").attr("data-project-id");
+		var projectId = $("fieldset#title-fieldset input[type=text]").attr("data-id");
 
 		// Get user list (emails)
 		var userList = $.map($("div.userlist div.user"), function(user) {
