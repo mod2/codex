@@ -11,10 +11,10 @@
 		<section>
 			<input type="text" class="title" {% if project %}value="{{ project.name }}" data-id="{{ project.id }}"{% endif %}/>
 		</section>
-		<span class="saved">Saved</span>
+		<span class="saved"></span>
 	</fieldset>
 
-	<fieldset class="faded">
+	<fieldset id="user-list" class="faded">
 		<label>Users</label>
 		<section>
 			<div class="userlist" data-project-id="{{ project.id }}">
@@ -27,7 +27,7 @@
 			<input id="add-user-button" type="submit" class="button" value="Add" />
 			<input type="hidden" name="user-email" />
 		</section>
-		<span class="saved">Saved</span>
+		<span class="saved"></span>
 	</fieldset>
 
 	<fieldset class="faded">
@@ -54,7 +54,7 @@
 
 			<input id="add-items-button" type="button" class="button" value="Add Items" />
 		</section>
-		<span class="saved">Saved</span>
+		<span class="saved"></span>
 	</fieldset>
 </form>
 {% endblock content %}

@@ -199,17 +199,18 @@ $(document).ready(function() {
 		}
 
 		// Add them to the list
-		$("div.userlist").append("<div class='user' data-email='" + userEmail + "'>" + displayName + " <span class='delete'>x</span></div>");
+		$("div.userlist").append("<div class='user' style='display: none; height: 1em;' data-email='" + userEmail + "'>" + displayName + " <span class='delete'>x</span></div>");
+		$("div.userlist div.user:last-child").slideDown(150, function() {
+			// Send it to the server
+			updateUserList();
 
-		// Send it to the server
-		updateUserList();
+			// Clear out the text box and hidden field
+			$("#add-user-autocomplete").val('');
+			$("input[name=user-email]").val('');
 
-		// Clear out the text box and hidden field
-		$("#add-user-autocomplete").val('');
-		$("input[name=user-email]").val('');
-
-		// Don't focus on the button anymore
-		$("#add-user-button").blur();
+			// Don't focus on the button anymore
+			$("#add-user-button").blur();
+		});
 
 		return false;
 	}
@@ -236,6 +237,10 @@ $(document).ready(function() {
 			return $(user).attr("data-email");
 		});
 
+		// Put loading sign up
+		var savedSign = $("fieldset#user-list").find("span.saved");
+		savedSign.html('...').removeClass("error").show();
+
 		// Update just the user list
 		$.ajax({
 			url: '/transcribe/api/projects/' + projectId + '/',
@@ -243,12 +248,15 @@ $(document).ready(function() {
 			contentType: 'application/json',
 			data: JSON.stringify({ users: userList }),
 			success: function(data) {
-				console.log("success", data);
+				savedSign.html("Saved");
 			},
 			error: function(data) {
+				savedSign.html("Error").addClass("error");
 				console.log("error", data);
 			},
 		});
+
+		return false;
 	}
 });
 
