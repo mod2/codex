@@ -182,24 +182,28 @@ $(document).ready(function() {
 	if ($("script#dropboxjs").length > 0) {
 		var options = {
 			success: function(files) {
-				var projectId = parseInt($("#name-fieldset input.name").attr("data-id"));
+				var projectId = $("#name-fieldset input.name").attr("data-id");
 
 				var items = $.map(files, function(file, i) {
 					return {
 						'name': file.name,
 						'url': file.link,
 						'type': getFileType(file.name),
-						'project': projectId,
+						'project': parseInt(projectId),
 						'source_type': 'dropbox',
 						'order': 0,
 					};
 				});
 
+				console.log(items);
+
 				// Send this to the Codex API
 				$.ajax({
 					url: '/transcribe/api/projects/' + projectId + '/items/',
 					method: 'POST',
-					data: items,
+					data: JSON.stringify(items),
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
 					success: function(data) {
 						console.log("success", data);
 
