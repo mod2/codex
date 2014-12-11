@@ -16,14 +16,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3zw+f$15)grg!nwa)%v@s!kc3u_ft(dy$ti*^ta(n_6+a%c8=0'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -128,6 +120,14 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
+# Import local settings
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
+
+# Debug toolbar
 if DEBUG:
     INSTALLED_APPS += ('debug_toolbar',)
     DEBUG_TOOLBAR_PATCH_SETTINGS = False
