@@ -1,13 +1,11 @@
 {% extends 'page.html' %}
 
-{% block title %}Project Details{% endblock title %}
+{% block title %}{{ project.name }}{% endblock title %}
 
 {% block page_link %}<a href="{% url "edit_project" project.id %}">Edit</a>{% endblock page_link %}
 
 {% block content %}
 <div class="project-details">
-    <h1>{{ project.name }}</h1>
-
 	<div class="group">
 		<label>Users</label>
 		<section>
