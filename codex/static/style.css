@@ -267,6 +267,15 @@ body #main.page #content form div.item {
 	padding: 8px 12px;
 }
 
+body #main.page #content form div.item a {
+	color: #1a303f;
+	text-decoration: none;
+}
+
+body #main.page #content form div.item a:hover {
+	color: #459ad7;
+}
+
 body #main.page #content form div.item.new {
 	background: #f4ffcc;
 }

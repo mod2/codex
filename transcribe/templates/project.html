@@ -27,36 +27,16 @@
 			<ul class="items">
                 {% for item in project.items.all %}
                 <li class="{{ item.status }}">
-                    <a href="/">{{ item.name }}</a> &mdash; {{ item.status }} &mdash; {{ item.type }} ({{ item.source_type }})
-                    {% if item.transcripts %}
+					<a href="{% url 'transcribe_item' project.id item.id %}">{{ item.name }}</a> &mdash; {{ item.type }} ({{ item.source_type }})
+					{% if item.transcripts.all|length > 0 %}
 					<ul>
-                        {% for transcript in item.transcripts %}
+                        {% for transcript in item.transcripts.all %}
                         <li class="{{ transcript.status }}">{{ transcript.date|date:"j F Y" }} &mdash; {{ transcript.owner.name }} &mdash; {{ transcript.status }}</li>
                         {% endfor %}
 					</ul>
                     {% endif %}
 				</li>
-                {% endif %}
-				<li class="finished">
-					<a href="/">page-01.jpg</a> — finished — image (Flickr)
-					<ul>
-						<li class="draft">14 Oct 2014 — Joe Schmoe — draft</li>
-						<li class="finished">18 Oct 2014 — Joe Schmoe — finished</li>
-						<li class="finished">21 Oct 2014 — Penelope — finished</li>
-					</ul>
-				</li>
-				<li>
-					<a href="/">page-02.jpg</a> — draft — image (Flickr)
-					<ul>
-						<li class="draft">17 Oct 2014 — Joe Schmoe — draft</li>
-					</ul>
-				</li>
-				<li>
-					<a href="/">page-03.jpg</a> — draft — image (local)
-					<ul>
-						<li class="draft">18 Oct 2014 — Penelope — draft</li>
-					</ul>
-				</li>
+                {% endfor %}
 			</ul>
 		</section>
 	</div>

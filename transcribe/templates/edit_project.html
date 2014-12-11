@@ -36,7 +36,7 @@
 			<div id="item-list">
 			{% for item in project.items.all %}
 			<div class="item" data-id="{{ item.id }}">
-				<span>{{ item.name }}</span>
+				<span><a href="{% url 'transcribe_item' project.id item.id %}">{{ item.name }}</a></span>
 				<div class="controls">
 					<span class="delete">x</span>
 					<span class="edit">e</span>
