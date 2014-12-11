@@ -5,6 +5,7 @@ from .models import Project, Item
 from .serializers import ProjectSerializer, ItemSerializer
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 
 class DefaultViewSetMixin(object):
@@ -57,7 +58,8 @@ class ItemViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
 def new_project(request):
     return render_to_response('edit_project.html', {'request': request,
                                                     'type': 'new',
-                                                    'title': 'New Project'})
+                                                    'title': 'New Project',
+                                                    'integrations': settings.INTEGRATIONS})
 
 
 @login_required
@@ -65,7 +67,7 @@ def edit_project(request, project_id):
     try:
         project = Project.objects.get(id=project_id)
         context = {'request': request, 'project': project, 'type': 'edit',
-                   'title': 'Edit Project'}
+                   'title': 'Edit Project', 'integrations': settings.INTEGRATIONS}
         return render_to_response('edit_project.html', context)
     except:
         pass

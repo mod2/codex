@@ -153,8 +153,83 @@ $(document).ready(function() {
 		$("form.add-items section ul li span[data-type=" + newType + "]").addClass("selected");
 	});
 
+	// Helper function to recognize file type
+	function getFileType(filename) {
+		var extension = filename.slice(filename.lastIndexOf('.') + 1);
 
-	// Autocomplete for adding userst to a project
+		switch (extension) {
+			case 'jpg':
+			case 'jpeg':
+			case 'gif':
+			case 'png':
+			case 'tif':
+			case 'tiff':
+				return 'image';
+			case 'mp3':
+			case 'wav':
+			case 'aiff':
+				return 'audio';
+			case 'mov':
+			case 'm4v':
+			case 'mp4':
+				return 'video';
+			default:
+				return 'unknown';
+		}
+	}
+
+	// Add Dropbox if it's included
+	if ($("script#dropboxjs").length > 0) {
+		var options = {
+			success: function(files) {
+				var projectId = $("#name-fieldset input.name").attr("data-id");
+
+				var items = $.map(files, function(file, i) {
+					return {
+						'name': file.name,
+						'url': file.link,
+						'type': getFileType(file.name),
+						//'owner': $("#user-id").html(),
+						'project': projectId,
+						'source_type': 'dropbox',
+						'order': 0,
+					};
+				});
+
+				console.log(items);
+
+				// Send this to the Codex API
+				$.ajax({
+					url: '/transcribe/api/projects/' + projectId + '/items/',
+					method: 'POST',
+					data: items,
+					success: function(data) {
+						console.log("success", data);
+
+						// Update the item list on the page
+
+						// Close the modal
+					},
+					error: function(data) {
+						console.log("error", data);
+					},
+				});
+			},
+			cancel: function() {
+			},
+			linkType: 'direct',
+			multiselect: true,
+			extensions: ['images', '.mp3'],
+		};
+
+		var button = Dropbox.createChooseButton(options);
+
+		// Add the button to the form
+		$("form.add-items section .main article[data-type=dropbox]").append(button);
+	}
+
+
+	// Autocomplete for adding users to a project
 	var options = {
 		serviceUrl: '/account/api/users/',
 		paramName: 'search',

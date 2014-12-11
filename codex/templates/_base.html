@@ -15,6 +15,10 @@
 	<script src="{% static 'jquery-2.1.1.min.js' %}" type="text/javascript" charset="utf-8"></script>
 	<script src="{% static 'jquery.autocomplete.min.js' %}" type="text/javascript" charset="utf-8"></script>
 	<script src="{% static 'codex.js' %}" type="text/javascript" charset="utf-8"></script>
+
+	{% if integrations.dropbox %}
+	<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="{{ integrations.dropbox.key }}"></script>
+	{% endif %}
 </head>
 <body>
 	<header>

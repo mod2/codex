@@ -25,6 +25,18 @@
 		<label>{{ project.items.all|length }} Item{% if project.items.all|length != 1 %}s{% endif %}</label>
 		<section>
 			<ul class="items">
+                {% for item in project.items.all %}
+                <li class="{{ item.status }}">
+                    <a href="/">{{ item.name }}</a> &mdash; {{ item.status }} &mdash; {{ item.type }} ({{ item.source_type }})
+                    {% if item.transcripts %}
+					<ul>
+                        {% for transcript in item.transcripts %}
+                        <li class="{{ transcript.status }}">{{ transcript.date|date:"j F Y" }} &mdash; {{ transcript.owner.name }} &mdash; {{ transcript.status }}</li>
+                        {% endfor %}
+					</ul>
+                    {% endif %}
+				</li>
+                {% endif %}
 				<li class="finished">
 					<a href="/">page-01.jpg</a> — finished — image (Flickr)
 					<ul>

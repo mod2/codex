@@ -744,6 +744,12 @@ form.edit-project.new fieldset.faded {
 	color: #f00;
 }
 
+.modal form h3 {
+	font-size: 1.15em;
+	font-weight: normal;
+	margin: 0 0 .75em 0;
+}
+
 .modal form input[type=text] {
 	border-radius: 3px;
 	border: solid 1px #bbb;
