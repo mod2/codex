@@ -267,11 +267,15 @@ body #main.page #content form div.item {
 	padding: 8px 12px;
 }
 
+body #main.page #content form div.item.new {
+	background: #f4ffcc;
+}
+
 body #main.page #content form div.item + div.item {
 	margin-top: .5em;
 }
 
-body #main.page #content form div.item + input.button {
+body #main.page #content form div#item-list + input.button {
 	margin-top: 1em;
 }
 
@@ -697,7 +701,7 @@ form.edit-project.new fieldset.faded {
 	bottom: 0;
 	display: none;
 	left: 0;
-	position: absolute;
+	position: fixed;
 	right: 0;
 	top: 0;
 	z-index: 60000;
@@ -706,7 +710,7 @@ form.edit-project.new fieldset.faded {
 .modal {
 	display: none;
 	margin: 50px auto;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 30%;
 	right: 30%;

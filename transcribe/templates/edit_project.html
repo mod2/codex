@@ -33,6 +33,7 @@
 	<fieldset class="faded">
 		<label>Items</label>
 		<section>
+			<div id="item-list">
 			{% for item in project.items.all %}
 			<div class="item" data-id="{{ item.id }}">
 				<span>{{ item.name }}</span>
@@ -43,6 +44,7 @@
 				</div>
 			</div>
 			{% endfor %}
+			</div>
 
 			<input id="add-items-button" type="button" class="button" value="Add Items" />
 		</section>

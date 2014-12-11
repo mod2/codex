@@ -195,8 +195,6 @@ $(document).ready(function() {
 					};
 				});
 
-				console.log(items);
-
 				// Send this to the Codex API
 				$.ajax({
 					url: '/transcribe/api/projects/' + projectId + '/items/',
@@ -204,12 +202,23 @@ $(document).ready(function() {
 					data: JSON.stringify(items),
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",
-					success: function(data) {
-						console.log("success", data);
-
+					success: function(returnedItems) {
 						// Update the item list on the page
+						$.map(returnedItems, function(item, i) {
+							var html = "<div class='item new' data-id='" + item.id + "'>";
+							html += "<span>" + item.name + "</span>\n";
+							html += "<div class='controls'>\n";
+							html += "<span class='delete'>x</span>\n";
+							html += "<span class='edit'>e</span>\n";
+							html += "<span class='reorder'>=</span>\n";
+							html += "</div>\n";
+							html += "</div>";
+
+							$("#item-list").append(html);
+						});
 
 						// Close the modal
+						hideModal();
 					},
 					error: function(data) {
 						console.log("error", data);
