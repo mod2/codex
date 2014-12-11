@@ -178,16 +178,21 @@ $(document).ready(function() {
 		}
 	}
 
+	function parseDropboxLink(link) {
+		return link.replace("www.dropbox", "dl.dropbox").replace("?dl=0", "?dl=1");
+	}
+
 	// Add Dropbox if it's included
 	if ($("script#dropboxjs").length > 0) {
 		var options = {
 			success: function(files) {
 				var projectId = $("#name-fieldset input.name").attr("data-id");
 
+				console.log(files);
 				var items = $.map(files, function(file, i) {
 					return {
 						'name': file.name,
-						'url': file.link,
+						'url': parseDropboxLink(file.link),
 						'type': getFileType(file.name),
 						'project': parseInt(projectId),
 						'source_type': 'dropbox',
@@ -227,7 +232,7 @@ $(document).ready(function() {
 			},
 			cancel: function() {
 			},
-			linkType: 'direct',
+			linkType: 'preview',
 			multiselect: true,
 			extensions: ['images', '.mp3'],
 		};
