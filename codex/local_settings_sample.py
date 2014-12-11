@@ -6,6 +6,13 @@ DEBUG = TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-if DEBUG:
-    INSTALLED_APPS += ('debug_toolbar',)
-    DEBUG_TOOLBAR_PATCH_SETTINGS = False
+# Remove the integrations you don't care about
+INTEGRATIONS = {
+    'dropbox': {
+        'key': 'your dropbox key here',
+    },
+    'flickr': {
+        'key': 'your flickr key here',
+        'secret': 'your flickr secret here',
+    },
+}
