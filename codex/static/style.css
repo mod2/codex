@@ -353,6 +353,7 @@ body #main.transcribe .image {
 
 body #main.transcribe .image img {
 	display: block;
+	max-width: 1200px; /* Temporary hack */
 }
 
 body #main.transcribe .transcript {
