@@ -182,21 +182,18 @@ $(document).ready(function() {
 	if ($("script#dropboxjs").length > 0) {
 		var options = {
 			success: function(files) {
-				var projectId = $("#name-fieldset input.name").attr("data-id");
+				var projectId = parseInt($("#name-fieldset input.name").attr("data-id"));
 
 				var items = $.map(files, function(file, i) {
 					return {
 						'name': file.name,
 						'url': file.link,
 						'type': getFileType(file.name),
-						//'owner': $("#user-id").html(),
 						'project': projectId,
 						'source_type': 'dropbox',
 						'order': 0,
 					};
 				});
-
-				console.log(items);
 
 				// Send this to the Codex API
 				$.ajax({
