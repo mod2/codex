@@ -6,6 +6,7 @@ from .serializers import ProjectSerializer, ItemSerializer
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.db.models import Q
 
 
 class DefaultViewSetMixin(object):
@@ -56,8 +57,11 @@ class ItemViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
 
 @login_required
 def home(request):
-    # Get all the user's projects
-    projects = Project.objects.filter(owner=request.user)
+    # Get all the user's projects (projects where user is owner or the user is
+    # in the project users list
+    projects = Project.objects.filter(Q(owner=request.user)
+                                      | Q(users=request.user)
+                                     )
 
     return render_to_response('index.html', { 'projects': projects })
 
