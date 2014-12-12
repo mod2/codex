@@ -48,8 +48,8 @@ ROOT_URLCONF = 'codex.urls'
 
 WSGI_APPLICATION = 'codex.wsgi.application'
 
-LOGIN_URL = '/account/login/'
-LOGOUT_URL = '/account/logout/'
+LOGIN_URL = '/accounts/login/'
+LOGOUT_URL = '/accounts/logout/'
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = ['accounts.backends.EmailAuthBackend', ]
 

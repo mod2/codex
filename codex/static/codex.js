@@ -1,3 +1,6 @@
+// Variable for stashing transcript text (for autosave)
+var transcriptionText = '';
+
 $(document).ready(function() {
 	// From https://gist.github.com/alanhamlett/6316427
 	$.ajaxSetup({
@@ -8,12 +11,47 @@ $(document).ready(function() {
 		}
 	});
 
+	// Preload transcription if it's there
+	transcriptionText = $(".transcript textarea").val();
+
 	$(".toggle-layout").on("click", function() {
 		$("#main.transcribe").toggleClass("side-by-side");
+
+		var userId = $("#user-id").html();
+		var newLayout = $("#main.transcribe").hasClass("side-by-side") ? "side_by_side" : "stacked";
+
+		// Update just the user list
+		$.ajax({
+			url: '/accounts/api/users/' + userId + '/',
+			method: 'PATCH',
+			contentType: 'application/json',
+			data: JSON.stringify({ layout: newLayout }),
+			success: function(data) {
+			},
+			error: function(data) {
+				console.log("error", data);
+			},
+		});
 	});
 
 	$(".toggle-lights").on("click", function() {
 		$("body").toggleClass("dark");
+
+		var userId = $("#user-id").html();
+		var newTheme = $("body").hasClass("dark") ? "dark" : "light";
+
+		// Update just the user list
+		$.ajax({
+			url: '/accounts/api/users/' + userId + '/',
+			method: 'PATCH',
+			contentType: 'application/json',
+			data: JSON.stringify({ theme: newTheme }),
+			success: function(data) {
+			},
+			error: function(data) {
+				console.log("error", data);
+			},
+		});
 	});
 
 	$("#name-fieldset input[type=text]").on("keyup", function(e) {
@@ -250,7 +288,7 @@ $(document).ready(function() {
 
 	// Autocomplete for adding users to a project
 	var options = {
-		serviceUrl: '/account/api/users/',
+		serviceUrl: '/accounts/api/users/',
 		paramName: 'search',
 		transformResult: function(response) {
 			// Load as JSON
@@ -289,212 +327,260 @@ $(document).ready(function() {
 		triggerSelectOnValidInput: false,
 	};
 
-	$("#add-user-autocomplete").autocomplete(options);
+	// Edit project page stuff
+	if ($("form.edit-project").length > 0) {
+		// Hook up user autocomplete
+		$("#add-user-autocomplete").autocomplete(options);
 
-	// Add User button
-	$("#add-user-button").on("click", addUserToProject);
+		// Add User button
+		$("#add-user-button").on("click", addUserToProject);
 
-	function addUserToProject() {
-		var userName = $("#add-user-autocomplete").val();
-		var userEmail = $("input[name=user-email]").val();
+		// Reordering items on Edit Project page
+		$("#item-list.sortable").sortable({
+			placeholder: "item placeholder",
+			handle: ".reorder",
+			update: function(event, ui) {
+				var order = {};
+				var items = ui.item.parents("#item-list:first").find("div.item");
 
-		if (userName && userEmail != userName && userEmail != '') {
-			// They typed in a user who has set a name
-			var displayName = userName + " (" + userEmail + ")";
-		} else if (userName && userEmail == '') {
-			// They typed an email in that wasn't in the system
-			var displayName = userName;
-			userEmail = userName;
-		} else {
-			// They typed in an email for a user who hasn't set a name
-			var displayName = userEmail;
-		}
+				for (var i=0; i<items.length; i++) {
+					var item = $(items[i]);
+					order[item.attr("data-id")] = i;
+				}
 
-		// Add them to the list
-		$("div.userlist").append("<div class='user' style='display: none; height: 1em;' data-email='" + userEmail + "'>" + displayName + " <span class='delete'>x</span></div>");
-		$("div.userlist div.user:last-child").slideDown(150, function() {
-			// Send it to the server
-			updateUserList();
+				var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
+				var url = '/transcribe/api/projects/' + projectId + '/items/update_order/';
 
-			// Clear out the text box and hidden field
-			$("#add-user-autocomplete").val('');
-			$("input[name=user-email]").val('');
-
-			// Don't focus on the button anymore
-			$("#add-user-button").blur();
-		});
-
-		return false;
-	}
-
-	$("div.userlist").on("click", "div.user span.delete", function() {
-		// Remove from the user list
-
-		$(this).parents("div.user").slideUp(150, function() {
-			$(this).remove();
-			updateUserList();
-		});
-
-		return false;
-	});
-
-
-	// Send user list to web service
-	function updateUserList() {
-		// Get project ID
-		var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
-
-		// Get user list (emails)
-		var userList = $.map($("div.userlist div.user"), function(user) {
-			return $(user).attr("data-email");
-		});
-
-		// Put loading sign up
-		var savedSign = $("fieldset#user-list").find("span.saved");
-		savedSign.html('...').removeClass("error").show();
-
-		// Update just the user list
-		$.ajax({
-			url: '/transcribe/api/projects/' + projectId + '/',
-			method: 'PATCH',
-			contentType: 'application/json',
-			data: JSON.stringify({ users: userList }),
-			success: function(data) {
-				savedSign.html("Saved");
-			},
-			error: function(data) {
-				savedSign.html("Error").addClass("error");
-				console.log("error", data);
-			},
-		});
-
-		return false;
-	}
-
-
-	// Reordering items on Edit Project page
-	$("#item-list.sortable").sortable({
-		placeholder: "item placeholder",
-		handle: ".reorder",
-		update: function(event, ui) {
-			var order = {};
-			var items = ui.item.parents("#item-list:first").find("div.item");
-
-			for (var i=0; i<items.length; i++) {
-				var item = $(items[i]);
-				order[item.attr("data-id")] = i;
-			}
-
-			var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
-			var url = '/transcribe/api/projects/' + projectId + '/items/update_order/';
-
-			$.ajax({
-				url: url,
-				method: 'POST',
-				contentType: 'application/json',
-				data: JSON.stringify(order),
-				success: function(data) {
-				},
-				error: function(data) {
-					console.log("Error! :(", data);
-				},
-			});
-		},
-	});
-
-
-	// Show delete modal for deleting an item
-	$("#item-list").on("click", ".item .controls .delete", function() {
-		// Tell the modal which item we're on
-		$(".modal .delete-item input[type=submit]").attr("data-id", $(this).parents(".item:first").attr("data-id"));
-
-		// Tell the modal which project we're on
-		var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
-		$(".modal .delete-item input[type=submit]").attr("data-project-id", projectId);
-
-		// Show the modal
-		showModal("delete-item");
-
-		return false;
-	});
-
-	// Actually delete the item
-	$(".modal .delete-item input[type=submit]").on("click", function() {
-		var itemId = $(this).attr("data-id");
-		var projectId = $(this).attr("data-project-id");
-		var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId;
-
-		$.ajax({
-			url: url,
-			method: 'DELETE',
-			success: function(data) {
-				// Hide modal
-				hideModal();
-
-				// Remove it from the items list
-				$("#item-list .item[data-id=" + itemId + "]").slideUp(150, function() {
-					$(this).remove();
+				$.ajax({
+					url: url,
+					method: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify(order),
+					success: function(data) {
+					},
+					error: function(data) {
+						console.log("Error! :(", data);
+					},
 				});
 			},
-			error: function(data) {
-				console.log("Error deleting item", data);
-			},
 		});
 
-		return false;
-	});
+		function addUserToProject() {
+			var userName = $("#add-user-autocomplete").val();
+			var userEmail = $("input[name=user-email]").val();
+
+			if (userName && userEmail != userName && userEmail != '') {
+				// They typed in a user who has set a name
+				var displayName = userName + " (" + userEmail + ")";
+			} else if (userName && userEmail == '') {
+				// They typed an email in that wasn't in the system
+				var displayName = userName;
+				userEmail = userName;
+			} else {
+				// They typed in an email for a user who hasn't set a name
+				var displayName = userEmail;
+			}
+
+			// Add them to the list
+			$("div.userlist").append("<div class='user' style='display: none; height: 1em;' data-email='" + userEmail + "'>" + displayName + " <span class='delete'>x</span></div>");
+			$("div.userlist div.user:last-child").slideDown(150, function() {
+				// Send it to the server
+				updateUserList();
+
+				// Clear out the text box and hidden field
+				$("#add-user-autocomplete").val('');
+				$("input[name=user-email]").val('');
+
+				// Don't focus on the button anymore
+				$("#add-user-button").blur();
+			});
+
+			return false;
+		}
+
+		$("div.userlist").on("click", "div.user span.delete", function() {
+			// Remove from the user list
+
+			$(this).parents("div.user").slideUp(150, function() {
+				$(this).remove();
+				updateUserList();
+			});
+
+			return false;
+		});
 
 
-	// Show modal for renaming an item
-	$("#item-list").on("click", ".item .controls .edit", function() {
-		// Tell the modal which item we're on
-		$(".modal .edit-item input[type=submit]").attr("data-id", $(this).parents(".item:first").attr("data-id"));
+		// Send user list to web service
+		function updateUserList() {
+			// Get project ID
+			var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
 
-		// Tell the modal which project we're on
-		var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
-		$(".modal .edit-item input[type=submit]").attr("data-project-id", projectId);
+			// Get user list (emails)
+			var userList = $.map($("div.userlist div.user"), function(user) {
+				return $(user).attr("data-email");
+			});
 
-		// Prepopulate the name field
-		var oldName = $(this).parents(".item:first").find("span a").html();
-		$(".modal .edit-item input[type=text]").val(oldName);
+			// Put loading sign up
+			var savedSign = $("fieldset#user-list").find("span.saved");
+			savedSign.html('...').removeClass("error").show();
 
-		// Show the modal
-		showModal("edit-item");
-
-		$(".modal .edit-item input[type=text]").focus();
-
-		return false;
-	});
-
-	// Actually edit the item
-	$(".modal .edit-item input[type=submit]").on("click", function() {
-		var itemId = $(this).attr("data-id");
-		var projectId = $(this).attr("data-project-id");
-		var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId;
-
-		var newName = $(".modal .edit-item input[name=name]").val().trim();
-
-		if (newName != '') {
+			// Update just the user list
 			$.ajax({
-				url: url,
+				url: '/transcribe/api/projects/' + projectId + '/',
 				method: 'PATCH',
 				contentType: 'application/json',
-				data: JSON.stringify({ name: newName }),
+				data: JSON.stringify({ users: userList }),
+				success: function(data) {
+					savedSign.html("Saved");
+				},
+				error: function(data) {
+					savedSign.html("Error").addClass("error");
+					console.log("error", data);
+				},
+			});
+
+			return false;
+		}
+
+
+		// Show delete modal for deleting an item
+		$("#item-list").on("click", ".item .controls .delete", function() {
+			// Tell the modal which item we're on
+			$(".modal .delete-item input[type=submit]").attr("data-id", $(this).parents(".item:first").attr("data-id"));
+
+			// Tell the modal which project we're on
+			var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
+			$(".modal .delete-item input[type=submit]").attr("data-project-id", projectId);
+
+			// Show the modal
+			showModal("delete-item");
+
+			return false;
+		});
+
+		// Actually delete the item
+		$(".modal .delete-item input[type=submit]").on("click", function() {
+			var itemId = $(this).attr("data-id");
+			var projectId = $(this).attr("data-project-id");
+			var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId;
+
+			$.ajax({
+				url: url,
+				method: 'DELETE',
 				success: function(data) {
 					// Hide modal
 					hideModal();
 
-					// Update it in the items list
-					$("#item-list .item[data-id=" + itemId + "] span a").html(newName);
+					// Remove it from the items list
+					$("#item-list .item[data-id=" + itemId + "]").slideUp(150, function() {
+						$(this).remove();
+					});
 				},
 				error: function(data) {
-					console.log("Error updating item", data);
+					console.log("Error deleting item", data);
 				},
 			});
-		}
 
-		return false;
-	});
+			return false;
+		});
+
+
+		// Show modal for renaming an item
+		$("#item-list").on("click", ".item .controls .edit", function() {
+			// Tell the modal which item we're on
+			$(".modal .edit-item input[type=submit]").attr("data-id", $(this).parents(".item:first").attr("data-id"));
+
+			// Tell the modal which project we're on
+			var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
+			$(".modal .edit-item input[type=submit]").attr("data-project-id", projectId);
+
+			// Prepopulate the name field
+			var oldName = $(this).parents(".item:first").find("span a").html();
+			$(".modal .edit-item input[type=text]").val(oldName);
+
+			// Show the modal
+			showModal("edit-item");
+
+			$(".modal .edit-item input[type=text]").focus();
+
+			return false;
+		});
+
+		// Actually edit the item
+		$(".modal .edit-item input[type=submit]").on("click", function() {
+			var itemId = $(this).attr("data-id");
+			var projectId = $(this).attr("data-project-id");
+			var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId;
+
+			var newName = $(".modal .edit-item input[name=name]").val().trim();
+
+			if (newName != '') {
+				$.ajax({
+					url: url,
+					method: 'PATCH',
+					contentType: 'application/json',
+					data: JSON.stringify({ name: newName }),
+					success: function(data) {
+						// Hide modal
+						hideModal();
+
+						// Update it in the items list
+						$("#item-list .item[data-id=" + itemId + "] span a").html(newName);
+					},
+					error: function(data) {
+						console.log("Error updating item", data);
+					},
+				});
+			}
+
+			return false;
+		});
+	}
+
+	// Autosaving (only on transcribe pages), every 5 seconds (5000 ms)
+	if ($("#main").hasClass("transcribe")) {
+		// On typing into the textarea, clear the "Saved." text
+		$(".transcript textarea").on("keypress", function() {
+			$("label.saved").html("");
+		});
+
+		// Autosave
+		var intervalId = window.setInterval(function() {
+			var currentTranscript = $(".transcript textarea").val().trim();
+
+			if (currentTranscript != transcriptionText) {
+				// The text has changed, so autosave it
+				$("label.saved").html("Saving...");
+
+				var itemId = $(".transcript").attr("data-id");
+				var projectId = $(".transcript").attr("data-project-id");
+				var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId + "/transcripts/";
+
+				// Post it
+				$.ajax({
+					url: url,
+					method: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						text: currentTranscript,
+						owner: $("#user-id").html(),
+						item: itemId,
+						status: 'draft',
+					}),
+					success: function(data) {
+						$("label.saved").html("Saved.");
+
+						transcriptionText = currentTranscript;
+					},
+					error: function(data) {
+						$("label.saved").html("Error saving. Trying again...");
+
+						console.log("error", data);
+					},
+				});
+			}
+		}, 5000);
+	}
 });
 
 function getCookie(name) {

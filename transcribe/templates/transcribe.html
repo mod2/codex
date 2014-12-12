@@ -1,6 +1,6 @@
 {% extends '_base.html' %}
 
-{% block mainclass %}transcribe side-by-side{% endblock mainclass %}
+{% block mainclass %}transcribe {% if request.user.layout == 'side_by_side' %}side-by-side{% else %}{{ request.user.layout }}{% endif %}{% endblock mainclass %}
 
 {% block main %}
 <header>
@@ -13,9 +13,9 @@
 		</div>
 	</div>
 	<div class="right">
-		<label class="saved">Saved 9:48 am</label>
-		<span>Finish &amp; Continue</span>
-		<span>Finish</span>
+		<label class="saved"></label>
+		<span id="finish-continue-button">Finish &amp; Continue</span>
+		<span id="finish-button">Finish</span>
 	</div>
 </header>
 
@@ -23,8 +23,8 @@
 	<div class="image">
 		<img src="{{ item.url }}" />
 	</div>
-	<div class="transcript">
-		<textarea spellcheck="false"></textarea>
+	<div class="transcript" data-project-id="{{ item.project.id }}" data-id="{{ item.id }}">
+		<textarea spellcheck="false">{{ item.latest_transcript.text }}</textarea>
 	</div>
 </div>
 {% endblock main %}
