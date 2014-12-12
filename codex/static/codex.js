@@ -253,7 +253,7 @@ $(document).ready(function() {
 
 	// Autocomplete for adding users to a project
 	var options = {
-		serviceUrl: '/account/api/users/',
+		serviceUrl: '/accounts/api/users/',
 		paramName: 'search',
 		transformResult: function(response) {
 			// Load as JSON
