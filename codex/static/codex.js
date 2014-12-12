@@ -537,7 +537,7 @@ $(document).ready(function() {
 
 	// Autosaving (only on transcribe pages), every 5 seconds (5000 ms)
 	if ($("#main").hasClass("transcribe")) {
-		// On typing into the textarea, clear the "Saved." text
+		// On typing into the textarea, clear the "Saved" text
 		$(".transcript textarea").on("keypress", function() {
 			$("label.saved").html("");
 		});
@@ -583,7 +583,7 @@ $(document).ready(function() {
 					contentType: 'application/json',
 					data: JSON.stringify(data),
 					success: function(data) {
-						$("label.saved").html("Saved.");
+						$("label.saved").html("Saved");
 
 						$(".transcript").attr("data-transcript-id", data.id);
 
@@ -591,11 +591,13 @@ $(document).ready(function() {
 						transcriptionText = currentTranscript;
 					},
 					error: function(data) {
-						$("label.saved").html("Error saving. Trying again...");
+						$("label.saved").html("Error saving, trying again...");
 
 						console.log("error", data);
 					},
 				});
+			} else {
+				$("label.saved").html("Saved");
 			}
 		}, 5000);
 	}
