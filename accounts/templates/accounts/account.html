@@ -1,0 +1,19 @@
+{% extends 'page.html' %}
+
+{% block title %}Account{% endblock title %}
+
+{% block content %}
+<form action='' method='post'>
+    {% csrf_token %}
+	<fieldset>
+        {{ form.as_p }}
+	</fieldset>
+
+
+	<input type="submit" value="Save"/>
+	<fieldset>
+		<label>Change Password</label>
+		<a href="{% url 'accounts:password_change' %}">Change password</a>
+	</fieldset>
+</form>
+{% endblock content %}
