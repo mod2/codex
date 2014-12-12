@@ -71,7 +71,8 @@ def home(request):
     # Get all the user's projects (projects where user is owner or the user is
     # in the project users list
     projects = Project.objects.filter(Q(owner=request.user)
-                                      | Q(users=request.user))
+                                      | Q(users=request.user),
+                                      status='active')
 
     # Get user's latest transcript for the item (don't try this at home, kids)
     def add_transcript(item, user):
@@ -136,7 +137,8 @@ def review_project(request, project_id):
 def archived_projects(request):
     try:
         projects = (Project.objects
-                    .filter(owner=request.user)
+                    .filter(Q(owner=request.user)
+                            | Q(users=request.user))
                     .exclude(status='active'))
         return render_to_response('archived_projects.html',
                                   {'request': request, 'projects': projects})
