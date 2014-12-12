@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Item
+from .models import Project, Item, Transcript
 from accounts.models import User
 
 
@@ -27,5 +27,17 @@ class ItemSerializer(serializers.ModelSerializer):
                   'source_type',
                   'url',
                   'project',
+                  'owner',
                   'order',
+                  )
+
+
+class TranscriptSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transcript
+        fields = ('id',
+                  'text',
+                  'owner',
+                  'item',
+                  'status',
                   )

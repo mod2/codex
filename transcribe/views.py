@@ -2,14 +2,14 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from rest_framework import viewsets, authentication, permissions, status
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
 
-from .models import Project, Item
-from .serializers import ProjectSerializer, ItemSerializer
-from django.db.models import Q
+from .models import Project, Item, Transcript
+from .serializers import ProjectSerializer, ItemSerializer, TranscriptSerializer
 
 
 class DefaultViewSetMixin(object):
@@ -31,6 +31,14 @@ class ProjectViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
         if self.request.user:
             qs = qs.filter(owner=self.request.user)
         return qs
+
+
+class TranscriptViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
+    model = Transcript
+    serializer_class = TranscriptSerializer
+
+    def get_queryset(self):
+        return Transcript.objects.filter(item=self.kwargs['item_pk'])
 
 
 class ItemViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
@@ -63,15 +71,15 @@ def home(request):
     # Get all the user's projects (projects where user is owner or the user is
     # in the project users list
     projects = Project.objects.filter(Q(owner=request.user)
-                                      | Q(users=request.user)
-                                     )
+                                      | Q(users=request.user))
 
     # Get all the user's active items
     items = Item.objects.filter(owner=request.user)
     items = [item for item in items if item.status(request.user) in ['draft', '']]
 
-    return render_to_response('index.html', { 'projects': projects, 'items': items, 'request': request })
-
+    return render_to_response('index.html', {'projects': projects,
+                                             'items': items,
+                                             'request': request})
 
 @login_required
 def new_project(request):
