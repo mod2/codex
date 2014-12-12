@@ -14,8 +14,8 @@
 	</div>
 	<div class="right">
 		<label class="saved">Saved 9:48 am</label>
-		<span>Finish &amp; Continue</span>
-		<span>Finish</span>
+		<span id="finish-continue-button">Finish &amp; Continue</span>
+		<span id="finish-button">Finish</span>
 	</div>
 </header>
 
@@ -23,7 +23,7 @@
 	<div class="image">
 		<img src="{{ item.url }}" />
 	</div>
-	<div class="transcript">
+	<div class="transcript" data-project-id="{{ item.project.id }}" data-id="{{ item.id }}">
 		<textarea spellcheck="false"></textarea>
 	</div>
 </div>
