@@ -75,7 +75,7 @@ class Transcript(StatusModel):
 
     def __unicode__(self):
         return "transcript by {owner} for item {item}".format(owner=self.owner,
-                                                              item=self)
+                                                              item=self.item)
 
     class Meta:
         ordering = ['-date']
