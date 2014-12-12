@@ -443,6 +443,58 @@ $(document).ready(function() {
 
 		return false;
 	});
+
+
+	// Show modal for renaming an item
+	$("#item-list").on("click", ".item .controls .edit", function() {
+		// Tell the modal which item we're on
+		$(".modal .edit-item input[type=submit]").attr("data-id", $(this).parents(".item:first").attr("data-id"));
+
+		// Tell the modal which project we're on
+		var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
+		$(".modal .edit-item input[type=submit]").attr("data-project-id", projectId);
+
+		// Prepopulate the name field
+		var oldName = $(this).parents(".item:first").find("span a").html();
+		$(".modal .edit-item input[type=text]").val(oldName);
+
+		// Show the modal
+		showModal("edit-item");
+
+		$(".modal .edit-item input[type=text]").focus();
+
+		return false;
+	});
+
+	// Actually edit the item
+	$(".modal .edit-item input[type=submit]").on("click", function() {
+		var itemId = $(this).attr("data-id");
+		var projectId = $(this).attr("data-project-id");
+		var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId;
+
+		var newName = $(".modal .edit-item input[name=name]").val().trim();
+
+		if (newName != '') {
+			$.ajax({
+				url: url,
+				method: 'PATCH',
+				contentType: 'application/json',
+				data: JSON.stringify({ name: newName }),
+				success: function(data) {
+					// Hide modal
+					hideModal();
+
+					// Update it in the items list
+					$("#item-list .item[data-id=" + itemId + "] span a").html(newName);
+				},
+				error: function(data) {
+					console.log("Error updating item", data);
+				},
+			});
+		}
+
+		return false;
+	});
 });
 
 function getCookie(name) {
