@@ -17,22 +17,12 @@
 		</div>
 
         <div class="info"><label>item</label> {{ item.project.name }}</div>
-        <h2>{{ item.name }}</h2>
-        {% if item.transcripts.all|length > 0 %}
-        <h3>Saved {{ item.transcripts.all.0|date:"H:M a, j B Y" }}</h3>
+		<h2><a href="{% url "transcribe_item" item.project.id item.id %}">{{ item.name }}</a></h2>
+        {% if item.latest_transcript %}
+        <h3>Saved {{ item.latest_transcript.date|date:"g:i a, j M Y" }}</h3>
         {% endif %}
 	</div>
     {% endfor %}
-
-	<div class="dashboard-entry item">
-		<div class="controls right">
-			<a class="action button" href="">Transcribe</a>
-		</div>
-
-		<div class="info"><label>item</label> Grandpa's Will</div>
-		<h2>page-1</h2>
-		<h3>Saved 9:31 am, 7 Jan 2014</h3>
-	</div>
 </section>
 
 <section class="dashboard-projects dashboard-group">

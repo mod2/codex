@@ -73,9 +73,14 @@ def home(request):
     projects = Project.objects.filter(Q(owner=request.user)
                                       | Q(users=request.user))
 
-    # Get all the user's active items
+    # Get user's latest transcript for the item (don't try this at home, kids)
+    def add_transcript(item, user):
+        item.latest_transcript = item.latest_transcript(user)
+        return item
+
+    # Get the user's items
     items = Item.objects.filter(owner=request.user)
-    items = [item for item in items if item.status(request.user) in ['draft', '']]
+    items = [add_transcript(item, request.user) for item in items if item.status(request.user) in ['draft', '']]
 
     return render_to_response('index.html', {'projects': projects,
                                              'items': items,
