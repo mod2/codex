@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
-from django.db import models
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db import models
+from model_utils import Choices
 
 
 class UserManager(BaseUserManager):
@@ -28,10 +30,15 @@ class User(AbstractBaseUser):
     """
     Custom user class with email as the username and simplified a little.
     """
+    LAYOUTS = Choices('side_by_side', 'stacked')
+    THEMES = Choices('light', 'dark')
     email = models.EmailField('email address', unique=True, db_index=True)
     name = models.CharField(max_length=255, blank=True)
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    layout = models.CharField(max_length=12, default=LAYOUTS.side_by_side,
+                              choices=LAYOUTS)
+    theme = models.CharField(max_length=5, default=THEMES.light, choices=THEMES)
 
     USERNAME_FIELD = 'email'
 
