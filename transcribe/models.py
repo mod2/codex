@@ -14,6 +14,17 @@ class Project(StatusModel):
     def __unicode__(self):
         return self.name
 
+    def get_next_item(self, user):
+        rtn_item = None
+        items = self.items.filter(owner=None)
+        for item in items:
+            if not item.is_skipped(user):
+                item.owner = user
+                item.save()
+                rtn_item = item
+                break
+        return rtn_item
+
     class Meta:
         ordering = ['name']
 
@@ -45,6 +56,9 @@ class Item(models.Model):
         skipped.save()
         self.owner = None
         self.save()
+
+    def is_skipped(self, user):
+        return self.transcripts.filter(owner=user, status='skipped').exists()
 
     class Meta:
         ordering = ['order', 'name']
