@@ -11,7 +11,7 @@
 		<section>
 			<ul>
 				{% for user in project.users.all %}
-				<li><b>{% if user.name %}{{ user.name }} ({{ user.email }}){% else %}{{ user.email }}{% endif %}:</b> {{ project.items.all|length }} item{% if project.items.all|length != 1 %}s{% endif %}</li>
+				<li><b>{{ user.get_full_name }}</b></li>
 				{% empty %}
 				<li>Nobody yet. <a href="{% url "edit_project" project.id %}">Add some &rarr;</a></li>
 				{% endfor %}

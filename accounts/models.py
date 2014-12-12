@@ -45,16 +45,10 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     def get_full_name(self):
-        if self.name:
-            return self.name
-        else:
-            return self.email
+        return "{} ({})".format(self.name, self.email) if self.name else self.email
 
     def get_short_name(self):
-        if self.name:
-            return self.name
-        else:
-            return self.email
+        return self.name if self.name else self.email
 
     def __unicode__(self):
         return self.name if self.name else self.email
