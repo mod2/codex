@@ -57,7 +57,7 @@ class User(AbstractBaseUser):
             return self.email
 
     def __unicode__(self):
-        return self.email
+        return self.name if self.name else self.email
 
     def has_perm(self, perm, obj=None):
         return True

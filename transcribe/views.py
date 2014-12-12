@@ -116,6 +116,7 @@ def edit_project(request, project_id):
 def project(request, project_id):
     try:
         project = Project.objects.get(id=project_id)
+
         return render_to_response('project.html', {'request': request,
                                                    'project': project})
     except:

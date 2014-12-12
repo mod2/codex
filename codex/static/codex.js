@@ -326,6 +326,10 @@ $(document).ready(function() {
 
 	// Edit project page stuff
 	if ($("form.edit-project").length > 0) {
+		// Preload transcription if it's there
+		transcriptionText = $(".transcript textarea").val();
+
+		// Hook up user autocomplete
 		$("#add-user-autocomplete").autocomplete(options);
 
 		// Add User button
