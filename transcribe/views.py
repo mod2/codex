@@ -63,7 +63,7 @@ def home(request):
                                       | Q(users=request.user)
                                      )
 
-    return render_to_response('index.html', { 'projects': projects })
+    return render_to_response('index.html', { 'projects': projects, 'user': request.user })
 
 @login_required
 def new_project(request):
