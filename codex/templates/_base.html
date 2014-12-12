@@ -23,7 +23,7 @@
 	<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="{{ integrations.dropbox.key }}"></script>
 	{% endif %}
 </head>
-<body>
+<body class="{{ request.user.theme }}">
 	<header>
 		<div class="left">
 			<span>Codex</span>
