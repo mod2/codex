@@ -188,14 +188,18 @@ $(document).ready(function() {
 			success: function(files) {
 				var projectId = $("#name-fieldset input.name").attr("data-id");
 
+				// What order # to start with (start with - 1 because we += 1 before)
+				var order = $("#item-list .item").length - 1;
+
 				var items = $.map(files, function(file, i) {
+					order += 1;
 					return {
 						'name': file.name,
 						'url': parseDropboxLink(file.link),
 						'type': getFileType(file.name),
 						'project': parseInt(projectId),
 						'source_type': 'dropbox',
-						'order': 0,
+						'order': order,
 					};
 				});
 
