@@ -8,6 +8,13 @@
 	<h1>{% block title %}{% endblock title %}</h1>
 </header>
 <div id="content" class="container">
+	{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+		<li class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
 	{% block content %}{% endblock content %}
 </div>
 {% endblock main %}
