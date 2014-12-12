@@ -49,8 +49,11 @@ class Item(models.Model):
         return "{item} in project {project}".format(project=self.project,
                                                     item=self.name)
 
-    def latest_transcript(self, user):
-        return self.transcripts.filter(owner=user).first()
+    def latest_transcript(self, user=None):
+        if user:
+            return self.transcripts.filter(owner=user).first()
+        else:
+            return self.transcripts.first()
 
     def status(self, user):
         transcript = self.latest_transcript(user)
