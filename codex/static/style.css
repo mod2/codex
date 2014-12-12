@@ -264,6 +264,7 @@ body #main.page #content form div.item {
 	background: #fff;
 	border-radius: 3px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+	cursor: pointer;
 	overflow: hidden;
 	padding: 8px 12px;
 }
@@ -292,10 +293,6 @@ body #main.page #content form div#item-list + input.button {
 body #main.page #content form div.item .controls {
 	color: #bbb;
 	float: right;
-}
-
-body #main.page #content form div.item .controls span {
-	cursor: pointer;
 }
 
 body #main.page #content form div.item .controls span:hover {
@@ -504,10 +501,9 @@ body.dark #main.transcribe .transcript textarea {
 }
 
 .dashboard-entry.project label {
-	color: hsl(35, 56%, 65%);
+	color: hsl(5, 56%, 65%);
 }
-
-.dashboard-entry.project.owner label {
+.dashboard-entry.project label {
 	color: hsl(5, 56%, 65%);
 }
 

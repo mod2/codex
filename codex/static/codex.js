@@ -257,7 +257,6 @@ $(document).ready(function() {
 							html += "<div class='controls'>\n";
 							html += "<span class='delete'>x</span>\n";
 							html += "<span class='edit'>e</span>\n";
-							html += "<span class='reorder'>=</span>\n";
 							html += "</div>\n";
 							html += "</div>";
 
@@ -338,7 +337,6 @@ $(document).ready(function() {
 		// Reordering items on Edit Project page
 		$("#item-list.sortable").sortable({
 			placeholder: "item placeholder",
-			handle: ".reorder",
 			update: function(event, ui) {
 				var order = {};
 				var items = ui.item.parents("#item-list:first").find("div.item");
