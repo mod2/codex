@@ -27,18 +27,31 @@ class Item(models.Model):
     source_type = models.CharField(max_length=7, choices=SOURCES)
     url = models.URLField()
     project = models.ForeignKey(Project, related_name='items')
+    owner = models.ForeignKey(User, related_name="owned_items", default=None,
+                              blank=True, null=True)
     order = models.PositiveSmallIntegerField()
 
     def __unicode__(self):
         return "{item} in project {project}".format(project=self.project,
                                                     item=self.name)
 
+    @property
+    def status(self):
+        return self.transcripts.first().status
+
+    def skip(self):
+        skipped = Transcript(owner=self.owner, item=self,
+                             status=Transcript.STATUS.skipped)
+        skipped.save()
+        self.owner = None
+        self.save()
+
     class Meta:
         ordering = ['order', 'name']
 
 
 class Transcript(StatusModel):
-    STATUS = Choices('draft', 'finished')
+    STATUS = Choices('draft', 'finished', 'skipped')
     text = models.TextField()
     owner = models.ForeignKey(User, related_name='transcripts')
     date = models.DateTimeField(auto_now_add=True)

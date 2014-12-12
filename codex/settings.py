@@ -15,6 +15,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
+DEBUG = False
 
 
 # Application definition
@@ -122,7 +123,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Import local settings
 try:
-    from local_settings import *
+    from local_settings import *  # noqa
 except ImportError:
     pass
 
