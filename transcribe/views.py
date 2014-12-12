@@ -164,11 +164,21 @@ def transcribe_item(request, project_id, item_id, transcript_id=None):
     try:
         project = Project.objects.get(id=project_id)
         item = Item.objects.get(id=item_id)
-        text = item.latest_transcript().text
 
+        # Get the latest transcript for this item
+        try:
+            latest_transcript = item.latest_transcript()
+            text = latest_transcript.text
+        except:
+            text = ''
+
+        # Override with specified transcript
         if transcript_id is not None:
-            transcript = Transcript.objects.get(id=transcript_id)
-            text = transcript.text
+            try:
+                transcript = Transcript.objects.get(id=transcript_id, item=item)
+                text = transcript.text
+            except:
+                pass
 
         # Make sure they have access (owner or are in the project)
         if request.user == project.owner or request.user in project.users.all:
