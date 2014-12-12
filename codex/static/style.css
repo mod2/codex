@@ -448,9 +448,17 @@ body.dark #main.transcribe .transcript textarea {
 	background: #5f7b9b;
 }
 
+.dashboard-empty {
+	background: #4b6480;
+	border-radius: 3px;
+	color: #d1e8f2;
+	font-style: italic;
+	padding: 5px 12px 6px;
+}
+
 .dashboard-entry {
 	background: #fff;
-	border-left: solid 20px #000;
+	border-left: solid 20px #999;
 	border-radius: 3px;
 	box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 	color: rgba(0, 0, 0, 0.8);
@@ -467,6 +475,10 @@ body.dark #main.transcribe .transcript textarea {
 }
 
 .dashboard-entry.project {
+	border-left-color: hsl(35, 56%, 65%);
+}
+
+.dashboard-entry.project.owner {
 	border-left-color: hsl(5, 56%, 65%);
 }
 
@@ -492,6 +504,10 @@ body.dark #main.transcribe .transcript textarea {
 }
 
 .dashboard-entry.project label {
+	color: hsl(35, 56%, 65%);
+}
+
+.dashboard-entry.project.owner label {
 	color: hsl(5, 56%, 65%);
 }
 

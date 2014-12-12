@@ -2,21 +2,23 @@
 
 {% block title %}Project Archive{% endblock title %}
 
+{% block page_link %}<a href="{% url "home" %}">&larr; Back</a>{% endblock page_link %}
+
 {% block mainclass %}page dashboard{% endblock mainclass %}
 
 {% block content %}
 {% for project in projects %}
 <div class="dashboard-entry project">
 	<div class="controls right">
-		<a class="action" href="{% url 'project' project.id %}">Manage</a>
+		{% if project.owner == request.user %}
 		<a class="action" href="{% url 'review_project' project.id %}">Review</a>
-		<a class="action" href="">Get Item</a>
+		{% endif %}
+		<a class="action button" href="{% url 'get_next_item' project.id %}">Get Item</a>
 	</div>
 
-	<div class="info"><label>project</label> 28 items left, 1 transcriber</div>
-	<h2>{{ project.name }}</h2>
+	<div class="info"><label>project</label> {{ project.items.all|length }} item{% if project.items.all|length != 1 %}s{% endif %} left, {{ project.users.all|length }} transcriber{% if project.users.all|length != 1 %}s{% endif %}</div>
+	<h2><a href="{% url 'project' project.id %}">{{ project.name }}</a></h2>
 	<div class="percentage"><div class="value" style="width: 81%;"></div></div>
 </div>
 {% endfor %}
-
 {% endblock %}

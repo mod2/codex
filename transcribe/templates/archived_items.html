@@ -1,0 +1,23 @@
+{% extends "page.html" %}
+
+{% block title %}Item Archive{% endblock title %}
+
+{% block page_link %}<a href="{% url "home" %}">&larr; Back</a>{% endblock page_link %}
+
+{% block mainclass %}page dashboard{% endblock mainclass %}
+
+{% block content %}
+{% for item in items %}
+<div class="dashboard-entry item">
+	<div class="controls right">
+		<a class="action button" href="{% url "transcribe_item" item.project.id item.id %}">Transcribe</a>
+	</div>
+
+	<div class="info"><label>item</label> {{ item.project.name }}</div>
+	<h2><a href="{% url "transcribe_item" item.project.id item.id %}">{{ item.name }}</a></h2>
+	{% if item.latest_transcript %}
+	<h3>Saved {{ item.latest_transcript.date|date:"g:i a, j M Y" }}</h3>
+	{% endif %}
+</div>
+{% endfor %}
+{% endblock %}
