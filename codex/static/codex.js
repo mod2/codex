@@ -188,7 +188,6 @@ $(document).ready(function() {
 			success: function(files) {
 				var projectId = $("#name-fieldset input.name").attr("data-id");
 
-				console.log(files);
 				var items = $.map(files, function(file, i) {
 					return {
 						'name': file.name,
