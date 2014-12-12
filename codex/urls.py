@@ -19,6 +19,7 @@ urlpatterns = patterns(
     # Project pages
     url(r'^new-project/$', 'transcribe.views.new_project', name='new_project'),
     url(r'^projects/(?P<project_id>\d+)/edit/$', 'transcribe.views.edit_project', name='edit_project'),
+    url(r'^projects/(?P<project_id>\d+)/items/(?P<item_id>\d+)/transcripts/(?P<transcript_id>\d+)/$', 'transcribe.views.transcribe_item', name='transcribe_item'),
     url(r'^projects/(?P<project_id>\d+)/items/(?P<item_id>\d+)/$', 'transcribe.views.transcribe_item', name='transcribe_item'),
     url(r'^projects/(?P<project_id>\d+)/review/$', 'transcribe.views.review_project', name='review_project'),
     url(r'^projects/(?P<project_id>\d+)/get-next-item/$', 'transcribe.views.get_next_item', name='get_next_item'),

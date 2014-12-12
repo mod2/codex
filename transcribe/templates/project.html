@@ -29,7 +29,7 @@
 					{% if item.transcripts.all|length > 0 %}
 					<ul>
                         {% for transcript in item.transcripts.all %}
-						<li class="{{ transcript.status }}">{{ transcript.date|date:"j M Y" }} &mdash; {{ transcript.status }} &mdash; {{ transcript.owner }}</li>
+                        <li class="{{ transcript.status }}"><a href="{% url 'transcribe_item' project.id item.id transcript.id %}">{{ transcript.date|date:"j M Y" }}</a> &mdash; {{ transcript.status }} &mdash; {{ transcript.owner }}</li>
                         {% endfor %}
 					</ul>
                     {% endif %}

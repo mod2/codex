@@ -160,16 +160,22 @@ def archived_items(request):
 
 
 @login_required
-def transcribe_item(request, project_id, item_id):
+def transcribe_item(request, project_id, item_id, transcript_id=None):
     try:
         project = Project.objects.get(id=project_id)
         item = Item.objects.get(id=item_id)
+        text = item.latest_transcript().text
+
+        if transcript_id is not None:
+            transcript = Transcript.objects.get(id=transcript_id)
+            text = transcript.text
 
         # Make sure they have access (owner or are in the project)
         if request.user == project.owner or request.user in project.users.all:
             return render_to_response('transcribe.html', {'request': request,
                                                           'project': project,
-                                                          'item': item})
+                                                          'item': item,
+                                                          'text': text})
         else:
             return render_to_response('error.html', {'request': request,
                                                      'type': 403})
