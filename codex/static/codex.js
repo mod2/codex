@@ -10,10 +10,42 @@ $(document).ready(function() {
 
 	$(".toggle-layout").on("click", function() {
 		$("#main.transcribe").toggleClass("side-by-side");
+
+		var userId = $("#user-id").html();
+		var newLayout = $("#main.transcribe").hasClass("side-by-side") ? "side-by-side" : "stacked";
+
+		// Update just the user list
+		$.ajax({
+			url: '/transcribe/api/users/' + userId + '/',
+			method: 'PATCH',
+			contentType: 'application/json',
+			data: JSON.stringify({ layout: newLayout }),
+			success: function(data) {
+			},
+			error: function(data) {
+				console.log("error", data);
+			},
+		});
 	});
 
 	$(".toggle-lights").on("click", function() {
 		$("body").toggleClass("dark");
+
+		var userId = $("#user-id").html();
+		var newTheme = $("body").hasClass("dark") ? "dark" : "light";
+
+		// Update just the user list
+		$.ajax({
+			url: '/transcribe/api/users/' + userId + '/',
+			method: 'PATCH',
+			contentType: 'application/json',
+			data: JSON.stringify({ theme: newTheme }),
+			success: function(data) {
+			},
+			error: function(data) {
+				console.log("error", data);
+			},
+		});
 	});
 
 	$("#name-fieldset input[type=text]").on("keyup", function(e) {
