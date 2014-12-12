@@ -325,7 +325,7 @@ $(document).ready(function() {
 	};
 
 	// Edit project page stuff
-	if ($("form#edit-project").length > 0) {
+	if ($("form.edit-project").length > 0) {
 		$("#add-user-autocomplete").autocomplete(options);
 
 		// Add User button

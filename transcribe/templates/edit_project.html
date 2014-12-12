@@ -9,7 +9,7 @@
 	<fieldset id="name-fieldset">
 		<label>Name</label>
 		<section>
-			<input type="text" class="name" autofocus {% if project %}value="{{ project.name }}" data-id="{{ project.id }}"{% endif %}/>
+            <input type="text" class="name" {% if type == 'new' %}autofocus {% endif %}{% if project %}value="{{ project.name }}" data-id="{{ project.id }}"{% endif %}/>
 		</section>
 		<span class="saved"></span>
 	</fieldset>
