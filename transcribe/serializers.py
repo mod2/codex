@@ -27,5 +27,6 @@ class ItemSerializer(serializers.ModelSerializer):
                   'source_type',
                   'url',
                   'project',
+                  'owner',
                   'order',
                   )
