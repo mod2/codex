@@ -46,9 +46,11 @@ class Item(models.Model):
         return "{item} in project {project}".format(project=self.project,
                                                     item=self.name)
 
-    @property
-    def status(self):
-        return self.transcripts.first().status
+
+    def status(self, user):
+        transcript = self.transcripts.filter(owner=user).first()
+
+        return transcript.status if transcript else ''
 
     def skip(self):
         skipped = Transcript(owner=self.owner, item=self,

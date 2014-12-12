@@ -66,7 +66,12 @@ def home(request):
                                       | Q(users=request.user)
                                      )
 
-    return render_to_response('index.html', { 'projects': projects, 'request': request })
+    # Get all the user's active items
+    items = Item.objects.filter(owner=request.user)
+    items = [item for item in items if item.status(request.user) in ['draft', '']]
+
+    return render_to_response('index.html', { 'projects': projects, 'items': items, 'request': request })
+
 
 @login_required
 def new_project(request):

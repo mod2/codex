@@ -10,15 +10,19 @@
 	<a class="right" href="{% url "archived_projects" %}">Archived Items</a>
 	<h1>Your Active Items</h1>
 
+    {% for item in items %}
 	<div class="dashboard-entry item">
 		<div class="controls right">
-			<a class="action button" href="">Transcribe</a>
+            <a class="action button" href="{% url "transcribe_item" item.project.id item.id %}">Transcribe</a>
 		</div>
 
-		<div class="info"><label>item</label> Grandmother's Journals</div>
-		<h2>page-023</h2>
-		<h3>Saved 5:45 pm, 28 Sep 2014</h3>
+        <div class="info"><label>item</label> {{ item.project.name }}</div>
+        <h2>{{ item.name }}</h2>
+        {% if item.transcripts.all|length > 0 %}
+        <h3>Saved {{ item.transcripts.all.0|date:"H:M a, j B Y" }}</h3>
+        {% endif %}
 	</div>
+    {% endfor %}
 
 	<div class="dashboard-entry item">
 		<div class="controls right">
