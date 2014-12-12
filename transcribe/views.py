@@ -55,6 +55,13 @@ class ItemViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
 
 
 @login_required
+def home(request):
+    # Get all the user's projects
+    projects = Project.objects.filter(owner=request.user)
+
+    return render_to_response('index.html', { 'projects': projects })
+
+@login_required
 def new_project(request):
     return render_to_response('edit_project.html', {'request': request,
                                                     'type': 'new',

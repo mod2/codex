@@ -3,7 +3,7 @@ from django.contrib import admin
 
 urlpatterns = patterns(
     '',
-    url(r'^$', 'codex.views.home', name='home'),
+    url(r'^$', 'transcribe.views.home', name='home'),
     url(r'^account/', include('accounts.urls', namespace='accounts')),
     url(r'^account/', 'accounts.views.account', name='account'),
     url(r'^admin/login/$', 'accounts.views.login', name='admin:login'),

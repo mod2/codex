@@ -6,37 +6,32 @@
 
 {% block content %}
 
-<div class="dashboard-entry item">
-	<div class="controls right">
-		<a class="action button" href="">Transcribe</a>
+<section class="dashboard-items dashboard-group">
+	<a class="right" href="{% url "archived_projects" %}">Archived Items</a>
+	<h1>Your Active Items</h1>
+
+	<div class="dashboard-entry item">
+		<div class="controls right">
+			<a class="action button" href="">Transcribe</a>
+		</div>
+
+		<div class="info"><label>item</label> Grandmother's Journals</div>
+		<h2>page-023</h2>
+		<h3>Saved 5:45 pm, 28 Sep 2014</h3>
 	</div>
 
-	<div class="info"><label>item</label> Grandmother's Journals</div>
-	<h2>page-023</h2>
-	<h3>Saved 5:45 pm, 28 Sep 2014</h3>
-</div>
+	<div class="dashboard-entry item">
+		<div class="controls right">
+			<a class="action button" href="">Transcribe</a>
+		</div>
 
-<div class="dashboard-entry item">
-	<div class="controls right">
-		<a class="action button" href="">Transcribe</a>
+		<div class="info"><label>item</label> Grandpa's Will</div>
+		<h2>page-1</h2>
+		<h3>Saved 9:31 am, 7 Jan 2014</h3>
 	</div>
+</section>
 
-	<div class="info"><label>item</label> Grandpa's Will</div>
-	<h2>page-1</h2>
-	<h3>Saved 9:31 am, 7 Jan 2014</h3>
-</div>
-
-<div class="dashboard-entry project">
-	<div class="controls right">
-		<a class="action button" href="">Get Item</a>
-	</div>
-
-	<div class="info"><label>project</label> 4 items left, 3 transcribers</div>
-	<h2><a href="">2007 Journal</a></h2>
-	<div class="percentage"><div class="value" style="width: 30%;"></div></div>
-</div>
-
-<section class="dashboard-projects">
+<section class="dashboard-projects dashboard-group">
 	<a class="right" href="{% url "archived_projects" %}">Archived Projects</a>
 	<h1>Your Active Projects</h1>
 
