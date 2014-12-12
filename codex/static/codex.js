@@ -15,11 +15,11 @@ $(document).ready(function() {
 		$("#main.transcribe").toggleClass("side-by-side");
 
 		var userId = $("#user-id").html();
-		var newLayout = $("#main.transcribe").hasClass("side-by-side") ? "side-by-side" : "stacked";
+		var newLayout = $("#main.transcribe").hasClass("side-by-side") ? "side_by_side" : "stacked";
 
 		// Update just the user list
 		$.ajax({
-			url: '/transcribe/api/users/' + userId + '/',
+			url: '/accounts/api/users/' + userId + '/',
 			method: 'PATCH',
 			contentType: 'application/json',
 			data: JSON.stringify({ layout: newLayout }),
@@ -39,7 +39,7 @@ $(document).ready(function() {
 
 		// Update just the user list
 		$.ajax({
-			url: '/transcribe/api/users/' + userId + '/',
+			url: '/accounts/api/users/' + userId + '/',
 			method: 'PATCH',
 			contentType: 'application/json',
 			data: JSON.stringify({ theme: newTheme }),
