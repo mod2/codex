@@ -86,6 +86,7 @@ def home(request):
                                              'items': items,
                                              'request': request})
 
+
 @login_required
 def new_project(request):
     return render_to_response('edit_project.html',
@@ -142,6 +143,17 @@ def archived_projects(request):
     except:
         pass
 
+
+@login_required
+def archived_items(request):
+    try:
+        items = Item.objects.filter(owner=request.user)
+        items = [item for item in items if item.status(request.user) == 'finished']
+
+        return render_to_response('archived_items.html',
+                                  {'request': request, 'items': items})
+    except:
+        pass
 
 @login_required
 def transcribe_item(request, project_id, item_id):

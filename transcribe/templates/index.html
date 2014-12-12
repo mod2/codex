@@ -7,7 +7,7 @@
 {% block content %}
 
 <section class="dashboard-items dashboard-group">
-	<a class="right" href="{% url "archived_projects" %}">Archived Items</a>
+	<a class="right" href="{% url "archived_items" %}">Archived Items</a>
 	<h1>Your Active Items</h1>
 
     {% for item in items %}
@@ -22,6 +22,10 @@
         <h3>Saved {{ item.latest_transcript.date|date:"g:i a, j M Y" }}</h3>
         {% endif %}
 	</div>
+	{% empty %}
+	<div class="dashboard-empty">
+		No items. {% if projects|length > 0 %}Click "Get Item" below to transcribe an item.{% else %}Click "Create Project" below to start a project.{% endif %}
+	</div>
     {% endfor %}
 </section>
 
@@ -30,7 +34,7 @@
 	<h1>Your Active Projects</h1>
 
 	{% for project in projects %}
-	<div class="dashboard-entry project">
+	<div class="dashboard-entry project{% if project.owner == request.user %} owner{% endif %}">
 		<div class="controls right">
 			{% if project.owner == request.user %}
 			<a class="action" href="{% url 'review_project' project.id %}">Review</a>
