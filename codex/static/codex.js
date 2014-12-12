@@ -82,6 +82,7 @@ $(document).ready(function() {
 	function showModal(type) {
 		$(".modal-background").fadeIn(100);
 
+		$(".modal form").hide();
 		$(".modal ." + type).show();
 		$(".modal").fadeIn(100);
 	}
@@ -400,7 +401,48 @@ $(document).ready(function() {
 			});
 		},
 	});
-	
+
+
+	// Show delete modal for deleting an item
+	$("#item-list").on("click", ".item .controls .delete", function() {
+		// Tell the modal which item we're on
+		$(".modal .delete-item input[type=submit]").attr("data-id", $(this).parents(".item:first").attr("data-id"));
+
+		// Tell the modal which project we're on
+		var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
+		$(".modal .delete-item input[type=submit]").attr("data-project-id", projectId);
+
+		// Show the modal
+		showModal("delete-item");
+
+		return false;
+	});
+
+	// Actually delete the item
+	$(".modal .delete-item input[type=submit]").on("click", function() {
+		var itemId = $(this).attr("data-id");
+		var projectId = $(this).attr("data-project-id");
+		var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId;
+
+		$.ajax({
+			url: url,
+			method: 'DELETE',
+			success: function(data) {
+				// Hide modal
+				hideModal();
+
+				// Remove it from the items list
+				$("#item-list .item[data-id=" + itemId + "]").slideUp(150, function() {
+					$(this).remove();
+				});
+			},
+			error: function(data) {
+				console.log("Error deleting item", data);
+			},
+		});
+
+		return false;
+	});
 });
 
 function getCookie(name) {
