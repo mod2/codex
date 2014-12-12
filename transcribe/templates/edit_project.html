@@ -33,7 +33,7 @@
 	<fieldset class="faded">
 		<label>Items</label>
 		<section>
-			<div id="item-list">
+			<div id="item-list" class="sortable">
 			{% for item in project.items.all %}
 			<div class="item" data-id="{{ item.id }}">
 				<span><a href="{% url 'transcribe_item' project.id item.id %}">{{ item.name }}</a></span>

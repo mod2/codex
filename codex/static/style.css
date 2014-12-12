@@ -261,6 +261,7 @@ body #main.page #content form input.button:hover {
 }
 
 body #main.page #content form div.item {
+	background: #fff;
 	border-radius: 3px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 	overflow: hidden;
@@ -293,8 +294,26 @@ body #main.page #content form div.item .controls {
 	float: right;
 }
 
+body #main.page #content form div.item .controls span {
+	cursor: pointer;
+}
+
+body #main.page #content form div.item .controls span:hover {
+	color: #333;
+}
+
 body #main.page #content form div.item .controls span + span {
 	margin-left: .5em;
+}
+
+body #main.page #content form div.item.placeholder {
+	background: #ddd;
+	border-radius: 3px;
+	box-shadow: none;
+	display: block;
+	height: 2em;
+	margin-top: .5em;
+	padding: 8px 12px;
 }
 
 

@@ -369,6 +369,38 @@ $(document).ready(function() {
 
 		return false;
 	}
+
+
+	// Reordering items on Edit Project page
+	$("#item-list.sortable").sortable({
+		placeholder: "item placeholder",
+		handle: ".reorder",
+		update: function(event, ui) {
+			var order = {};
+			var items = ui.item.parents("#item-list:first").find("div.item");
+
+			for (var i=0; i<items.length; i++) {
+				var item = $(items[i]);
+				order[item.attr("data-id")] = i;
+			}
+
+			var projectId = $("fieldset#name-fieldset input[type=text]").attr("data-id");
+			var url = '/transcribe/api/projects/' + projectId + '/items/update_order/';
+
+			$.ajax({
+				url: url,
+				method: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify(order),
+				success: function(data) {
+				},
+				error: function(data) {
+					console.log("Error! :(", data);
+				},
+			});
+		},
+	});
+	
 });
 
 function getCookie(name) {
