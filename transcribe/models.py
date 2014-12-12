@@ -1,7 +1,10 @@
+from __future__ import unicode_literals
+
 from django.db import models
-from accounts.models import User
 from model_utils.models import StatusModel
 from model_utils import Choices
+
+from accounts.models import User
 
 
 class Project(StatusModel):
