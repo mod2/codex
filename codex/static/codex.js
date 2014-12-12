@@ -547,27 +547,47 @@ $(document).ready(function() {
 			var currentTranscript = $(".transcript textarea").val().trim();
 
 			if (currentTranscript != transcriptionText) {
+				var itemId = $(".transcript").attr("data-id");
+				var projectId = $(".transcript").attr("data-project-id");
+
 				// The text has changed, so autosave it
 				$("label.saved").html("Saving...");
 
-				var itemId = $(".transcript").attr("data-id");
-				var projectId = $(".transcript").attr("data-project-id");
-				var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId + "/transcripts/";
+				// Get an initial transcript if it's not there
+				if (!$(".transcript").attr("data-transcript-id")) {
+					// New transcript for this session
+					var method = 'POST';
+					var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId + "/transcripts/";
 
-				// Post it
-				$.ajax({
-					url: url,
-					method: 'POST',
-					contentType: 'application/json',
-					data: JSON.stringify({
+					var data = {
 						text: currentTranscript,
 						owner: $("#user-id").html(),
 						item: itemId,
 						status: 'draft',
-					}),
+					};
+				} else {
+					// Update transcript for this session
+					var method = 'PATCH';
+					var transcriptId = $(".transcript").attr("data-transcript-id");
+					var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId + "/transcripts/" + transcriptId + "/";
+
+					var data = {
+						text: currentTranscript,
+					};
+				}
+
+				// Post it
+				$.ajax({
+					url: url,
+					method: method,
+					contentType: 'application/json',
+					data: JSON.stringify(data),
 					success: function(data) {
 						$("label.saved").html("Saved.");
 
+						$(".transcript").attr("data-transcript-id", data.id);
+
+						// Update current cache
 						transcriptionText = currentTranscript;
 					},
 					error: function(data) {
