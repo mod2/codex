@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div class="right">
-		<label class="saved">Saved 9:48 am</label>
+		<label class="saved"></label>
 		<span id="finish-continue-button">Finish &amp; Continue</span>
 		<span id="finish-button">Finish</span>
 	</div>
@@ -24,7 +24,7 @@
 		<img src="{{ item.url }}" />
 	</div>
 	<div class="transcript" data-project-id="{{ item.project.id }}" data-id="{{ item.id }}">
-		<textarea spellcheck="false"></textarea>
+		<textarea spellcheck="false">{{ item.latest_transcript.text }}</textarea>
 	</div>
 </div>
 {% endblock main %}
