@@ -38,7 +38,7 @@
 	{% for project in projects %}
 	<div class="dashboard-entry project">
 		<div class="controls right">
-			{% if project.owner == user %}
+			{% if project.owner == request.user %}
 			<a class="action" href="{% url 'review_project' project.id %}">Review</a>
             {% endif %}
 			<a class="action button" href="{% url 'get_next_item' project.id %}">Get Item</a>

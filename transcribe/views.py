@@ -66,7 +66,7 @@ def home(request):
                                       | Q(users=request.user)
                                      )
 
-    return render_to_response('index.html', { 'projects': projects, 'user': request.user })
+    return render_to_response('index.html', { 'projects': projects, 'request': request })
 
 @login_required
 def new_project(request):
@@ -80,10 +80,14 @@ def new_project(request):
 def edit_project(request, project_id):
     try:
         project = Project.objects.get(id=project_id)
-        context = {'request': request, 'project': project, 'type': 'edit',
-                   'title': 'Edit Project',
-                   'integrations': settings.INTEGRATIONS}
-        return render_to_response('edit_project.html', context)
+
+        if project.owner == request.user:
+            context = {'request': request, 'project': project, 'type': 'edit',
+                    'title': 'Edit Project',
+                    'integrations': settings.INTEGRATIONS}
+            return render_to_response('edit_project.html', context)
+        else:
+            return render_to_response('error.html', {'type': 403})
     except:
         pass
 
