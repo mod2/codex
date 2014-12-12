@@ -73,9 +73,18 @@ def home(request):
     projects = Project.objects.filter(Q(owner=request.user)
                                       | Q(users=request.user))
 
-    return render_to_response('index.html', {'projects': projects,
-                                             'user': request.user})
+    # Get user's latest transcript for the item (don't try this at home, kids)
+    def add_transcript(item, user):
+        item.latest_transcript = item.latest_transcript(user)
+        return item
 
+    # Get the user's items
+    items = Item.objects.filter(owner=request.user)
+    items = [add_transcript(item, request.user) for item in items if item.status(request.user) in ['draft', '']]
+
+    return render_to_response('index.html', {'projects': projects,
+                                             'items': items,
+                                             'request': request})
 
 @login_required
 def new_project(request):
@@ -89,10 +98,14 @@ def new_project(request):
 def edit_project(request, project_id):
     try:
         project = Project.objects.get(id=project_id)
-        context = {'request': request, 'project': project, 'type': 'edit',
-                   'title': 'Edit Project',
-                   'integrations': settings.INTEGRATIONS}
-        return render_to_response('edit_project.html', context)
+
+        if project.owner == request.user:
+            context = {'request': request, 'project': project, 'type': 'edit',
+                    'title': 'Edit Project',
+                    'integrations': settings.INTEGRATIONS}
+            return render_to_response('edit_project.html', context)
+        else:
+            return render_to_response('error.html', {'type': 403})
     except:
         pass
 

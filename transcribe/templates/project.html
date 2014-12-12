@@ -2,7 +2,7 @@
 
 {% block title %}{{ project.name }}{% endblock title %}
 
-{% block page_link %}<a href="{% url "edit_project" project.id %}">Edit</a>{% endblock page_link %}
+{% block page_link %}{% if project.owner == request.user %}<a href="{% url "edit_project" project.id %}">Edit</a>{% endif %}{% endblock page_link %}
 
 {% block content %}
 <div class="project-details">
@@ -39,6 +39,7 @@
 		</section>
 	</div>
 
+	{% if project.owner == request.user %}
 	<div class="group">
 		<label>Download</label>
 		<section>
@@ -58,6 +59,7 @@
 			</ul>
 		</section>
 	</div>
+	{% endif %}
 </div>
 
 {% endblock content %}

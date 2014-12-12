@@ -49,9 +49,13 @@ class Item(models.Model):
         return "{item} in project {project}".format(project=self.project,
                                                     item=self.name)
 
-    @property
-    def status(self):
-        return self.transcripts.first().status
+    def latest_transcript(self, user):
+        return self.transcripts.filter(owner=user).first()
+
+    def status(self, user):
+        transcript = self.latest_transcript(user)
+
+        return transcript.status if transcript else ''
 
     def skip(self):
         skipped = Transcript(owner=self.owner, item=self,
@@ -76,7 +80,7 @@ class Transcript(StatusModel):
 
     def __unicode__(self):
         return "transcript by {owner} for item {item}".format(owner=self.owner,
-                                                              item=self)
+                                                              item=self.item)
 
     class Meta:
         ordering = ['-date']

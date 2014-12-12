@@ -10,25 +10,19 @@
 	<a class="right" href="{% url "archived_projects" %}">Archived Items</a>
 	<h1>Your Active Items</h1>
 
+    {% for item in items %}
 	<div class="dashboard-entry item">
 		<div class="controls right">
-			<a class="action button" href="">Transcribe</a>
+            <a class="action button" href="{% url "transcribe_item" item.project.id item.id %}">Transcribe</a>
 		</div>
 
-		<div class="info"><label>item</label> Grandmother's Journals</div>
-		<h2>page-023</h2>
-		<h3>Saved 5:45 pm, 28 Sep 2014</h3>
+        <div class="info"><label>item</label> {{ item.project.name }}</div>
+		<h2><a href="{% url "transcribe_item" item.project.id item.id %}">{{ item.name }}</a></h2>
+        {% if item.latest_transcript %}
+        <h3>Saved {{ item.latest_transcript.date|date:"g:i a, j M Y" }}</h3>
+        {% endif %}
 	</div>
-
-	<div class="dashboard-entry item">
-		<div class="controls right">
-			<a class="action button" href="">Transcribe</a>
-		</div>
-
-		<div class="info"><label>item</label> Grandpa's Will</div>
-		<h2>page-1</h2>
-		<h3>Saved 9:31 am, 7 Jan 2014</h3>
-	</div>
+    {% endfor %}
 </section>
 
 <section class="dashboard-projects dashboard-group">
@@ -38,7 +32,7 @@
 	{% for project in projects %}
 	<div class="dashboard-entry project">
 		<div class="controls right">
-			{% if project.owner == user %}
+			{% if project.owner == request.user %}
 			<a class="action" href="{% url 'review_project' project.id %}">Review</a>
             {% endif %}
 			<a class="action button" href="{% url 'get_next_item' project.id %}">Get Item</a>
