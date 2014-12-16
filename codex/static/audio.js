@@ -5,6 +5,7 @@ $(document).ready(function() {
 	var mePlayer = new MediaElementPlayer("audio", {
 		features: ['playpause', 'rewind', 'current', 'progress', 'duration', 'volume'],
 		enableKeyboard: false,
+		audioWidth: '100%',
 		success: function(mediaElement, domObject) {
 			// Start at the start time
 			if (startTime) {
