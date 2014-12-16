@@ -275,7 +275,7 @@ $(document).ready(function() {
 			},
 			linkType: 'preview',
 			multiselect: true,
-			extensions: ['images', '.mp3'],
+			extensions: ['images', 'audio', 'video'],
 		};
 
 		var button = Dropbox.createChooseButton(options);
