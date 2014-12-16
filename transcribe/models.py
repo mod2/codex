@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+from __future__ import unicode_literals, division
 
 from django.db import models
 from model_utils.models import StatusModel
@@ -42,6 +42,18 @@ class Project(StatusModel):
             return False
 
         return len(filter(check_status, self.items.all()))
+
+    def percentage_done(self):
+        """ Return percentage completion of project """
+
+        num_items = len(self.items.all())
+        num_completed = num_items - self.items_left()
+
+        # Don't divide by 0
+        if num_items > 0:
+            return num_completed / num_items * 100.0
+        else:
+            return 0.0
 
     class Meta:
         ordering = ['name']

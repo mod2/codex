@@ -15,7 +15,9 @@
 	<div class="right">
 		<label class="saved">Loaded</label>
 		<span id="finish-button" class="finish-button" data-uri="{% url "home" %}">Finish</span>
+		{% if item.project.items_left > 1 %}
 		<span id="finish-continue-button" class="finish-button" data-uri="{% url "get_next_item" item.project.id %}">Finish &amp; Continue</span>
+		{% endif %}
 	</div>
 </header>
 

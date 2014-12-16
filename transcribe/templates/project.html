@@ -20,7 +20,7 @@
 	</div>
 
 	<div class="group">
-        <label>{{ project.items.all|length }} Item{% if project.items.all|length != 1 %}s{% endif %}, {{ project.items_left }} left</label>
+        <label>{{ project.items.all|length }} Item{% if project.items.all|length != 1 %}s{% endif %}</label>
 		<section>
 			<ul class="items">
                 {% for item in project.items.all %}
