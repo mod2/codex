@@ -938,3 +938,35 @@ form.edit-project.new fieldset.faded {
 .autocomplete-suggestions .autocomplete-suggestion:hover {
 	background: #eee;
 }
+
+
+/* Messages and errors */
+/* -------------------------------------------------- */
+
+.message {
+	background: #eee;
+	font-size: 1.2em;
+	margin-bottom: 1em;
+	padding: 11px 13px;
+}
+
+.message.success {
+	background: #d7f9c4;
+	color: #4f8623;
+}
+
+.message.error {
+	background: #f9c4c4;
+	color: #b30707;
+}
+
+ul.errorlist {
+	list-style: none;
+	padding: 0;
+}
+
+ul.errorlist li {
+	background: #f9c4c4;
+	color: #b30707;
+	padding: 11px 13px;
+}
