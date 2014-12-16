@@ -150,6 +150,15 @@ body #main.page #content form fieldset + fieldset {
 	padding-top: 2em;
 }
 
+body #main.page #content form a {
+	color: #4d86c7;
+	text-decoration: none;
+}
+
+body #main.page #content form a:hover {
+	color: #333;
+}
+
 body #main.page #content form label {
 	font-size: 1.05em;
 	float: left;
