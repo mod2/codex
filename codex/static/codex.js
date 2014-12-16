@@ -282,7 +282,7 @@ $(document).ready(function() {
 		var button = Dropbox.createChooseButton(options);
 
 		// Add the button to the form
-		$("form.add-items section .main article[data-type=dropbox]").append(button);
+		$("form.add-items section .main article[data-type=dropbox] div#button-wrapper").append(button);
 	}
 
 
