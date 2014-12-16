@@ -535,72 +535,85 @@ $(document).ready(function() {
 		});
 	}
 
-	// Autosaving (only on transcribe pages), every 5 seconds (5000 ms)
+	// Autosave function
+	function autoSave() {
+		var currentTranscript = $(".transcript textarea").val().trim();
+
+		if (currentTranscript != transcriptionText) {
+			var itemId = $(".transcript").attr("data-id");
+			var projectId = $(".transcript").attr("data-project-id");
+
+			// The text has changed, so autosave it
+			$("label.saved").html("Saving...");
+
+			// Get an initial transcript if it's not there
+			if (!$(".transcript").attr("data-transcript-id")) {
+				// New transcript for this session
+				var method = 'POST';
+				var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId + "/transcripts/";
+
+				var data = {
+					text: currentTranscript,
+					owner: $("#user-id").html(),
+					item: itemId,
+					status: 'draft',
+				};
+			} else {
+				// Update transcript for this session
+				var method = 'PATCH';
+				var transcriptId = $(".transcript").attr("data-transcript-id");
+				var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId + "/transcripts/" + transcriptId + "/";
+
+				var data = {
+					text: currentTranscript,
+				};
+			}
+
+			// Post it
+			$.ajax({
+				url: url,
+				method: method,
+				contentType: 'application/json',
+				data: JSON.stringify(data),
+				success: function(data) {
+					$("label.saved").html("Saved");
+
+					$(".transcript").attr("data-transcript-id", data.id);
+
+					// Update current cache
+					transcriptionText = currentTranscript;
+				},
+				error: function(data) {
+					$("label.saved").html("Error saving, trying again...");
+
+					console.log("error", data);
+				},
+			});
+		} else {
+			$("label.saved").html("Saved");
+		}
+	}
+
+	// Autosaving (only on transcribe pages)
 	if ($("#main").hasClass("transcribe")) {
 		// On typing into the textarea, clear the "Saved" text
 		$(".transcript textarea").on("keypress", function() {
 			$("label.saved").html("");
 		});
 
-		// Autosave
-		var intervalId = window.setInterval(function() {
-			var currentTranscript = $(".transcript textarea").val().trim();
-
-			if (currentTranscript != transcriptionText) {
-				var itemId = $(".transcript").attr("data-id");
-				var projectId = $(".transcript").attr("data-project-id");
-
-				// The text has changed, so autosave it
-				$("label.saved").html("Saving...");
-
-				// Get an initial transcript if it's not there
-				if (!$(".transcript").attr("data-transcript-id")) {
-					// New transcript for this session
-					var method = 'POST';
-					var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId + "/transcripts/";
-
-					var data = {
-						text: currentTranscript,
-						owner: $("#user-id").html(),
-						item: itemId,
-						status: 'draft',
-					};
-				} else {
-					// Update transcript for this session
-					var method = 'PATCH';
-					var transcriptId = $(".transcript").attr("data-transcript-id");
-					var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId + "/transcripts/" + transcriptId + "/";
-
-					var data = {
-						text: currentTranscript,
-					};
-				}
-
-				// Post it
-				$.ajax({
-					url: url,
-					method: method,
-					contentType: 'application/json',
-					data: JSON.stringify(data),
-					success: function(data) {
-						$("label.saved").html("Saved");
-
-						$(".transcript").attr("data-transcript-id", data.id);
-
-						// Update current cache
-						transcriptionText = currentTranscript;
-					},
-					error: function(data) {
-						$("label.saved").html("Error saving, trying again...");
-
-						console.log("error", data);
-					},
-				});
-			} else {
-				$("label.saved").html("Saved");
-			}
-		}, 5000);
+		// Autosave every 5 seconds
+		var intervalId = window.setInterval(autoSave(), 5000);
 	}
+
+	// Save before closing tab
+	$(window).unload(function() {
+		// See if there's unsaved text and autosave if there is
+		var currentTranscript = $(".transcript textarea").val().trim();
+
+		if (currentTranscript != transcriptionText) {
+			autoSave();
+		}
+	});
 
 
 	// Finish item
