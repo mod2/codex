@@ -1017,3 +1017,42 @@ ul.errorlist li {
 	color: #b30707;
 	padding: 11px 13px;
 }
+
+
+/* Audio upload */
+/* -------------------------------------------------- */
+
+.add-items h4 {
+	color: #555;
+	font-weight: normal;
+	margin-bottom: 0;
+}
+
+.add-items .controls {
+	color: #444;
+	font-size: .9em;
+	line-height: 1.1em;
+	margin-top: 5px;
+	padding-left: 1.5em;
+	position: relative;
+}
+
+.add-items .controls input[type=checkbox] {
+	float: left;
+	position: absolute;
+	left: 0;
+}
+
+.add-items .controls input[type=text] {
+	border: none;
+	border-bottom: solid 1px #ccc;
+	border-radius: 0;
+	display: inline;
+	padding: 0;
+	width: 1.5em;
+}
+
+.add-items .controls input[type=text]:focus {
+	border-bottom-color: #3fa0ff;
+	outline: none;
+}
