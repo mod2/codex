@@ -205,12 +205,12 @@ $(document).ready(function() {
 			case 'tiff':
 				return 'image';
 			case 'mp3':
+			case 'mp4':
 			case 'wav':
 			case 'aiff':
 				return 'audio';
 			case 'mov':
 			case 'm4v':
-			case 'mp4':
 				return 'video';
 			default:
 				return 'unknown';
