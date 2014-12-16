@@ -28,6 +28,21 @@ class Project(StatusModel):
                 break
         return rtn_item
 
+    def items_left(self):
+        """ Return number of items left (where last transcript != finished) """
+
+        def check_status(item):
+            t = item.latest_transcript()
+
+            # No transcript or latest transcript's status != finished
+            if not t or t.status != 'finished':
+                return True
+
+            # Finished, so don't include it
+            return False
+
+        return len(filter(check_status, self.items.all()))
+
     class Meta:
         ordering = ['name']
 
