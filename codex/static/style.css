@@ -300,8 +300,8 @@ body #main.page #content form div.item + div.item {
 	margin-top: .5em;
 }
 
-body #main.page #content form div#item-list + input.button {
-	margin-top: 1em;
+body #main.page #content form div.item:last-child {
+	margin-bottom: 1em;
 }
 
 body #main.page #content form div.item .controls {
