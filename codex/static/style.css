@@ -261,6 +261,11 @@ body #main.page #content form input.button {
 	box-shadow: 0 0 5px #ddd;
 }
 
+body #main.page #content form input.button.spaced {
+	display: block;	
+	margin-top: 2em;
+}
+
 body #main.page #content form input[type=text] + input.button {
 	margin-left: 3px;
 }

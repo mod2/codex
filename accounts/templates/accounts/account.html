@@ -2,6 +2,8 @@
 
 {% block title %}Account{% endblock title %}
 
+{% block page_link %}<a href="{% url "home" %}">&larr; Back</a>{% endblock page_link %}
+
 {% block content %}
 <form action='' method='post'>
     {% csrf_token %}
