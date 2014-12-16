@@ -22,8 +22,12 @@
 </header>
 
 <div class="wrapper">
-	<div class="image">
+	<div class="item {{ item.type }} {{ item.source_type }}">
+		{% if item.type == 'image' %}
 		<img src="{{ item.url }}" />
+		{% elif item.type == 'audio' %}
+		<audio src="{{ item.url }}" />
+		{% endif %}
 	</div>
 	<div class="transcript" data-project-id="{{ item.project.id }}" data-id="{{ item.id }}"{% if item.latest_transcript %} data-transcript-id="{{ item.latest_transcript.id }}"{% endif %}>
 		<textarea autofocus>{{ text }}</textarea>

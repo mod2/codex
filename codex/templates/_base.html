@@ -19,6 +19,12 @@
 	{% endif %}
 	<script src="{% static 'codex.js' %}" type="text/javascript" charset="utf-8"></script>
 
+    {% if type == 'transcribe' and item and item.type == 'audio' %}
+    {# MediaElement.js for audio #}
+    <script src="{% static 'me.js/mediaelement-and-player.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="{% static 'me.js/mediaelementplayer.css' %}" type="text/css" media="screen" charset="utf-8">
+    {% endif %}
+
 	{% if integrations.dropbox %}
 	<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="{{ integrations.dropbox.key }}"></script>
 	{% endif %}

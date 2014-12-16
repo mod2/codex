@@ -206,6 +206,7 @@ $(document).ready(function() {
 				return 'image';
 			case 'mp3':
 			case 'mp4':
+			case 'm4a':
 			case 'wav':
 			case 'aiff':
 				return 'audio';
@@ -668,6 +669,10 @@ $(document).ready(function() {
 			},
 		});
 	});
+
+
+	// Audio transcription
+	$("audio").mediaelementplayer();
 });
 
 function getCookie(name) {

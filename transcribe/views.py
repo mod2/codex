@@ -185,7 +185,8 @@ def transcribe_item(request, project_id, item_id, transcript_id=None):
             return render_to_response('transcribe.html', {'request': request,
                                                           'project': project,
                                                           'item': item,
-                                                          'text': text})
+                                                          'text': text,
+                                                          'type': 'transcribe'})
         else:
             return render_to_response('error.html', {'request': request,
                                                      'type': 403})
