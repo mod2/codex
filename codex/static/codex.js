@@ -603,7 +603,7 @@ $(document).ready(function() {
 		});
 
 		// Autosave every 5 seconds
-		var intervalId = window.setInterval(autoSave(), 5000);
+		var intervalId = window.setInterval(autoSave, 5000);
 	}
 
 	// Save before closing tab
