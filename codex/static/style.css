@@ -386,18 +386,51 @@ body #main.transcribe .item.image img {
 	max-width: 1200px; /* Temporary hack */
 }
 
+body #main.transcribe .item.audio {
+	-webkit-flex: 0.7;
+	flex: 0.7;
+}
+
 body #main.transcribe .item.audio .mejs-container {
 	margin: 40px auto;
 }
 
+@media screen and (min-height: 800px) {
+	body #main.transcribe .item.audio.side-by-side {
+		-webkit-flex: 0.4;
+		flex: 0.4;
+	}
+}
+
+@media screen and (max-height: 600px) {
+	body #main.transcribe .item.audio.side-by-side ul.instructions {
+		display: none;
+	}
+}
+
+@media screen and (min-height: 1000px) {
+	body #main.transcribe .item.audio.side-by-side {
+		-webkit-flex: 0.3;
+		flex: 0.3;
+	}
+}
+
 body #main.transcribe .item.audio ul.instructions {
 	-webkit-column-count: 2;
+	column-count: 2;
 	color: #8ba4b6;
 	font-size: .9em;
 	line-height: 1.7em;
 	list-style: none;
 	margin: 40px auto;
 	max-width: 480px;
+}
+
+@media screen and (max-width: 1100px) {
+	body #main.transcribe .item.audio ul.instructions {
+		-webkit-column-count: 1;
+		column-count: 1;
+	}
 }
 
 body #main.transcribe .transcript {
