@@ -7,12 +7,12 @@
     {% csrf_token %}
 	<fieldset>
         {{ form.as_p }}
+
+		<input type="submit" value="Save" class="button" />
 	</fieldset>
 
-
-	<input type="submit" value="Save"/>
 	<fieldset>
-		<label>Change Password</label>
+		<label>Password</label>
 		<a href="{% url 'accounts:password_change' %}">Change password</a>
 	</fieldset>
 </form>

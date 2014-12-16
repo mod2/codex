@@ -9,6 +9,12 @@ class UserForm(forms.ModelForm):
     """
     Form for the user account information/preferences.
     """
+
+    # Turn off the colon label_suffix
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(UserForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = User
         fields = ['email', 'name', 'layout', 'theme']
