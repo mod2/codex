@@ -14,8 +14,8 @@
 	</div>
 	<div class="right">
 		<label class="saved">Loaded</label>
-		<span id="finish-button">Finish</span>
-		<span id="finish-continue-button">Finish &amp; Continue</span>
+		<span id="finish-button" class="finish-button" data-uri="{% url "home" %}">Finish</span>
+		<span id="finish-continue-button" class="finish-button" data-uri="{% url "get_next_item" item.project.id %}">Finish &amp; Continue</span>
 	</div>
 </header>
 
@@ -23,7 +23,7 @@
 	<div class="image">
 		<img src="{{ item.url }}" />
 	</div>
-	<div class="transcript" data-project-id="{{ item.project.id }}" data-id="{{ item.id }}">
+	<div class="transcript" data-project-id="{{ item.project.id }}" data-id="{{ item.id }}"{% if item.latest_transcript %} data-transcript-id="{{ item.latest_transcript.id }}"{% endif %}>
 		<textarea autofocus>{{ text }}</textarea>
 	</div>
 </div>

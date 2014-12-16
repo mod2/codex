@@ -601,6 +601,60 @@ $(document).ready(function() {
 			}
 		}, 5000);
 	}
+
+
+	// Finish item
+	$(".finish-button").on("click", function() {
+		var itemId = $(".transcript").attr("data-id");
+		var projectId = $(".transcript").attr("data-project-id");
+		var currentTranscript = $(".transcript textarea").val().trim();
+
+		// Allow for "blank" transcripts
+		if (currentTranscript == '') {
+			currentTranscript = ' ';
+		}
+
+		var data = {
+			text: currentTranscript,
+			owner: $("#user-id").html(),
+			item: itemId,
+			status: 'finished',
+		};
+		var method = 'PATCH';
+		var url = "/transcribe/api/projects/" + projectId + "/items/" + itemId + "/transcripts/";
+		var redirectUrl = $(this).attr("data-uri");
+
+		// The text has changed, so autosave it
+		$("label.saved").html("Saving...");
+
+		if (!$(".transcript").attr("data-transcript-id")) {
+			// New transcript for this session
+			method = 'POST';
+		} else {
+			// Modify the existing transcript
+			var transcriptId = $(".transcript").attr("data-transcript-id");
+			url += transcriptId + "/";
+		}
+
+		// Post it
+		$.ajax({
+			url: url,
+			method: method,
+			contentType: 'application/json',
+			data: JSON.stringify(data),
+			success: function(data) {
+				$("label.saved").html("Saved");
+
+				// Redirect to dashboard
+				window.location.href = redirectUrl;
+			},
+			error: function(data) {
+				$("label.saved").html("Error finishing item");
+
+				console.log("error", data);
+			},
+		});
+	});
 });
 
 function getCookie(name) {
