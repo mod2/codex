@@ -2,11 +2,15 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 from django.db.models import Q
+from django.forms.models import model_to_dict
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from rest_framework import viewsets, authentication, permissions, status
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
+import json
 
 from .models import Project, Item, Transcript
 from .serializers import ProjectSerializer, ItemSerializer, TranscriptSerializer
@@ -203,3 +207,51 @@ def get_next_item(request, project_id):
     else:
         return render_to_response('error.html', {'request': request,
                                                  'type': 404})
+
+
+@login_required
+def download_project(request, project_id, download_type):
+    project = Project.objects.get(id=project_id)
+
+    if download_type == 'text':
+        # For each item, get the last transcript
+        final_transcript = []
+        for item in project.items.all().order_by('order', 'id'):
+            if item.latest_transcript():
+                final_transcript.append(item.latest_transcript().text)
+        return HttpResponse('\n---\n'.join(final_transcript))
+    elif download_type == 'json':
+        def get_transcript_dict(transcript):
+            return {
+                'status': transcript.status,
+                'text': transcript.text,
+                'owner': transcript.owner.get_full_name(),
+                'date': transcript.date.strftime('%B %d, %Y'),
+            }
+
+        def get_item_dict(item):
+            return {
+                'name': item.name,
+                'type': item.type,
+                'source_type': item.source_type,
+                'url': item.url,
+                'owner': item.owner.id,
+                'order': item.order,
+                'transcripts': [get_transcript_dict(t) for t in item.transcripts.all()],
+            }
+
+        data = {
+            'project': {
+                'id': project.id,
+                'name': project.name,
+                'owner': project.owner.id,
+                'users': [u.get_full_name() for u in project.users.all()],
+                'items': [get_item_dict(i) for i in project.items.all()],
+            },
+            'users': [{ 'id': u.id, 'name': u.name, 'email': u.email } for u in set(list(project.users.all()).append(project.owner))],
+        }
+
+        return JsonResponse(json.dumps(data), safe=False)
+    else:
+        return render_to_response('error.html', {'request': request,
+                                                 'type': 500})

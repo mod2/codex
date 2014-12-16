@@ -23,6 +23,7 @@ urlpatterns = patterns(
     url(r'^projects/(?P<project_id>\d+)/items/(?P<item_id>\d+)/$', 'transcribe.views.transcribe_item', name='transcribe_item'),
     url(r'^projects/(?P<project_id>\d+)/review/$', 'transcribe.views.review_project', name='review_project'),
     url(r'^projects/(?P<project_id>\d+)/get-next-item/$', 'transcribe.views.get_next_item', name='get_next_item'),
+    url(r'^projects/(?P<project_id>\d+)/download/(?P<download_type>.+)/$', 'transcribe.views.download_project', name='download_project'),
     url(r'^projects/(?P<project_id>\d+)/$', 'transcribe.views.project', name='project'),
 
     # Archived projects/items
