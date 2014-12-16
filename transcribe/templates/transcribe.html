@@ -26,7 +26,17 @@
 		{% if item.type == 'image' %}
 		<img src="{{ item.url }}" />
 		{% elif item.type == 'audio' %}
-		<audio src="{{ item.url }}" />
+		<div class="audio-wrapper">
+			<audio src="{{ item.url }}" data-start-time="5" data-end-time="10" />
+		</div>
+		<ul class="instructions">
+			<li><b>Play/pause:</b> shift+space</li>
+			<li><b>Jump to beginning:</b> ctrl+0</li>
+			<li><b>Rewind 5 seconds:</b> ctrl+j</li>
+			<li><b>Fast forward 5 seconds:</b> ctrl+k</li>
+			<li><b>Rewind 30 seconds:</b> ctrl+h</li>
+			<li><b>Fast forward 30 seconds:</b> ctrl+l</li>
+		</ul>
 		{% endif %}
 	</div>
 	<div class="transcript" data-project-id="{{ item.project.id }}" data-id="{{ item.id }}"{% if item.latest_transcript %} data-transcript-id="{{ item.latest_transcript.id }}"{% endif %}>

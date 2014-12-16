@@ -669,10 +669,6 @@ $(document).ready(function() {
 			},
 		});
 	});
-
-
-	// Audio transcription
-	$("audio").mediaelementplayer();
 });
 
 function getCookie(name) {
