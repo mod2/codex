@@ -27,7 +27,7 @@
 		<img src="{{ item.url }}" />
 		{% elif item.type == 'audio' %}
 		<div class="audio-wrapper">
-			<audio src="{{ item.url }}" data-start-time="5" data-end-time="10" />
+			<audio src="{{ item.url }}" data-start-time="{{ item.audio_start }}" data-end-time="{{ item.audio_stop }}" />
 		</div>
 		<ul class="instructions">
 			<li><b>Play/pause:</b> shift+space</li>

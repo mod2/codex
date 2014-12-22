@@ -71,8 +71,12 @@
 
                 <div id="button-wrapper"></div>
 
+				<div class="importing" style="display: none;">Importing...</div>
+
                 <h4>Options</h4>
-                <div class="controls"><input type="checkbox" checked /> <label>Split audio into chunks of </label> <input type="text" value="62" /> seconds each</div>
+				<div class="controls"><input id="chunk-audio-checkbox" type="checkbox" checked /> <label>Split audio into chunks of </label> <input id="chunk-audio-size" type="text" value="60" /> seconds each with <input id="chunk-audio-overlap" type="text" value="2" /> seconds overlap</div>
+
+				<div class="audio-list"></div>
 			</article>
 			<article data-type="flickr">
 				<h3>Flickr Import</h3>

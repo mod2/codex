@@ -222,6 +222,57 @@ $(document).ready(function() {
 		return link.replace("www.dropbox", "dl.dropbox").replace("?dl=0", "?dl=1");
 	}
 
+	function sendItems(files, itemFiles, projectId, orderNum) {
+		// Collapse the list
+		var items = [];
+		var order = orderNum;
+		for (var i in files) {
+			for (var j in itemFiles["item" + i]) {
+				var item = itemFiles["item" + i][j];
+				item.order = order;
+				items.push(item);
+
+				order += 1;
+			}
+		}
+
+		$("article[data-type=dropbox] .importing").fadeOut(100);
+
+		if (items.length > 0) {
+			// Send this to the Codex API
+			$.ajax({
+				url: '/transcribe/api/projects/' + projectId + '/items/',
+				method: 'POST',
+				data: JSON.stringify(items),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function(returnedItems) {
+					// Update the item list on the page
+					$.map(returnedItems, function(item, i) {
+						var html = "<div class='item new' data-id='" + item.id + "'>";
+						html += "<span>" + item.name + "</span>\n";
+						html += "<div class='controls'>\n";
+						html += "<span class='delete'>x</span>\n";
+						html += "<span class='edit'>e</span>\n";
+						html += "</div>\n";
+						html += "</div>";
+
+						$("#item-list").append(html);
+					});
+
+					// Close the modal
+					hideModal();
+
+					// Clean out audio-list
+					$("article[data-type=dropbox] .audio-list").html('');
+				},
+				error: function(data) {
+					console.log("error", data);
+				},
+			});
+		}
+	}
+
 	// Add Dropbox if it's included
 	if ($("script#dropboxjs").length > 0) {
 		var options = {
@@ -231,46 +282,84 @@ $(document).ready(function() {
 				// What order # to start with (start with - 1 because we += 1 before)
 				var order = $("#item-list .item").length - 1;
 
-				var items = $.map(files, function(file, i) {
-					order += 1;
-					return {
-						'name': file.name,
-						'url': parseDropboxLink(file.link),
-						'type': getFileType(file.name),
-						'project': parseInt(projectId),
-						'source_type': 'dropbox',
-						'order': order,
-					};
-				});
+				// Loading text
+				$("article[data-type=dropbox] .importing").fadeIn(100);
 
-				// Send this to the Codex API
-				$.ajax({
-					url: '/transcribe/api/projects/' + projectId + '/items/',
-					method: 'POST',
-					data: JSON.stringify(items),
-					contentType: "application/json; charset=utf-8",
-					dataType: "json",
-					success: function(returnedItems) {
-						// Update the item list on the page
-						$.map(returnedItems, function(item, i) {
-							var html = "<div class='item new' data-id='" + item.id + "'>";
-							html += "<span>" + item.name + "</span>\n";
-							html += "<div class='controls'>\n";
-							html += "<span class='delete'>x</span>\n";
-							html += "<span class='edit'>e</span>\n";
-							html += "</div>\n";
-							html += "</div>";
+				var itemFiles = {};
+				for (var i in files) {
+					var file = files[i];
 
-							$("#item-list").append(html);
+					// If it's audio, load and chunk it
+					if (getFileType(file.name) == 'audio' && $("#chunk-audio-checkbox").attr("checked")) {
+						var chunkDuration = parseInt($("#chunk-audio-size").val().trim());
+						var chunkOverlap = parseInt($("#chunk-audio-overlap").val().trim());
+
+						$("<div id='item" + i + "'><audio src='" + parseDropboxLink(file.link) + "'  data-file-name='" + file.name + "' data-id='" + i + "'/></div>").appendTo("article[data-type=dropbox] .audio-list");
+
+						var meItem = new MediaElementPlayer("#item" + i + " audio");
+						meItem.media.addEventListener("loadedmetadata", function(item) {
+							var fileName = item.target.attributes['data-file-name'].value;
+							var fileLink = item.target.attributes['src'].value;
+							var itemId = item.target.attributes['data-id'].value;
+							// Initialize array
+							if (typeof itemFiles["item" + itemId] == 'undefined') {
+								itemFiles["item" + itemId] = [];
+							}
+
+							if (item.target.duration > chunkDuration) {
+								var numChunks = Math.ceil(item.target.duration / chunkDuration);
+								for (var j=0; j<numChunks; j++) {
+									var start = j * chunkDuration;
+									var stop = (j+1) * chunkDuration + chunkOverlap;
+
+									// Boundary checking
+									if (stop > item.target.duration) {
+										stop = item.target.duration;
+									}
+
+									itemFiles["item" + itemId].push({
+										'name': fileName + " - part " + (j + 1),
+										'url': fileLink,
+										'type': getFileType(fileName),
+										'project': parseInt(projectId),
+										'source_type': 'dropbox',
+										'audio_start': start,
+										'audio_stop': stop,
+									});
+								}
+							} else {
+								// Don't chunk
+								itemFiles["item" + itemId].push({
+									'name': fileName,
+									'url': fileLink,
+									'type': getFileType(fileName),
+									'project': parseInt(projectId),
+									'source_type': 'dropbox',
+								});
+							}
+							$("item#" + i).remove();
+
+							// Check to see if queue is empty, then send
+							if (Object.keys(itemFiles).length == files.length) {
+								sendItems(files, itemFiles, projectId, order);
+							}
 						});
+					} else {
+						// Normal item
+						itemFiles["item" + itemId].push({
+							'name': file.name,
+							'url': parseDropboxLink(file.link),
+							'type': getFileType(file.name),
+							'project': parseInt(projectId),
+							'source_type': 'dropbox',
+						});
+					}
+				}
 
-						// Close the modal
-						hideModal();
-					},
-					error: function(data) {
-						console.log("error", data);
-					},
-				});
+				// Check to see if queue is empty, then send
+				if (Object.keys(itemFiles).length == files.length) {
+					sendItems(files, itemFiles, projectId, order);
+				}
 			},
 			cancel: function() {
 			},

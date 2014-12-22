@@ -956,6 +956,17 @@ form.edit-project.new fieldset.faded {
 	display: none;
 }
 
+.modal form.add-items section .main article .importing {
+	color: #7b9fd7;
+	display: none;
+	font-style: italic;
+	margin: 1em 0 .5em;
+}
+
+.modal form.add-items section .main article .audio-list {
+	display: none;
+}
+
 .modal form.add-items section .main article:first-child {
 	display: block;
 }

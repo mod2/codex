@@ -13,16 +13,20 @@
 	<link rel="shortcut icon" href="{% static 'favicon.png' %}?v=6">
 
 	<script src="{% static 'jquery-2.1.1.min.js' %}" type="text/javascript" charset="utf-8"></script>
+
+	{# New project page, edit project page #}
 	{% if type == 'edit' or type == 'new' %}
 	<script src="{% static 'jquery.autocomplete.min.js' %}" type="text/javascript" charset="utf-8"></script>
 	<script src="{% static 'jquery-ui.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'me.js/mediaelement-and-player.min.js' %}" type="text/javascript" charset="utf-8"></script>
 	{% endif %}
+
 	<script src="{% static 'codex.js' %}" type="text/javascript" charset="utf-8"></script>
 
+    {# Audio controls #}
     {% if type == 'transcribe' and item and item.type == 'audio' %}
 	<script src="{% static 'audio.js' %}" type="text/javascript" charset="utf-8"></script>
 	<script src="{% static 'jquery.hotkeys.js' %}" type="text/javascript" charset="utf-8"></script>
-    {# MediaElement.js for audio #}
     <script src="{% static 'me.js/mediaelement-and-player.min.js' %}" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="{% static 'me.js/mediaelementplayer.css' %}" type="text/css" media="screen" charset="utf-8">
     {% endif %}
