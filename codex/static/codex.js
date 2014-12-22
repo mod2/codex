@@ -301,6 +301,7 @@ $(document).ready(function() {
 							var fileName = item.target.attributes['data-file-name'].value;
 							var fileLink = item.target.attributes['src'].value;
 							var itemId = item.target.attributes['data-id'].value;
+
 							// Initialize array
 							if (typeof itemFiles["item" + itemId] == 'undefined') {
 								itemFiles["item" + itemId] = [];
@@ -345,8 +346,13 @@ $(document).ready(function() {
 							}
 						});
 					} else {
+						// Initialize array
+						if (typeof itemFiles["item" + i] == 'undefined') {
+							itemFiles["item" + i] = [];
+						}
+
 						// Normal item
-						itemFiles["item" + itemId].push({
+						itemFiles["item" + i].push({
 							'name': file.name,
 							'url': parseDropboxLink(file.link),
 							'type': getFileType(file.name),

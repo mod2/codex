@@ -72,11 +72,17 @@ class ItemViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
 
 @login_required
 def home(request):
+    # See if user has an active item for the project
+    def add_has_item(project, user):
+        project.has_active_item = project.user_has_item(user)
+        return project
+
     # Get all the user's projects (projects where user is owner or the user is
     # in the project users list
     projects = Project.objects.filter(Q(owner=request.user)
                                       | Q(users=request.user),
                                       status='active')
+    projects = [add_has_item(project, request.user) for project in projects]
 
     # Get user's latest transcript for the item (don't try this at home, kids)
     def add_transcript(item, user):

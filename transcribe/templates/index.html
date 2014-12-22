@@ -39,7 +39,7 @@
 			{% if project.owner == request.user %}
 			<a class="action" href="{% url 'review_project' project.id %}">Review</a>
             {% endif %}
-            {% if project.items_available > 0 %}
+            {% if project.items_available > 0 and not project.has_active_item %}
 			<a class="action button" href="{% url 'get_next_item' project.id %}">Get Item</a>
             {% endif %}
 		</div>
