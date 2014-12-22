@@ -29,6 +29,8 @@ class ItemSerializer(serializers.ModelSerializer):
                   'project',
                   'owner',
                   'order',
+                  'audio_start',
+                  'audio_stop',
                   )
 
 

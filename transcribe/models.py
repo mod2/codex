@@ -72,6 +72,11 @@ class Item(models.Model):
                               blank=True, null=True)
     order = models.PositiveSmallIntegerField()
 
+    audio_start = models.PositiveSmallIntegerField(null=True, default=None,
+                                                   blank=True)
+    audio_stop = models.PositiveSmallIntegerField(null=True, default=None,
+                                                  blank=True)
+
     def __unicode__(self):
         return "{item} in project {project}".format(project=self.project,
                                                     item=self.name)

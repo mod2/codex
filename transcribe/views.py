@@ -2,9 +2,9 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.core import serializers
+# from django.core import serializers
 from django.db.models import Q
-from django.forms.models import model_to_dict
+# from django.forms.models import model_to_dict
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from rest_framework import viewsets, authentication, permissions, status
@@ -85,7 +85,8 @@ def home(request):
 
     # Get the user's items
     items = Item.objects.filter(owner=request.user)
-    items = [add_transcript(item, request.user) for item in items if item.status(request.user) in ['draft', '']]
+    items = [add_transcript(item, request.user)
+             for item in items if item.status(request.user) in ['draft', '']]
 
     return render_to_response('index.html', {'projects': projects,
                                              'items': items,
@@ -107,8 +108,8 @@ def edit_project(request, project_id):
 
         if project.owner == request.user:
             context = {'request': request, 'project': project, 'type': 'edit',
-                    'title': 'Edit Project',
-                    'integrations': settings.INTEGRATIONS}
+                       'title': 'Edit Project',
+                       'integrations': settings.INTEGRATIONS}
             return render_to_response('edit_project.html', context)
         else:
             return render_to_response('error.html', {'type': 403})
@@ -155,7 +156,8 @@ def archived_projects(request):
 def archived_items(request):
     try:
         items = Item.objects.filter(owner=request.user)
-        items = [item for item in items if item.status(request.user) == 'finished']
+        items = [item for item in items
+                 if item.status(request.user) == 'finished']
 
         return render_to_response('archived_items.html',
                                   {'request': request, 'items': items})
@@ -237,7 +239,8 @@ def download_project(request, project_id, download_type):
                 'url': item.url,
                 'owner': item.owner.id,
                 'order': item.order,
-                'transcripts': [get_transcript_dict(t) for t in item.transcripts.all()],
+                'transcripts': [get_transcript_dict(t)
+                                for t in item.transcripts.all()],
             }
 
         data = {
@@ -248,7 +251,8 @@ def download_project(request, project_id, download_type):
                 'users': [u.get_full_name() for u in project.users.all()],
                 'items': [get_item_dict(i) for i in project.items.all()],
             },
-            'users': [{ 'id': u.id, 'name': u.name, 'email': u.email } for u in set(list(project.users.all()).append(project.owner))],
+            'users': [{'id': u.id, 'name': u.name, 'email': u.email}
+                      for u in set(list(project.users.all()).append(project.owner))],
         }
 
         return JsonResponse(json.dumps(data), safe=False)
