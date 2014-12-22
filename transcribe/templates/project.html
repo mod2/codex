@@ -7,11 +7,19 @@
 {% block content %}
 <div class="project-details">
 	<div class="group">
+		<label>Status</label>
+		<section>
+			<article>{{ project.percentage_done }}% ({{ project.items_left }} items to be finished)</article>
+			<div class="percentage"><div class="value" style="width: {{ project.percentage_done }}%;"></div></div>
+		</section>
+	</div>
+
+	<div class="group">
 		<label>Users</label>
 		<section>
 			<ul>
 				{% for user in project.users.all %}
-				<li><b>{{ user.get_full_name }}</b></li>
+				<li>{{ user.get_full_name }}</li>
 				{% empty %}
 				<li>Nobody yet. <a href="{% url "edit_project" project.id %}">Add some &rarr;</a></li>
 				{% endfor %}
@@ -29,7 +37,7 @@
 					{% if item.transcripts.all|length > 0 %}
 					<ul>
                         {% for transcript in item.transcripts.all %}
-                        <li class="{{ transcript.status }}"><a href="{% url 'transcribe_item' project.id item.id transcript.id %}">{{ transcript.date|date:"j M Y" }}</a> &mdash; {{ transcript.status }} &mdash; {{ transcript.owner }}</li>
+						<li class="{{ transcript.status }}">{{ transcript.status|title }} — {{ transcript.owner }} &mdash; <a href="{% url 'transcribe_item' project.id item.id transcript.id %}">{{ transcript.date|date:"j M Y" }}</a></li>
                         {% endfor %}
 					</ul>
                     {% endif %}
@@ -41,12 +49,14 @@
 
 	{% if project.owner == request.user %}
 	<div class="group">
-		<label>Download</label>
+		<label>Downloads</label>
 		<section>
 			<ul>
-				<li><a href="">Download transcript</a> (text)</li>
+				<li><a href="">Final transcript</a> (text)</li>
+				<!--
 				<li><a href="">Download transcript</a> (PDF)</li>
 				<li><a href="">Download project history</a> (JSON)</li>
+				-->
 			</ul>
 		</section>
 	</div>

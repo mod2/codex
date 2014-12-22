@@ -633,20 +633,6 @@ body.dark #main.transcribe .transcript textarea {
 	text-decoration: none;
 }
 
-.dashboard-entry .percentage {
-	border: solid 1px #4d9083;
-	height: .8em;
-	margin-top: .5em;
-	width: 150px;
-}
-
-.dashboard-entry .percentage .value {
-	background: #4d9083;
-	display: inline-block;
-	float: left;
-	height: 100%;
-}
-
 .dashboard-group + .dashboard-group {
 	margin-top: 3em;
 }
@@ -778,6 +764,12 @@ form.edit-project.new fieldset.faded {
 
 .project-details .group section ul li {
 	list-style: none;
+}
+
+.project-details .group section ul li ul li {
+	font-size: .9em;
+	font-style: italic;
+	list-style: circle;
 }
 
 .project-details .group section b {
@@ -1067,4 +1059,22 @@ ul.errorlist li {
 .add-items .controls input[type=text]:focus {
 	border-bottom-color: #3fa0ff;
 	outline: none;
+}
+
+
+/* Percentage bars */
+/* -------------------------------------------------- */
+
+.percentage {
+	border: solid 1px #4d9083;
+	height: .8em;
+	margin-top: .5em;
+	width: 150px;
+}
+
+.percentage .value {
+	background: #4d9083;
+	display: inline-block;
+	float: left;
+	height: 100%;
 }

@@ -66,9 +66,9 @@ class Project(StatusModel):
 
         # Don't divide by 0
         if num_items > 0:
-            return num_completed / num_items * 100.0
+            return int(num_completed / num_items * 100.0)
         else:
-            return 0.0
+            return 0
 
     def user_has_item(self, user):
         """ Return true if user has an active item from this project """
