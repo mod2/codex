@@ -43,6 +43,21 @@ class Project(StatusModel):
 
         return len(filter(check_status, self.items.all()))
 
+    def items_available(self):
+        """ Return number of items available for proofing """
+
+        def check_status(item):
+            t = item.latest_transcript()
+
+            # No transcript or latest transcript was skipped
+            if not t or t.status == 'skipped':
+                return True
+
+            # Finished, so don't include it
+            return False
+
+        return len(filter(check_status, self.items.all()))
+
     def percentage_done(self):
         """ Return percentage completion of project """
 
@@ -54,6 +69,13 @@ class Project(StatusModel):
             return num_completed / num_items * 100.0
         else:
             return 0.0
+
+    def user_has_item(self, user):
+        """ Return true if user has an active item from this project """
+        if len(self.items.filter(owner=user)) > 0:
+            return True
+        else:
+            return False
 
     class Meta:
         ordering = ['name']

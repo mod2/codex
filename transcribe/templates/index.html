@@ -39,12 +39,12 @@
 			{% if project.owner == request.user %}
 			<a class="action" href="{% url 'review_project' project.id %}">Review</a>
             {% endif %}
-            {% if project.items_left > 1 %}
+            {% if project.items_available > 0 %}
 			<a class="action button" href="{% url 'get_next_item' project.id %}">Get Item</a>
             {% endif %}
 		</div>
 
-        <div class="info"><label>project</label> {{ project.items_left }} of {{ project.items.all|length }} item{% if project.items.all|length != 1 %}s{% endif %} left, {{ project.users.all|length }} transcriber{% if project.users.all|length != 1 %}s{% endif %}</div>
+        <div class="info"><label>project</label> {{ project.items_available }} of {{ project.items.all|length }} item{% if project.items.all|length != 1 %}s{% endif %} available, {{ project.users.all|length }} transcriber{% if project.users.all|length != 1 %}s{% endif %}</div>
 		<h2><a href="{% url 'project' project.id %}">{{ project.name }}</a></h2>
         <div class="percentage"><div class="value" style="width: {{ project.percentage_done }}%;"></div></div>
 	</div>
