@@ -701,6 +701,16 @@ form.edit-project.new fieldset.faded {
 	opacity: 0.2;
 }
 
+#main.page #content form.edit-project section a.delete-project-link {
+	color: #d24304;
+	font-size: .8em;
+}
+
+#main.page #content form.edit-project section a.delete-project-link:hover {
+	color: #333;
+}
+
+
 
 /* Project Details */
 /* -------------------------------------------------- */
@@ -783,15 +793,6 @@ form.edit-project.new fieldset.faded {
 
 .project-details .group section ul.items li ul li + li {
 	margin-top: .1em;
-}
-
-.project-details .group section a.delete-project-link {
-	color: #d24304;
-	font-size: .8em;
-}
-
-.project-details .group section a.delete-project-link:hover {
-	color: #333;
 }
 
 
