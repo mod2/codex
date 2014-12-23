@@ -249,16 +249,18 @@ def download_project(request, project_id, download_type):
                                 for t in item.transcripts.all()],
             }
 
+        all_users = project.users.all()
+
         data = {
             'project': {
                 'id': project.id,
                 'name': project.name,
                 'owner': project.owner.id,
-                'users': [u.get_full_name() for u in project.users.all()],
+                'users': [u.get_full_name() for u in all_users],
                 'items': [get_item_dict(i) for i in project.items.all()],
             },
             'users': [{'id': u.id, 'name': u.name, 'email': u.email}
-                      for u in set(list(project.users.all()).append(project.owner))],
+                      for u in set(list(all_users).append(project.owner))],
         }
 
         return JsonResponse(json.dumps(data), safe=False)

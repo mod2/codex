@@ -45,7 +45,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     def get_full_name(self):
-        return "{} ({})".format(self.name, self.email) if self.name else self.email
+        return "{0.name} ({0.email})".format(self) if self.name else self.email
 
     def get_short_name(self):
         return self.name if self.name else self.email
