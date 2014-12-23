@@ -7,13 +7,14 @@ from django.db.models import Q
 # from django.forms.models import model_to_dict
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
-from rest_framework import viewsets, authentication, permissions, status
+from rest_framework import viewsets, authentication, permissions, status, views
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
 import json
 
 from .models import Project, Item, Transcript
 from .serializers import ProjectSerializer, ItemSerializer, TranscriptSerializer
+from .serializers import UserProjectSerializer
 
 
 class DefaultViewSetMixin(object):
@@ -68,6 +69,38 @@ class ItemViewSet(DefaultViewSetMixin, viewsets.ModelViewSet):
             item.order = request.data[unicode(item.pk)]
             item.save()
         return Response({"success": True})
+
+
+class UserProjectView(views.APIView):
+    authentication_classes = (
+        authentication.SessionAuthentication,
+    )
+    permission_classes = (
+        permissions.IsAuthenticated,
+    )
+
+    def post(self, request, project_id):
+        data = request.data
+        response_context = {}
+        status_code = 200
+        try:
+            data['project'] = project_id
+        except TypeError:
+            status_code = 400
+            response_context["detail"] = "Expected a JSON dictionary."
+        else:
+            ups = UserProjectSerializer(data=data)
+            if ups.is_valid():
+                ups.save()
+                project = Project.objects.get(pk=project_id)
+                response_context['project'] = project_id
+                response_context['users'] = [{'email': u.email,
+                                              'invited': u.invited}
+                                             for u in project.users.all()]
+            else:
+                status_code = 200
+                response_context["detail"] = ups.errors
+        return Response(response_context, status=status_code)
 
 
 @login_required

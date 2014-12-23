@@ -1,8 +1,19 @@
 from __future__ import unicode_literals
 
+from datetime import timedelta
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.utils import timezone
 from model_utils import Choices
+
+
+def _generate_password():
+    return '1234'
+
+
+def send_invite_email(user):
+    pass
 
 
 class UserManager(BaseUserManager):
@@ -34,6 +45,8 @@ class User(AbstractBaseUser):
     THEMES = Choices('light', 'dark')
     email = models.EmailField('email address', unique=True, db_index=True)
     name = models.CharField(max_length=255, blank=True)
+    date_joined = models.DateTimeField(auto_now_add=True,
+                                       default=timezone.now())
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     layout = models.CharField(max_length=12, default=LAYOUTS.side_by_side,
@@ -59,6 +72,21 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+    @classmethod
+    def create_new_user(cls, email):
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            password = _generate_password()
+            user = User.objects.create(email=email, password=password)
+            send_invite_email(user)
+        return user
+
     @property
     def is_staff(self):
         return self.is_admin
+
+    @property
+    def invited(self):
+        return (not self.is_active
+                and (self.last_login - self.date_joined) < timedelta(seconds=2))

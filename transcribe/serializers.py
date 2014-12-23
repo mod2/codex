@@ -14,6 +14,22 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'owner', 'status', 'users')
 
 
+class UserProjectSerializer(serializers.Serializer):
+    emails = serializers.ListField(child=serializers.EmailField())
+    project = serializers.PrimaryKeyRelatedField(queryset=Project.objects.all())
+
+    def save(self):
+        project = self.validated_data['project']
+        for email in self.validated_data['emails']:
+            user = User.create_new_user(email)
+            project.users.add(user)
+        for email in project.users.all().values('email'):
+            email = email['email']
+            if email not in self.validated_data['emails']:
+                user = User.objects.get(email=email)
+                project.users.remove(user)
+
+
 class ItemSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         many = kwargs.pop('many', True)
