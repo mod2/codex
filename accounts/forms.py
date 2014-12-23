@@ -32,7 +32,7 @@ class AuthenticationForm(forms.Form):
     # Turn off the colon label_suffix
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
-        super(UserForm, self).__init__(*args, **kwargs)
+        super(AuthenticationForm, self).__init__(*args, **kwargs)
 
     class Meta:
         fields = ['email', 'password', 'next']
