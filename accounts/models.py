@@ -2,7 +2,9 @@ from __future__ import unicode_literals
 
 from datetime import timedelta
 
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
 from model_utils import Choices
@@ -13,6 +15,7 @@ def _generate_password():
 
 
 def send_invite_email(user, password):
+    subject = "You're invited."
     msg = """
     You have been invited to help transcribe some family history. Click on the
     following link, change your password (currently "{password}"), then you can
@@ -20,8 +23,10 @@ def send_invite_email(user, password):
     Change password</a>.
 
     email/username: {email}
-    """
-    print(msg.format(email=user.email, password=password))
+    """.format(email=user.email, password=password)
+    from_email = settings.DEFAULT_FROM_EMAIL
+    to_emails = [user.email]
+    send_mail(subject, msg, from_email, to_emails, html_message=msg)
 
 
 class UserManager(BaseUserManager):

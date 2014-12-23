@@ -16,3 +16,10 @@ INTEGRATIONS = {
         'secret': 'your flickr secret here',
     },
 }
+
+DEFAULT_FROM_EMAIL = 'system@localhost'
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
