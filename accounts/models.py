@@ -9,11 +9,19 @@ from model_utils import Choices
 
 
 def _generate_password():
-    return '1234'
+    return '1234567890'
 
 
-def send_invite_email(user):
-    pass
+def send_invite_email(user, password):
+    msg = """
+    You have been invited to help transcribe some family history. Click on the
+    following link, change your password (currently "{password}"), then you can
+    start contributing. <a href="localhost:8000/accounts/password/change/">
+    Change password</a>.
+
+    email/username: {email}
+    """
+    print(msg.format(email=user.email, password=password))
 
 
 class UserManager(BaseUserManager):
@@ -47,7 +55,7 @@ class User(AbstractBaseUser):
     name = models.CharField(max_length=255, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True,
                                        default=timezone.now())
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     layout = models.CharField(max_length=12, default=LAYOUTS.side_by_side,
                               choices=LAYOUTS)
@@ -78,8 +86,10 @@ class User(AbstractBaseUser):
             user = User.objects.get(email=email)
         except User.DoesNotExist:
             password = _generate_password()
-            user = User.objects.create(email=email, password=password)
-            send_invite_email(user)
+            user = User.objects.create(email=email)
+            user.set_password(password)
+            user.save()
+            send_invite_email(user, password)
         return user
 
     @property
@@ -87,6 +97,5 @@ class User(AbstractBaseUser):
         return self.is_admin
 
     @property
-    def invited(self):
-        return (not self.is_active
-                and (self.last_login - self.date_joined) < timedelta(seconds=2))
+    def has_logged_in(self):
+        return not (self.last_login - self.date_joined) < timedelta(seconds=2)

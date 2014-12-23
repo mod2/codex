@@ -95,7 +95,7 @@ class UserProjectView(views.APIView):
                 project = Project.objects.get(pk=project_id)
                 response_context['project'] = project_id
                 response_context['users'] = [{'email': u.email,
-                                              'invited': u.invited}
+                                              'invited': not u.has_logged_in}
                                              for u in project.users.all()]
             else:
                 status_code = 200
