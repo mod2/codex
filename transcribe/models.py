@@ -1,6 +1,7 @@
 from __future__ import unicode_literals, division
 
 from django.db import models
+from django.utils import timezone
 from model_utils.models import StatusModel
 from model_utils import Choices
 
@@ -132,7 +133,8 @@ class Transcript(StatusModel):
     STATUS = Choices('draft', 'finished', 'skipped')
     text = models.TextField()
     owner = models.ForeignKey(User, related_name='transcripts')
-    date = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True, default=timezone.now())
     item = models.ForeignKey(Item, related_name='transcripts')
 
     def __unicode__(self):
@@ -140,4 +142,4 @@ class Transcript(StatusModel):
                                                               item=self.item)
 
     class Meta:
-        ordering = ['-date']
+        ordering = ['-last_modified']

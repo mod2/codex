@@ -58,4 +58,6 @@ class TranscriptSerializer(serializers.ModelSerializer):
                   'owner',
                   'item',
                   'status',
+                  'last_modified',
                   )
+        read_only_fields = ('id', 'last_modified',)
