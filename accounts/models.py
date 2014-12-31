@@ -54,8 +54,8 @@ class User(AbstractBaseUser):
     """
     Custom user class with email as the username and simplified a little.
     """
-    LAYOUTS = Choices('side_by_side', 'stacked')
-    THEMES = Choices('light', 'dark')
+    LAYOUTS = Choices(('side_by_side', 'Side By Side'), ('stacked', 'Stacked'))
+    THEMES = Choices(('light', 'Light'), ('dark', 'Dark'))
     email = models.EmailField('email address', unique=True, db_index=True)
     name = models.CharField(max_length=255, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True,
