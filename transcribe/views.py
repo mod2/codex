@@ -114,7 +114,7 @@ def home(request):
     # in the project users list
     projects = Project.objects.filter(Q(owner=request.user)
                                       | Q(users=request.user),
-                                      status='active')
+                                      status='active').distinct()
     projects = [add_has_item(project, request.user) for project in projects]
 
     # Get user's latest transcript for the item (don't try this at home, kids)
