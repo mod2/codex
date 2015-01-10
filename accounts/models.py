@@ -15,18 +15,23 @@ def _generate_password():
 
 
 def send_invite_email(user, password):
-    subject = "You're invited."
-    msg = """
-    You have been invited to help transcribe some family history. Click on the
-    following link, change your password (currently "{password}"), then you can
-    start contributing. <a href="localhost:8000/accounts/password/change/">
-    Change password</a>.
+    subject = "[Codex] Invite to help transcribe"
 
-    email/username: {email}
+    msg = """
+    <p>You've been invited to use Codex.</p>
+
+    <p>
+    Email/username: <b>{email}</b><br/>
+    Password: <b>{password}</b> (change this!)
+    </p>
+
+    <p><a href="localhost:8000/accounts/password/change/">Log in and change password</a></p>
     """.format(email=user.email, password=password)
+
     from_email = settings.DEFAULT_FROM_EMAIL
     to_emails = [user.email]
-    send_mail(subject, msg, from_email, to_emails, html_message=msg)
+
+    send_mail(subject, msg, from_email, to_emails, html_message=msg, fail_silently=False)
 
 
 class UserManager(BaseUserManager):
