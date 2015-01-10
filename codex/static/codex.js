@@ -280,7 +280,7 @@ $(document).ready(function() {
 				var projectId = $("#name-fieldset input.name").attr("data-id");
 
 				// What order # to start with (start with - 1 because we += 1 before)
-				var order = $("#item-list .item").length - 1;
+				var order = Math.max($("#item-list .item").length - 1, 0);
 
 				// Loading text
 				$("article[data-type=dropbox] .importing").fadeIn(100);
