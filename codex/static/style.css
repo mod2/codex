@@ -384,6 +384,7 @@ body #main.transcribe .item {
 body #main.transcribe .item.image img {
 	display: block;
 	max-width: 1200px; /* Temporary hack */
+	margin: 0px auto;
 }
 
 body #main.transcribe .item.audio {
