@@ -9,7 +9,11 @@ from accounts.models import User
 
 
 class Project(StatusModel):
-    STATUS = Choices('active', 'finished', 'inactive')
+    STATUS = Choices(('active', 'Active'),
+                     ('inactive', 'Inactive'),
+                     ('review', 'In Review'),
+                     ('finished', 'Finished'),
+                     )
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(User, related_name='projects')
     users = models.ManyToManyField(User, related_name="perm_projects",
@@ -135,7 +139,7 @@ class Transcript(StatusModel):
     owner = models.ForeignKey(User, related_name='transcripts')
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True, default=timezone.now())
-    item = models.ForeignKey(Item, related_name='transcripts')
+    item = models.ForeignKey(Item, null=True, related_name='transcripts')
 
     def __unicode__(self):
         return "transcript by {owner} for item {item}".format(owner=self.owner,
@@ -143,3 +147,13 @@ class Transcript(StatusModel):
 
     class Meta:
         ordering = ['-last_modified']
+
+
+class ProjectTranscript(Transcript):
+    project = models.ForeignKey(, related_name="+")
+    last_item = models.ForeignKey(Item, related_name="+")
+
+    def __unicode__(self):
+        return "project transcript by {owner} for item {item}".format(owner=self.owner,
+                                                              item=self.item)
+
