@@ -382,9 +382,11 @@ body #main.transcribe .item {
 }
 
 body #main.transcribe .item.image img {
+	-webkit-transition: max-width .25s ease-in-out;
 	display: block;
-	max-width: 1200px; /* Temporary hack */
 	margin: 0px auto;
+	max-width: 1200px; /* Default */
+	transition: max-width .25s ease-in-out;
 }
 
 body #main.transcribe .item.audio {
@@ -1079,3 +1081,42 @@ ul.errorlist li {
 	float: left;
 	height: 100%;
 }
+
+
+/* Tool menus */
+/* -------------------------------------------------- */
+
+body #main.transcribe header div {
+	position: relative;
+}
+
+body #main.transcribe header .tools-menu {
+	background: #333;
+	border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+	color: #fff;
+	margin-top: 5px;
+	min-width: 250px;
+	position: absolute;
+	right: 0;
+	z-index: 80000;
+}
+
+body #main.transcribe header .tools-menu .tool-group {
+	padding: 12px 15px;
+}
+
+body #main.transcribe header .tools-menu label {
+	display: block;
+	margin-bottom: 3px;
+	padding: 0;
+}
+
+body #main.transcribe header .tools-menu select {
+	display: block;
+}
+
+body #main.transcribe header .tools-menu select {
+	display: block;
+}
+
