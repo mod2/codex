@@ -9,11 +9,13 @@ from accounts.models import User
 
 
 class Project(StatusModel):
-    STATUS = Choices(('active', 'Active'),
-                     ('inactive', 'Inactive'),
-                     ('review', 'In Review'),
-                     ('finished', 'Finished'),
-                     )
+    STATUS = Choices(
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+        ('review', 'In Review'),
+        ('finished', 'Finished'),
+    )
+
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(User, related_name='projects')
     users = models.ManyToManyField(User, related_name="perm_projects",
@@ -150,10 +152,9 @@ class Transcript(StatusModel):
 
 
 class ProjectTranscript(Transcript):
-    project = models.ForeignKey(, related_name="+")
+    project = models.ForeignKey(Project, related_name="final_transcripts")
     last_item = models.ForeignKey(Item, related_name="+")
 
     def __unicode__(self):
-        return "project transcript by {owner} for item {item}".format(owner=self.owner,
-                                                              item=self.item)
-
+        return ("project transcript by {owner} for item {item}"
+                .format(owner=self.owner, item=self.item))
