@@ -136,7 +136,12 @@ class Item(models.Model):
 
 
 class Transcript(StatusModel):
-    STATUS = Choices('draft', 'finished', 'skipped')
+    STATUS = Choices(
+        ('draft', 'Draft'),
+        ('finished', 'Finished'),
+        ('skipped', 'Skipped'),
+    )
+
     text = models.TextField()
     owner = models.ForeignKey(User, related_name='transcripts')
     created = models.DateTimeField(auto_now_add=True)
@@ -153,8 +158,8 @@ class Transcript(StatusModel):
 
 class ProjectTranscript(Transcript):
     project = models.ForeignKey(Project, related_name="final_transcripts")
-    last_item = models.ForeignKey(Item, related_name="+")
+    last_item_seen = models.ForeignKey(Item, related_name="+")
 
     def __unicode__(self):
-        return ("project transcript by {owner} for item {item}"
-                .format(owner=self.owner, item=self.item))
+        return ("project transcript by {owner} for project {project}"
+                .format(owner=self.owner, project=self.project))
