@@ -9,5 +9,7 @@
 	<p class="message">Sorry, you don't have access to that.</p>
 	{% elif type == 404 %}
 	<p class="message">Sorry, that doesn't exist.</p>
+	{% elif type == 500 %}
+    <p class="message">Server error. {{ message }}</p>
 	{% endif %}
 {% endblock content %}

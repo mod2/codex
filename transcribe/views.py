@@ -218,7 +218,7 @@ def transcribe_item(request, project_id, item_id, transcript_id=None):
             text = ''
 
         # Override with specified transcript
-        if transcript_id is not None:
+        if transcript_id:
             try:
                 transcript = Transcript.objects.get(id=transcript_id, item=item)
                 text = transcript.text
@@ -226,7 +226,7 @@ def transcribe_item(request, project_id, item_id, transcript_id=None):
                 pass
 
         # Make sure they have access (owner or are in the project)
-        if request.user == project.owner or request.user in project.users.all:
+        if request.user == project.owner or Project.objects.filter(id=project.id, users__id=request.user.id):
             return render_to_response('transcribe.html', {'request': request,
                                                           'project': project,
                                                           'item': item,
@@ -236,7 +236,9 @@ def transcribe_item(request, project_id, item_id, transcript_id=None):
             return render_to_response('error.html', {'request': request,
                                                      'type': 403})
     except:
-        pass
+        return render_to_response('error.html', {'request': request,
+                                                    'type': 500,
+                                                 'message': "Something bad happened."})
 
 
 @login_required
