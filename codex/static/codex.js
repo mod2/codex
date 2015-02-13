@@ -775,6 +775,19 @@ $(document).ready(function() {
 
 		return false;
 	});
+
+	$("#tool-zoom select").on("change", function() {
+		// Get the zoom value
+		var zoomValue = $(this).val();
+
+		// Remove any existing zoom classes
+		$("body #main.transcribe").removeClass("zoom-full zoom-25 zoom-50 zoom-75 zoom-100 zoom-150 zoom-200 zoom-300");
+
+		// Apply the appropriate class
+		$("body #main.transcribe").addClass("zoom-" + zoomValue);
+
+		return false;
+	});
 });
 
 function getCookie(name) {

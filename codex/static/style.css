@@ -1121,3 +1121,44 @@ body #main.transcribe header .tools-menu select {
 	display: block;
 	width: 100%;
 }
+
+/* Zoom */
+body #main.transcribe.zoom-default .item.image img {
+	max-width: 1200px;
+}
+
+body #main.transcribe.zoom-full .item.image img {
+	max-width: none;
+}
+
+body #main.transcribe.zoom-25 .item.image img {
+	max-width: 25%;
+}
+
+body #main.transcribe.zoom-50 .item.image img {
+	max-width: 50%;
+}
+
+body #main.transcribe.zoom-75 .item.image img {
+	max-width: 75%;
+}
+
+body #main.transcribe.zoom-100 .item.image img {
+	max-width: 100%;
+}
+
+body #main.transcribe.zoom-150 .item.image img {
+	max-width: 150%;
+}
+
+body #main.transcribe.zoom-200 .item.image img {
+	max-width: 200%;
+}
+
+body #main.transcribe.zoom-300 .item.image img {
+	max-width: 300%;
+}
+
+body #main.transcribe.zoom-400 .item.image img {
+	max-width: 400%;
+}
