@@ -460,8 +460,12 @@ $(document).ready(function() {
 		});
 
 		function addUserToProject() {
-			var userName = $("#add-user-autocomplete").val();
-			var userEmail = $("input[name=user-email]").val();
+			var userName = $("#add-user-autocomplete").val().trim();
+			var userEmail = $("input[name=user-email]").val().trim();
+
+			if (userName == '' && userEmail == '') {
+				return false;
+			}
 
 			if (userName && userEmail != userName && userEmail != '') {
 				// They typed in a user who has set a name
