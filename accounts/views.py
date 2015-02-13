@@ -53,7 +53,8 @@ def account(request):
     else:
         form = UserForm(instance=request.user)
     return render_to_response('accounts/account.html',
-                              {'form': form},
+                              {'form': form,
+                               'title': "Account"},
                               context_instance=RequestContext(request))
 
 
