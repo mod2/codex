@@ -1093,7 +1093,7 @@ body #main.transcribe header div {
 body #main.transcribe header .tools-menu {
 	background: #333;
 	border-radius: 5px;
-	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 	color: #fff;
 	display: none;
 	margin-top: 5px;
@@ -1105,6 +1105,10 @@ body #main.transcribe header .tools-menu {
 
 body #main.transcribe header .tools-menu .tool-group {
 	padding: 12px 15px;
+}
+
+body #main.transcribe header .tools-menu .tool-group:first-child {
+	padding-top: 10px;
 }
 
 body #main.transcribe header .tools-menu label {

@@ -764,6 +764,17 @@ $(document).ready(function() {
 			},
 		});
 	});
+
+	// Tools menu
+	$(".toggle-tools").on("click", function() {
+		if ($(".tools-menu:visible").length) {
+			$(".tools-menu").slideUp(100);
+		} else {
+			$(".tools-menu").slideDown(100);
+		}
+
+		return false;
+	});
 });
 
 function getCookie(name) {
