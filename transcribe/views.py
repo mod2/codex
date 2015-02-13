@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 
 from django.conf import settings
@@ -162,7 +164,8 @@ def project(request, project_id):
         project = Project.objects.get(id=project_id)
 
         return render_to_response('project.html', {'request': request,
-                                                   'project': project})
+                                                   'project': project,
+                                                   'title': project.name})
     except:
         pass
 
@@ -173,7 +176,8 @@ def review_project(request, project_id):
     try:
         project = Project.objects.get(id=project_id)
         return render_to_response('review_project.html', {'request': request,
-                                                          'project': project})
+                                                          'project': project,
+                                                          'title': "Review {}".format(project.name)})
     except:
         pass
 
@@ -186,7 +190,8 @@ def archived_projects(request):
                             | Q(users=request.user))
                     .exclude(status='active'))
         return render_to_response('archived_projects.html',
-                                  {'request': request, 'projects': projects})
+                                  {'request': request, 'projects': projects,
+                                   'title': "Archived Projects"})
     except:
         pass
 
@@ -199,7 +204,8 @@ def archived_items(request):
                  if item.status(request.user) == 'finished']
 
         return render_to_response('archived_items.html',
-                                  {'request': request, 'items': items})
+                                  {'request': request, 'items': items,
+                                   'title': "Archived Items"})
     except:
         pass
 
@@ -225,12 +231,19 @@ def transcribe_item(request, project_id, item_id, transcript_id=None):
             except:
                 pass
 
+        # Page title
+        page_title = ''
+        if transcript_id is not None:
+            page_title += "Transcript {} —".format(transcript_id)
+        page_title += "Item {} — {}".format(item.id, project.name)
+
         # Make sure they have access (owner or are in the project)
         if request.user == project.owner or Project.objects.filter(id=project.id, users__id=request.user.id):
             return render_to_response('transcribe.html', {'request': request,
                                                           'project': project,
                                                           'item': item,
                                                           'text': text,
+                                                          'title': page_title,
                                                           'type': 'transcribe'})
         else:
             return render_to_response('error.html', {'request': request,

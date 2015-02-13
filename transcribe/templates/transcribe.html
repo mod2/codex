@@ -7,10 +7,27 @@
 	<div class="left">
 		<span class="toggle-lights">Light/Dark</span>
 		<span class="toggle-layout">Switch Layout</span>
+		{% if item.type == 'image' %}
+		<span class="toggle-tools">Tools</span>
 
-		<div class="controls-image">
-
+		<div class="tools-menu tools-{{ item.type }}">
+			<div id="tool-zoom" class="tool-group">
+				<label>Zoom</label>
+				<select>
+					<option value="default">Default</option>			
+					<option value="25">25% of frame</option>			
+					<option value="50">50% of frame</option>			
+					<option value="75">75% of frame</option>			
+					<option value="100">100% of frame</option>			
+					<option value="150">150% of frame</option>			
+					<option value="200">200% of frame</option>			
+					<option value="300">300% of frame</option>			
+					<option value="400">400% of frame</option>			
+					<option value="full">Full size</option>			
+				</select>
+			</div>
 		</div>
+		{% endif %}
 	</div>
 	<div class="right">
 		<label class="saved">Loaded</label>

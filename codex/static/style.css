@@ -382,8 +382,11 @@ body #main.transcribe .item {
 }
 
 body #main.transcribe .item.image img {
+	-webkit-transition: max-width .25s ease-in-out;
 	display: block;
-	max-width: 1200px; /* Temporary hack */
+	margin: 0px auto;
+	max-width: 1200px; /* Default */
+	transition: max-width .25s ease-in-out;
 }
 
 body #main.transcribe .item.audio {
@@ -1077,4 +1080,85 @@ ul.errorlist li {
 	display: inline-block;
 	float: left;
 	height: 100%;
+}
+
+
+/* Tool menus */
+/* -------------------------------------------------- */
+
+body #main.transcribe header div {
+	position: relative;
+}
+
+body #main.transcribe header .tools-menu {
+	background: #333;
+	border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+	color: #fff;
+	display: none;
+	margin-top: 5px;
+	min-width: 250px;
+	position: absolute;
+	right: 0;
+	z-index: 80000;
+}
+
+body #main.transcribe header .tools-menu .tool-group {
+	padding: 12px 15px;
+}
+
+body #main.transcribe header .tools-menu .tool-group:first-child {
+	padding-top: 10px;
+}
+
+body #main.transcribe header .tools-menu label {
+	display: block;
+	margin-bottom: 3px;
+	padding: 0;
+}
+
+body #main.transcribe header .tools-menu select {
+	display: block;
+	width: 100%;
+}
+
+/* Zoom */
+body #main.transcribe.zoom-default .item.image img {
+	max-width: 1200px;
+}
+
+body #main.transcribe.zoom-full .item.image img {
+	max-width: none;
+}
+
+body #main.transcribe.zoom-25 .item.image img {
+	max-width: 25%;
+}
+
+body #main.transcribe.zoom-50 .item.image img {
+	max-width: 50%;
+}
+
+body #main.transcribe.zoom-75 .item.image img {
+	max-width: 75%;
+}
+
+body #main.transcribe.zoom-100 .item.image img {
+	max-width: 100%;
+}
+
+body #main.transcribe.zoom-150 .item.image img {
+	max-width: 150%;
+}
+
+body #main.transcribe.zoom-200 .item.image img {
+	max-width: 200%;
+}
+
+body #main.transcribe.zoom-300 .item.image img {
+	max-width: 300%;
+}
+
+body #main.transcribe.zoom-400 .item.image img {
+	max-width: 400%;
 }

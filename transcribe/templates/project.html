@@ -33,11 +33,11 @@
 			<ul class="items">
                 {% for item in project.items.all %}
                 <li class="{{ item.status }}">
-					<a href="{% url 'transcribe_item' project.id item.id %}">{{ item.name }}</a> &mdash; {{ item.type }} ({{ item.source_type }})
+					<a href="{% url 'transcribe_item' project.id item.id %}">{{ item.name }}</a> &mdash; {{ item.type }} &mdash; {{ item.source_type|title }}
 					{% if item.transcripts.all|length > 0 %}
 					<ul>
                         {% for transcript in item.transcripts.all %}
-						<li class="{{ transcript.status }}">{{ transcript.status|title }} — {{ transcript.owner }} &mdash; <a href="{% url 'transcribe_item' project.id item.id transcript.id %}">{{ transcript.date|date:"j M Y" }}</a></li>
+						<li class="{{ transcript.status }}">{{ transcript.status|title }} — {{ transcript.owner }} &mdash; <a href="{% url 'transcribe_item' project.id item.id transcript.id %}">{{ transcript.last_modified|date:"j M Y" }}</a></li>
                         {% endfor %}
 					</ul>
                     {% endif %}
