@@ -7,9 +7,10 @@
 	<div class="left">
 		<span class="toggle-lights">Light/Dark</span>
 		<span class="toggle-layout">Switch Layout</span>
+		{% if item.type == 'image' %}
 		<span class="tools">Tools</span>
 
-		<div class="tools-menu tools-image">
+		<div class="tools-menu tools-{{ item.type }}">
 			<div class="tool-group">
 				<label>Zoom</label>
 				<select>
@@ -26,6 +27,7 @@
 				</select>
 			</div>
 		</div>
+		{% endif %}
 	</div>
 	<div class="right">
 		<label class="saved">Loaded</label>
