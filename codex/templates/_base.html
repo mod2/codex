@@ -41,10 +41,12 @@
 			<span>Codex</span>
 			<a href="{% url 'home' %}">Home</a>
 		</div>
+		{% if request.user %}
 		<div class="right">
 			<a href="{% url 'account' %}">Account</a>
 			<a href="{% url 'accounts:logout' %}">Logout</a>
 		</div>
+		{% endif %}
 	</header>
 
 	<section id="main" class="{% block mainclass %}{% endblock mainclass %}">

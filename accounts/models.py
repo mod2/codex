@@ -15,10 +15,10 @@ def _generate_password():
 
 
 def send_invite_email(user, password):
-    subject = "[Codex] Invite to help transcribe"
+    subject = "[Codex] Invitation to help transcribe"
 
     msg = """
-    <p>You've been invited to use Codex.</p>
+    <p>You've been invited to help transcribe a project on Codex.</p>
 
     <p>
     Email/username: <b>{email}</b><br/>
@@ -27,6 +27,7 @@ def send_invite_email(user, password):
 
     <p><a href="localhost:8000/accounts/password/change/">Log in and change password</a></p>
     """.format(email=user.email, password=password)
+    # TODO: change localhost:8000 to the actual host
 
     from_email = settings.DEFAULT_FROM_EMAIL
     to_emails = [user.email]
